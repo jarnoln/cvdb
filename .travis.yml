@@ -1,0 +1,19 @@
+language: python
+  - "3.4"
+
+sudo: required
+dist: trusty
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - python cvdb/generate_passwords.py
+  - python manage.py makemigrations
+  - python manage.py migrate
+
+script:
+  - coverage run --source='./viewcv' manage.py test viewcv
+
+after_success:
+  - codecov
