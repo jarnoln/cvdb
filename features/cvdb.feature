@@ -5,4 +5,4 @@ Feature: CVDB
     Scenario: Open front page and check title
 
         When I open root page
-        Then I will see title "Welcome to Django"
+        Then I will see title "CVDB"
