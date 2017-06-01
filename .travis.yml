@@ -1,4 +1,5 @@
 language: python
+python:
   - "3.4"
 
 sudo: required
@@ -13,7 +14,8 @@ before_script:
   - python manage.py migrate
 
 script:
-  - coverage run --source='./viewcv' manage.py test viewcv
+  - coverage run --source='./viewcv' manage.py test -v2 viewcv
+  - coverage report
 
 after_success:
   - codecov
