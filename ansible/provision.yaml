@@ -1,0 +1,13 @@
+---
+- name: Prepare server
+  hosts: all
+  become: true
+  tasks:
+    - name: Check connection
+      ping:
+
+    - name: Install required packages
+      yum: pkg=nginx,git,python-virtualenv state=present
+
+    - name: Start Nginx
+      service: name=nginx state=started

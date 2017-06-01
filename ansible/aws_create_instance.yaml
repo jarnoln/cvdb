@@ -12,3 +12,5 @@
         count_tag:
           Name: AnsibleDemo
         exact_count: 1
+        group: ssh-and-http
+        key_name: amazonlinux
