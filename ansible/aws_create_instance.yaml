@@ -1,0 +1,11 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: False
+  tasks:
+   - ec2:
+       image: ami-b968bad6
+       region: eu-central-1
+       instance_type: t2.micro
+       instance_tags:
+         Name: AnsibleDemo
