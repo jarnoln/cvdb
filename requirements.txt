@@ -1,0 +1,8 @@
+behave==1.2.5
+behave-django==0.5.0
+coverage==4.4.1
+Django==1.11.1
+parse==1.8.2
+parse-type==0.3.4
+pytz==2017.2
+six==1.10.0
