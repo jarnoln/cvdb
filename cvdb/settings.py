@@ -17,7 +17,7 @@ try:
     from .passwords import SECRET_KEY
 except ImportError:
     print('Password file does not exist. How to create it:')
-    print('python cvdb/generate_passwords.py')
+    print('python cvdb/generate_passwords.py cvdb/passwords.py')
     sys.exit(1)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

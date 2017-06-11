@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import random
-
-PROJECT_NAME = 'cvdb'
+import argparse
 
 
 def generate_passwords(password_file_path):
@@ -15,5 +14,7 @@ def generate_passwords(password_file_path):
 
 
 if __name__ == '__main__':
-    password_file_path = '%s/passwords.py' % PROJECT_NAME
-    generate_passwords(password_file_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('password_file_path', help='Where password file will be placed')
+    args = parser.parse_args()
+    generate_passwords(args.password_file_path)
