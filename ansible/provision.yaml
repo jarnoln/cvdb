@@ -7,7 +7,13 @@
       ping:
 
     - name: Install required packages
-      yum: pkg=nginx,git,python-virtualenv state=present
+      yum: pkg={{item}} state=present
+      with_items:
+        - nginx
+        - git
+        - python-virtualenv
 
     - name: Start Nginx
       service: name=nginx state=started
+
+    - 
