@@ -1,0 +1,35 @@
+---
+- name: prepare server
+  hosts: all
+  become: true
+  vars:
+      host: "{{ inventory_hostname }}"
+
+  tasks:
+    - name: check connection
+      ping:
+
+    - name: install required packages
+      apt: pkg={{item}} state=present
+      with_items:
+        - nginx
+        - git
+        - python-virtualenv
+
+    - name: start nginx
+      service: name=nginx state=started
+
+    - name: write gunicorn systemd service script
+      template:
+          src=./systemd.gunicorn.service.j2
+          dest=/etc/systemd/system/gunicorn-cvdb.service
+      notify:
+          - restart gunicorn
+
+  handlers:
+    - name: restart gunicorn
+      systemd:
+          name=gunicorn-cvdb
+          daemon_reload=yes
+          enabled=yes
+          state=restarted
