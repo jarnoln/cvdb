@@ -26,6 +26,21 @@
       notify:
           - restart gunicorn
 
+    - name: add nginx config to sites-available
+      template:
+          src=./nginx.conf.j2
+          dest=/etc/nginx/sites-available/{{ host }}
+      notify:
+          - restart nginx
+
+    - name: add symlink in nginx sites-enabled
+      file:
+          src=/etc/nginx/sites-available/{{ host }}
+          dest=/etc/nginx/sites-enabled/{{ host }}
+          state=link
+      notify:
+          - restart nginx
+
   handlers:
     - name: restart gunicorn
       systemd:
@@ -33,3 +48,6 @@
           daemon_reload=yes
           enabled=yes
           state=restarted
+
+    - name: restart nginx
+      service:  name=nginx state=restarted

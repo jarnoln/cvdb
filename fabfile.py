@@ -2,9 +2,9 @@
 #
 # Usage:
 # Localhost:
-# fab -f fabfile.py deploy:host=username@localhost
+# fab deploy:host=username@localhost
 # Live:
-# fab -f fabfile.py deploy:host=ec2user@makecv.net
+# fab deploy:host=ubuntu@makecv.net
 
 import os
 from fabric.contrib.files import exists
