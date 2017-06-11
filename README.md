@@ -4,3 +4,7 @@
 [![codecov](https://codecov.io/gh/jarnoln/cvdb/branch/master/graph/badge.svg)](https://codecov.io/gh/jarnoln/cvdb)
 
 CV database
+
+## Installation
+
+    ansible-playbook -i ansible/inventory ansible/provision.yaml
