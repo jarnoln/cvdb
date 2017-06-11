@@ -9,7 +9,7 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - python cvdb/generate_passwords.py
+  - python cvdb/generate_passwords.py cvdb/passwords.py
   - python manage.py makemigrations
   - python manage.py migrate
 
