@@ -45,7 +45,7 @@ def deploy():
     _check_secret_key(source_folder, python)
     _update_database(source_folder, python)
     _run_remote_unit_tests(app_list, source_folder, python)
-    # _restart_nginx(site_name)
+    _restart_nginx(site_name)
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -91,6 +91,7 @@ def _run_remote_unit_tests(app_list, source_folder, python):
     for app in app_list:
         run('cd %s && %s manage.py test %s --settings=cvdb.settings' % (source_folder, python, app))
 
-# def _restart_nginx(site_name):
-#    sudo('systemctl restart %s.gunicorn' % site_name)
-#    sudo('service nginx restart')
+
+def _restart_nginx(site_name):
+    sudo('systemctl restart gunicorn-cvdb')
+    sudo('service nginx restart')
