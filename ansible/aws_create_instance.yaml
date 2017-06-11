@@ -8,9 +8,9 @@
         region: eu-central-1
         instance_type: t2.micro
         instance_tags:
-          Name: AnsibleDemo
+          Name: CVDB
         count_tag:
-          Name: AnsibleDemo
+          Name: CVDB
         exact_count: 1
         group: ssh-and-http
         key_name: amazonlinux
