@@ -6,6 +6,7 @@
 # Live:
 # fab -f fabfile.py deploy:host=ec2user@makecv.net
 
+import os
 from fabric.contrib.files import exists
 from fabric.api import env, local, run, sudo
 from fabric.network import ssh
@@ -14,6 +15,12 @@ from fabric.network import ssh
 REPO_URL = "git@github.com:jarnoln/cvdb.git"
 LOCAL_SITE_NAME = 'local.makecv.net'
 ssh.util.log_to_file('fabric_ssh.log')
+
+aws_key_file_path = os.environ.get("AWS_KEY_FILE_PATH", '')
+if aws_key_file_path:
+    env.key_filename = aws_key_file_path
+else:
+    print("No AWS key file defined. Not a problem if not deploying to AWS.")
 
 
 def get_site_name():
