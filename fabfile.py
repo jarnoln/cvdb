@@ -12,11 +12,15 @@ from fabric.network import ssh
 
 
 REPO_URL = "git@github.com:jarnoln/cvdb.git"
+LOCAL_SITE_NAME = 'local.makecv.net'
 ssh.util.log_to_file('fabric_ssh.log')
 
 
 def get_site_name():
-    return 'makecv.net'
+    if env.host == 'localhost' or env.host == '127.0.0.1':
+        return LOCAL_SITE_NAME
+    else:
+        return env.host
 
 
 def deploy():
@@ -26,11 +30,15 @@ def deploy():
     virtualenv = site_folder + '/virtualenv'
     python = virtualenv + '/bin/python'
     pip = virtualenv + '/bin/pip'
-
+    app_list = ['viewcv']
     _create_directory_structure_if_necessary(site_folder)
     _init_virtualenv(site_folder)
     _get_latest_source(source_folder)
     _install_virtualenv_libraries(source_folder, pip)
+    _check_secret_key(source_folder, python)
+    _update_database(source_folder, python)
+    _run_remote_unit_tests(app_list, source_folder, python)
+    # _restart_nginx(site_name)
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -58,3 +66,24 @@ def _get_latest_source(source_folder):
 
 def _install_virtualenv_libraries(source_folder, pip):
     run('cd %s && %s install -r requirements.txt' % (source_folder, pip))
+
+
+def _check_secret_key(source_folder, python):
+    settings_folder = source_folder + '/cvdb'
+    if not exists(settings_folder + '/passwords.py'):
+        run('%s %s/generate_passwords.py %s/passwords.py' % (python, settings_folder, settings_folder))
+
+
+def _update_database(source_folder, python):
+    run('cd %s && %s manage.py makemigrations' % (source_folder, python))
+    run('cd %s && %s manage.py migrate' % (source_folder, python))
+
+
+def _run_remote_unit_tests(app_list, source_folder, python):
+    print('*** Run remote unit tests')
+    for app in app_list:
+        run('cd %s && %s manage.py test %s --settings=cvdb.settings' % (source_folder, python, app))
+
+# def _restart_nginx(site_name):
+#    sudo('systemctl restart %s.gunicorn' % site_name)
+#    sudo('service nginx restart')
