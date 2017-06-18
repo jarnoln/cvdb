@@ -44,6 +44,7 @@ def deploy():
     _install_virtualenv_libraries(source_folder, pip)
     _check_secret_key(source_folder, python)
     _update_database(source_folder, python)
+    _update_static_files(source_folder)
     _run_remote_unit_tests(app_list, source_folder, python)
     _restart_nginx(site_name)
 
@@ -84,6 +85,10 @@ def _check_secret_key(source_folder, python):
 def _update_database(source_folder, python):
     run('cd %s && %s manage.py makemigrations' % (source_folder, python))
     run('cd %s && %s manage.py migrate' % (source_folder, python))
+
+
+def _update_static_files(source_folder):
+    run('cd %s && ../virtualenv/bin/python manage.py collectstatic --noinput' % source_folder)
 
 
 def _run_remote_unit_tests(app_list, source_folder, python):
