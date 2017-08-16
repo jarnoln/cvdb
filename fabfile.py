@@ -57,7 +57,7 @@ def _create_directory_structure_if_necessary(site_folder):
 
 def _init_virtualenv(site_folder):
     if not exists(site_folder + '/virtualenv'):
-        run('cd %s && virtualenv virtualenv' % site_folder)
+        run('cd %s && virtualenv --python=python3 virtualenv' % site_folder)
     if not exists(site_folder + '/db'):
         run('cd %s && mkdir db' % site_folder)
 
