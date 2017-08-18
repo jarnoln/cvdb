@@ -1,9 +1,16 @@
 server {
     listen 80;
-    server_name {{ host }};
+    server_name {{ host }} www.{{ host }} staging.{{ host }};
 
     location /static {
         alias /home/{{ ansible_ssh_user }}/sites/{{ host }}/static;
+        autoindex on;
+    }
+
+    # This is used by certbot to verify site ownership
+    location /.well-known {
+        alias /home/{{ ansible_ssh_user }}/sites/{{ host }}/.well-known;
+        autoindex on;
     }
 
     location / {
