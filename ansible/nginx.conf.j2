@@ -1,6 +1,10 @@
 server {
     listen 80;
+    listen 443 ssl;
+
     server_name {{ host }} www.{{ host }} staging.{{ host }};
+    ssl_certificate /etc/letsencrypt/live/makecv.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/makecv.net/privkey.pem;
 
     location /static {
         alias /home/{{ ansible_ssh_user }}/sites/{{ host }}/static;
