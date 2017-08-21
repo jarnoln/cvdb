@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title> CVDB </title>
-  </head>
-  <body>
+{% extends "viewcv/base.html" %}
+
+{% block title %}CVDB{% endblock %}
+{% block content %}
     <h1> CVDB </h1>
-    <p>
-      <a href="{% url 'account_login' %}">Login</a>
-    </p>
-  </body>
-</html>
+{% endblock content %}
