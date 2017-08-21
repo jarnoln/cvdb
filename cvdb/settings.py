@@ -43,12 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'viewcv',  # Needs to be defined before allauth to override templates
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'behave_django',
-    'viewcv',
 ]
 
 MIDDLEWARE = [
