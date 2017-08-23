@@ -80,3 +80,14 @@ class ProfileTest(TestCase):
         user = self.create_and_log_in_user()
         response = self.client.get(reverse('profile'))
         self.assertTemplateUsed(response, 'viewcv/profile.html')
+
+    def test_default_content(self):
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['user'].is_authenticated())
+        self.assertEqual(response.context['user'], user)
+        self.assertContains(response, 'Profile')
+        html = response.content.decode('utf8')
+        # print(html)
+        self.assertTrue(html.startswith('<!DOCTYPE html>'))
