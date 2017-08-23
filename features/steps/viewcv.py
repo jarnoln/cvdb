@@ -1,5 +1,6 @@
 from time import sleep
 from behave import given, when, then
+from selenium.webdriver.common.keys import Keys
 # from django.conf import settings
 
 
@@ -10,9 +11,19 @@ def open_root_page(context):
     sleep(1)
 
 
-@when(u'I will click link "{text}"')
+@when(u'I click link "{text}"')
 def step_impl(context, text):
     context.browser.find_element_by_link_text(text).click()
+    sleep(2)
+
+
+@when(u'I fill signup form')
+def step_impl(context):
+    context.browser.find_element_by_id('id_username').send_keys(context.username)
+    context.browser.find_element_by_id('id_email').send_keys(context.email)
+    context.browser.find_element_by_id('id_password1').send_keys(context.password)
+    context.browser.find_element_by_id('id_password2').send_keys(context.password)
+    context.browser.find_element_by_id('id_password2').send_keys(Keys.ENTER)
     sleep(2)
 
 
@@ -25,3 +36,9 @@ def step_impl(context, title):
 def step_impl(context, text):
     link = context.browser.find_element_by_link_text(text)
     context.test.assertEqual(text, link.text)
+
+
+@then(u'I will see element "{id}"')
+def step_impl(context, id):
+    context.browser.find_element_by_id(id)
+
