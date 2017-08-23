@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    steps:
+      - checkout
+      - run:
+          command: pip install -r requirements.txt
+      - run:
+          command: python cvdb/generate_passwords.py cvdb/passwords.py
+      - run:
+          command: python manage.py test
