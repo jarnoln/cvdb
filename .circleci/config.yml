@@ -6,8 +6,15 @@ jobs:
     steps:
       - checkout
       - run:
-          command: pip install -r requirements.txt
+          command: |
+            pip install -r requirements.txt
+            pip install coverage
       - run:
           command: python cvdb/generate_passwords.py cvdb/passwords.py
       - run:
           command: python manage.py test
+      - run:
+          name: Run coverage
+          command: |
+            coverage run --source='./viewcv' manage.py test -v2 viewcv
+            coverage report
