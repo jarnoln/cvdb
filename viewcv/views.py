@@ -20,8 +20,13 @@ class HomeView(TemplateView):
 
 class ProfileView(DetailView):
     template_name = 'viewcv/profile.html'
+    context_object_name = 'target_user'
 
     def get_object(self, queryset=None):
+        target_username = self.kwargs.get('slug', '')
+        if target_username:
+            # return auth.models.User.objects.get(username=target_username)
+            return auth.get_user_model().objects.get(username=target_username)
         return auth.get_user(self.request)
 
 

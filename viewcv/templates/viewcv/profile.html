@@ -10,19 +10,19 @@
 <table class="table">
   <tr>
     <th> {% trans 'Username' %} </th>
-    <td> {{ user.username }} </td>
+    <td> {{ target_user.username }} </td>
   </tr>
   <tr>
     <th> {% trans 'Email' %} </th>
-    <td> {{ user.email }} </td>
+    <td> {{ target_user.email }} </td>
   </tr>
   <tr>
     <th> {% trans 'First name' %} </th>
-    <td> {{ user.first_name }} </td>
+    <td> {{ target_user.first_name }} </td>
   </tr>
   <tr>
     <th> {% trans 'Last name' %} </th>
-    <td> {{ user.last_name }} </td>
+    <td> {{ target_user.last_name }} </td>
   </tr>
 </table>
 {% endblock content %}

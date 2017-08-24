@@ -67,8 +67,12 @@ class LoginTest(TestCase):
 class ProfileTest(ExtTestCase):
     def test_reverse(self):
         self.assertEqual(reverse('profile'), '/accounts/profile/')
+        self.assertEqual(reverse('user_detail', args=['shinji']), '/user/shinji/')
 
     def test_uses_correct_template(self):
+        user = auth.models.User.objects.create(username='shinji')
+        response = self.client.get(reverse('user_detail', args=[user.username]))
+        self.assertTemplateUsed(response, 'viewcv/profile.html')
         self.create_and_log_in_user()
         response = self.client.get(reverse('profile'))
         self.assertTemplateUsed(response, 'viewcv/profile.html')
@@ -87,9 +91,21 @@ class ProfileTest(ExtTestCase):
         self.assertInHTML(user.username, html)
         self.assertInHTML(user.email, html)
 
-    def test_cant_view_if_not_logged_in(self):
+    def test_viewing_other_user(self):
+        target_user = auth.models.User.objects.create(username='shinji', email='shinji@nerv.org')
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('user_detail', args=[target_user.username]))
+        # self.assertEqual(response.context['user'], user)
+        self.assertEqual(response.context['object'], target_user)
+        self.assertContains(response, 'Profile')
+        html = response.content.decode('utf8')
+        self.assertTrue(html.startswith('<!DOCTYPE html>'))
+        self.assertInHTML(target_user.username, html)
+        self.assertInHTML(target_user.email, html)
+
+    def test_cant_view_profile_if_not_logged_in(self):
         user = auth.models.User.objects.create(username='user')
-        response = self.client.post(reverse('user_delete', args=[user.username]), {}, follow=True)
+        response = self.client.get(reverse('profile'), follow=True)
         self.assertTemplateUsed(response, 'account/login.html')
 
 
