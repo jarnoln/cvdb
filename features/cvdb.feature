@@ -1,4 +1,4 @@
-Feature: Home page
+Feature: Home page and account management
     As a user
     I want to see home page titled "CVDB"
     and links to log in and sign up
@@ -29,3 +29,16 @@ Feature: Home page
          And I click link "Login"
         Then I will see title "Sign In"
          And I will see element "login_form"
+
+        When I fill login form
+        Then I will see title "Profile"
+         And I will see link "Delete account"
+
+    Scenario: Delete account
+        When I click link "Delete account"
+        Then I will see title "Confirm delete user"
+         And I will see element "button_delete"
+
+        When I click element "button_delete"
+        Then I will see title "CVDB"
+         And I will see link "Login"

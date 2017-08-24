@@ -33,6 +33,14 @@ def step_impl(context):
     sleep(2)
 
 
+@when(u'I fill login form')
+def step_impl(context):
+    context.browser.find_element_by_id('id_login').send_keys(context.username)
+    context.browser.find_element_by_id('id_password').send_keys(context.password)
+    context.browser.find_element_by_id('id_password').send_keys(Keys.ENTER)
+    sleep(2)
+
+
 @then(u'I will see title "{title}"')
 def step_impl(context, title):
     context.test.assertIn(title, context.browser.title)
