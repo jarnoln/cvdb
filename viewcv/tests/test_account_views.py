@@ -90,6 +90,7 @@ class UserDetailTest(ExtTestCase):
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
         self.assertInHTML(user.username, html)
         self.assertInHTML(user.email, html)
+        self.assertInHTML('Delete account', html)
 
     def test_viewing_other_user(self):
         target_user = auth.models.User.objects.create(username='shinji', email='shinji@nerv.org')
@@ -102,6 +103,7 @@ class UserDetailTest(ExtTestCase):
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
         self.assertInHTML(target_user.username, html)
         self.assertInHTML(target_user.email, html)
+        self.assertNotIn('Delete account', html)
 
     def test_cant_view_profile_if_not_logged_in(self):
         auth.models.User.objects.create(username='user')

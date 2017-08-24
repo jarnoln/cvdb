@@ -1,6 +1,6 @@
 {% extends "viewcv/base.html" %}
 {% load i18n %}
-{% block title %} {% trans 'Confirm delete user' %} {% endblock %}
+{% block head_title %} {% trans 'Confirm delete user' %} {% endblock %}
 
 {% block content %}
 <h1> {% trans 'Are you sure you want to delete user' %}: {{ user.username }}? </h1>

@@ -25,4 +25,13 @@
     <td> {{ target_user.last_name }} </td>
   </tr>
 </table>
+
+{% if target_user == user %}
+<p>
+  <a class="btn btn-danger" href="{% url 'user_delete' target_user %}">
+    {% trans 'Delete account' %}
+  </a>
+</p>
+{% endif %}
+
 {% endblock content %}
