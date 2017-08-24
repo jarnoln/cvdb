@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib import auth
+from .ext_test_case import ExtTestCase
 
 
 class SignupTest(TestCase):
@@ -63,21 +64,12 @@ class LoginTest(TestCase):
         self.assertInHTML('Logout', html)
 
 
-class ProfileTest(TestCase):
-    def create_and_log_in_user(self):
-        user = auth.models.User.objects.create(username='test_user', email='tuser@iki.fi')
-        user.set_password('password')
-        user.save()
-        response = self.client.post(reverse('account_login'), {'login': user.username, 'password': 'password'})
-        html = response.content.decode('utf8')
-        print(html)
-        return user
-
+class ProfileTest(ExtTestCase):
     def test_reverse(self):
         self.assertEqual(reverse('profile'), '/accounts/profile/')
 
     def test_uses_correct_template(self):
-        user = self.create_and_log_in_user()
+        self.create_and_log_in_user()
         response = self.client.get(reverse('profile'))
         self.assertTemplateUsed(response, 'viewcv/profile.html')
 

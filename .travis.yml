@@ -8,6 +8,7 @@ dist: trusty
 install:
   - pip install -r requirements.txt
   - pip install coverage
+  - pip install codecov
 
 before_script:
   - python cvdb/generate_passwords.py cvdb/passwords.py
