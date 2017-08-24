@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
-from .views import HomeView, ProfileView, CvUserDelete
+from .cv_user import ProfileView, CvUserDelete
+from .views import HomeView
+
 
 urlpatterns = [
     url(r'^user/(?P<slug>[\w\.-]+)/delete/$', login_required(CvUserDelete.as_view()), name='user_delete'),
