@@ -6,9 +6,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Python packages
           command: |
             pip install -r requirements.txt
             pip install coverage
+            pip install codecov
       - run:
           command: python cvdb/generate_passwords.py cvdb/passwords.py
       - run:
@@ -17,4 +19,5 @@ jobs:
           name: Run coverage
           command: |
             coverage run --source='./viewcv' manage.py test -v2 viewcv
+            codecov
             coverage report
