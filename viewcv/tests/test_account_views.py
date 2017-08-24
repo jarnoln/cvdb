@@ -86,3 +86,20 @@ class ProfileTest(ExtTestCase):
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
         self.assertInHTML(user.username, html)
         self.assertInHTML(user.email, html)
+
+
+class DeleteUserPageTest(ExtTestCase):
+    def test_reverse_blog_delete(self):
+        self.assertEqual(reverse('user_delete', args=['test_user']), '/user/test_user/delete/')
+
+    def test_uses_correct_template(self):
+        user = self.create_and_log_in_user()
+        # project = Project.objects.create(created_by=creator, name="test_project")
+        response = self.client.get(reverse('user_delete', args=[user.username]))
+        self.assertTemplateUsed(response, 'auth/user_confirm_delete.html')
+
+    def test_can_delete_user(self):
+        user = self.create_and_log_in_user()
+        self.assertEqual(auth.models.User.objects.count(), 1)
+        response = self.client.post(reverse('user_delete', args=[user.username]), {}, follow=True)
+        self.assertEqual(auth.models.User.objects.count(), 0)
