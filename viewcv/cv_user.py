@@ -14,7 +14,7 @@ def can_edit_user(logged_user, target_user):
     return False
 
 
-class ProfileView(DetailView):
+class CvUserDetail(DetailView):
     template_name = 'viewcv/profile.html'
     context_object_name = 'target_user'
 

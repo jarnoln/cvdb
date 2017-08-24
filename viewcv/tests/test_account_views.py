@@ -64,7 +64,7 @@ class LoginTest(TestCase):
         self.assertInHTML('Logout', html)
 
 
-class ProfileTest(ExtTestCase):
+class UserDetailTest(ExtTestCase):
     def test_reverse(self):
         self.assertEqual(reverse('profile'), '/accounts/profile/')
         self.assertEqual(reverse('user_detail', args=['shinji']), '/user/shinji/')
@@ -104,7 +104,7 @@ class ProfileTest(ExtTestCase):
         self.assertInHTML(target_user.email, html)
 
     def test_cant_view_profile_if_not_logged_in(self):
-        user = auth.models.User.objects.create(username='user')
+        auth.models.User.objects.create(username='user')
         response = self.client.get(reverse('profile'), follow=True)
         self.assertTemplateUsed(response, 'account/login.html')
 
