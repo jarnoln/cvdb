@@ -17,6 +17,12 @@ def step_impl(context, text):
     sleep(2)
 
 
+@when(u'I click element "{id}"')
+def step_impl(context, id):
+    context.browser.find_element_by_id(id).click()
+    sleep(2)
+
+
 @when(u'I fill signup form')
 def step_impl(context):
     context.browser.find_element_by_id('id_username').send_keys(context.username)

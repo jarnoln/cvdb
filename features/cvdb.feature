@@ -18,10 +18,11 @@ Feature: Home page
 
         When I fill signup form
         Then I will see title "Profile"
-         And I will see link "Logout"
+         And I will see element "navbar_logout"
 
-        When I click link "Logout"
-        Then I will see title "Sign Out"
+        When I click element "navbar_logout"
+        Then I will see title "CVDB"
+         And I will see link "Login"
 
     Scenario: Login
         When I open root page
