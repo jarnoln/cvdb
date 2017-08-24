@@ -87,6 +87,11 @@ class ProfileTest(ExtTestCase):
         self.assertInHTML(user.username, html)
         self.assertInHTML(user.email, html)
 
+    def test_cant_view_if_not_logged_in(self):
+        user = auth.models.User.objects.create(username='user')
+        response = self.client.post(reverse('user_delete', args=[user.username]), {}, follow=True)
+        self.assertTemplateUsed(response, 'account/login.html')
+
 
 class DeleteUserPageTest(ExtTestCase):
     def test_reverse_blog_delete(self):
@@ -94,12 +99,33 @@ class DeleteUserPageTest(ExtTestCase):
 
     def test_uses_correct_template(self):
         user = self.create_and_log_in_user()
-        # project = Project.objects.create(created_by=creator, name="test_project")
         response = self.client.get(reverse('user_delete', args=[user.username]))
         self.assertTemplateUsed(response, 'auth/user_confirm_delete.html')
 
     def test_can_delete_user(self):
         user = self.create_and_log_in_user()
         self.assertEqual(auth.models.User.objects.count(), 1)
-        response = self.client.post(reverse('user_delete', args=[user.username]), {}, follow=True)
+        self.client.post(reverse('user_delete', args=[user.username]), {}, follow=True)
         self.assertEqual(auth.models.User.objects.count(), 0)
+
+    def test_404_no_user(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse('user_delete', args=['dummy_user']))
+        # print(response.content.decode('utf8'))
+        self.assertTemplateUsed(response, '404.html')
+
+    def test_cant_delete_user_if_not_logged_in(self):
+        user = auth.models.User.objects.create(username='user')
+        self.assertEqual(auth.models.User.objects.all().count(), 1)
+        response = self.client.post(reverse('user_delete', args=[user.username]), {}, follow=True)
+        # print(response.content.decode('utf8'))
+        self.assertEqual(auth.models.User.objects.all().count(), 1)
+        self.assertTemplateUsed(response, 'account/login.html')
+
+    def test_cant_delete_other_users(self):
+        self.create_and_log_in_user()
+        other_user = auth.models.User.objects.create(username='other_user')
+        self.assertEqual(auth.models.User.objects.all().count(), 2)
+        response = self.client.post(reverse('user_delete', args=[other_user.username]), {}, follow=True)
+        self.assertEqual(auth.models.User.objects.all().count(), 2)
+        self.assertTemplateUsed(response, '404.html')

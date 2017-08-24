@@ -4,6 +4,6 @@ from .views import HomeView, ProfileView, CvUserDelete
 
 urlpatterns = [
     url(r'^user/(?P<slug>[\w\.-]+)/delete/$', login_required(CvUserDelete.as_view()), name='user_delete'),
-    url(r'^accounts/profile/$', ProfileView.as_view(), name='profile'),
+    url(r'^accounts/profile/$', login_required(ProfileView.as_view()), name='profile'),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
