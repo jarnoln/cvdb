@@ -1,8 +1,9 @@
-Feature: Home page and account management
+Feature: User account management
     As a user
-    I want to see home page titled "CVDB"
-    and links to log in and sign up
-    and if I click the links, I will see proper pages.
+    I want to see home page and links to log in and sign up
+    and be able to create user account by signing up
+    and be able to log in and out
+    and be able to delete my account.
 
     Scenario: Open front page, check title and links
         When I open root page
