@@ -10,13 +10,13 @@
         <td>
     <form action="{% url 'user_delete' user.username %}" method="post">
         {% csrf_token %}
-        <input type="submit" class="btn btn-danger" id="button_delete" value="{% trans 'Delete' %}" />
+        <button class="btn btn-danger" id="button_delete">{% trans 'Delete' %}</button>
     </form>
     </td>
         <td>
     <form action="{% url 'home' %}" method="get">
     {% csrf_token %}
-        <input type="submit" class="btn btn-primary" id="button_cancel" value="{% trans 'Cancel' %}" />
+        <button class="btn btn-primary" id="button_cancel">{% trans 'Cancel' %}</button>
     </form>
         </td>
     </tr>

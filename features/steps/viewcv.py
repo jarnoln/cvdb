@@ -17,9 +17,16 @@ def step_impl(context, text):
     sleep(2)
 
 
-@when(u'I click element "{id}"')
-def step_impl(context, id):
-    context.browser.find_element_by_id(id).click()
+@when(u'I click element "{element_id}"')
+def step_impl(context, element_id):
+    context.browser.find_element_by_id(element_id).click()
+    sleep(2)
+
+
+@when(u'I click button "{text}"')
+def step_impl(context, text):
+    xpath = '//button[text()="{}"]'.format(text)
+    context.browser.find_element_by_xpath(xpath).click()
     sleep(2)
 
 
@@ -52,7 +59,12 @@ def step_impl(context, text):
     context.test.assertEqual(text, link.text)
 
 
-@then(u'I will see element "{id}"')
-def step_impl(context, id):
-    context.browser.find_element_by_id(id)
+@then(u'I will see element "{element_id}"')
+def step_impl(context, element_id):
+    context.browser.find_element_by_id(element_id)
 
+
+@then(u'I will see button "{text}"')
+def step_impl(context, text):
+    xpath = '//button[text()="{}"]'.format(text)
+    context.browser.find_element_by_xpath(xpath)

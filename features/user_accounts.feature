@@ -20,8 +20,9 @@ Feature: User account management
         When I fill signup form
         Then I will see title "Profile"
          And I will see element "navbar_logout"
+         And I will see button "Logout"
 
-        When I click element "navbar_logout"
+        When I click button "Logout"
         Then I will see title "CVDB"
          And I will see link "Login"
 
@@ -30,7 +31,7 @@ Feature: User account management
          And I click link "Login"
         Then I will see title "Sign In"
          And I will see element "login_form"
-
+         And I will see button "Sign In"
         When I fill login form
         Then I will see title "Profile"
          And I will see link "Delete account"
@@ -38,8 +39,9 @@ Feature: User account management
     Scenario: Delete account
         When I click link "Delete account"
         Then I will see title "Confirm delete user"
-         And I will see element "button_delete"
+         # And I will see element "button_delete"
+         And I will see button "Delete"
 
-        When I click element "button_delete"
+        When I click button "Delete"
         Then I will see title "CVDB"
          And I will see link "Login"
