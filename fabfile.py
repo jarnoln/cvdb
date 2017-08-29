@@ -4,10 +4,10 @@
 # Localhost:
 # fab deploy:host=username@localhost
 # Live:
-# fab deploy:host=ubuntu@makecv.net
+# fab deploy:host=django@makecv.net
 
 import os
-from fabric.contrib.files import exists
+from fabric.contrib.files import exists, sed
 from fabric.api import env, local, run, sudo
 from fabric.network import ssh
 
@@ -41,12 +41,13 @@ def deploy():
     _create_directory_structure_if_necessary(site_folder)
     _init_virtualenv(site_folder)
     _get_latest_source(source_folder)
+    _update_settings(source_folder)
     _install_virtualenv_libraries(source_folder, pip)
     _check_secret_key(source_folder, python)
     _update_database(source_folder, python)
     _update_static_files(source_folder)
     _run_remote_unit_tests(app_list, source_folder, python)
-    _restart_nginx(site_name)
+    _restart_nginx()
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -70,6 +71,11 @@ def _get_latest_source(source_folder):
 
     current_commit = local("git log -n 1 --format=%H", capture=True)
     run('cd %s && git reset --hard %s' % (source_folder, current_commit))
+
+
+def _update_settings(source_folder):
+    settings_path = source_folder + '/cvdb/settings.py'
+    sed(settings_path, "DEBUG = True", "DEBUG = False")
 
 
 def _install_virtualenv_libraries(source_folder, pip):
@@ -97,6 +103,6 @@ def _run_remote_unit_tests(app_list, source_folder, python):
         run('cd %s && %s manage.py test %s --settings=cvdb.settings' % (source_folder, python, app))
 
 
-def _restart_nginx(site_name):
+def _restart_nginx():
     sudo('systemctl restart gunicorn-cvdb')
     sudo('service nginx restart')
