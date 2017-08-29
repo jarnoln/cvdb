@@ -3,6 +3,9 @@ from django.core.urlresolvers import reverse
 from django.contrib import auth
 from .ext_test_case import ExtTestCase
 
+# Django allauth views:
+# http://django-allauth.readthedocs.io/en/latest/views.html
+
 
 class SignupTest(TestCase):
     def test_reverse(self):
@@ -62,6 +65,34 @@ class LoginTest(TestCase):
         self.assertEqual(response.context['user'], user)
         html = response.content.decode('utf8')
         self.assertInHTML('Logout', html)
+
+
+class EmailManagementTest(ExtTestCase):
+    def test_reverse(self):
+        self.assertEqual(reverse('account_email'), '/accounts/email/')
+
+    def test_uses_correct_template(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse('account_email'), follow=True)
+        self.assertTemplateUsed(response, 'account/email.html')
+
+    def test_redirect_to_login_if_not_logged_in(self):
+        response = self.client.get(reverse('account_email'), follow=True)
+        self.assertTemplateUsed(response, 'account/login.html')
+
+
+class SocialConnectionsTest(ExtTestCase):
+    def test_reverse(self):
+        self.assertEqual(reverse('socialaccount_connections'), '/accounts/social/connections/')
+
+    def test_uses_correct_template(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse('socialaccount_connections'), follow=True)
+        self.assertTemplateUsed(response, 'socialaccount/connections.html')
+
+    def test_redirect_to_login_if_not_logged_in(self):
+        response = self.client.get(reverse('socialaccount_connections'), follow=True)
+        self.assertTemplateUsed(response, 'account/login.html')
 
 
 class UserDetailTest(ExtTestCase):
