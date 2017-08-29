@@ -3,13 +3,37 @@ from django.contrib import auth
 from .ext_test_case import ExtTestCase
 
 
+class UserListTest(ExtTestCase):
+    def test_reverse(self):
+        self.assertEqual(reverse('user_list'), '/users/')
+
+    def test_uses_correct_template(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse('user_list'))
+        self.assertTemplateUsed(response, 'auth/user_list.html')
+
+    def test_default_context(self):
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('user_list'))
+        self.assertEqual(response.context['user_list'].count(), 1)
+        self.assertEqual(response.context['user_list'][0], user)
+        user_2 = auth.get_user_model().objects.create(username='user_2')
+        response = self.client.get(reverse('user_list'))
+        self.assertEqual(response.context['user_list'].count(), 2)
+        self.assertContains(response, user_2.username)
+        user_3 = auth.get_user_model().objects.create(username='user_3')
+        response = self.client.get(reverse('user_list'))
+        self.assertEqual(response.context['user_list'].count(), 3)
+        self.assertContains(response, user_3.username)
+
+
 class UserDetailTest(ExtTestCase):
     def test_reverse(self):
         self.assertEqual(reverse('profile'), '/accounts/profile/')
         self.assertEqual(reverse('user_detail', args=['shinji']), '/user/shinji/')
 
     def test_uses_correct_template(self):
-        user = auth.models.User.objects.create(username='shinji')
+        user = auth.get_user_model().objects.create(username='shinji')
         response = self.client.get(reverse('user_detail', args=[user.username]))
         self.assertTemplateUsed(response, 'viewcv/profile.html')
         self.create_and_log_in_user()

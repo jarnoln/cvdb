@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import DeleteView
 from django.http import Http404
 from django.contrib import auth
@@ -12,6 +12,15 @@ def can_edit_user(logged_user, target_user):
     if logged_user.is_staff:
         return True
     return False
+
+
+class CvUserList(ListView):
+    model = auth.get_user_model()
+
+    def get_context_data(self, **kwargs):
+        context = super(CvUserList, self).get_context_data(**kwargs)
+        context['messages'] = self.request.GET.get('message', '')
+        return context
 
 
 class CvUserDetail(DetailView):
