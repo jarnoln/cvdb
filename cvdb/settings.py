@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.amazon',
+    'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
     'behave_django',
 ]
 
@@ -108,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = []
 
 # Django allauth settings
 # http://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Internationalization
