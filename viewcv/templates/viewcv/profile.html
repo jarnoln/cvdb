@@ -34,6 +34,11 @@
 
 {% if target_user == user %}
 <p>
+  <a class="btn btn-primary" href="{% url 'user_update' target_user %}">
+    {% trans 'Edit' %}
+  </a>
+</p>
+<p class="text-right">
   <a class="btn btn-danger" href="{% url 'user_delete' target_user %}">
     {% trans 'Delete account' %}
   </a>

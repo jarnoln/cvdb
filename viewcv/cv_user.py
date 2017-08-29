@@ -1,6 +1,6 @@
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.http import Http404
 from django.contrib import auth
 
@@ -33,6 +33,31 @@ class CvUserDetail(DetailView):
             # return auth.models.User.objects.get(username=target_username)
             return auth.get_user_model().objects.get(username=target_username)
         return auth.get_user(self.request)
+
+
+class CvUserUpdate(UpdateView):
+    model = auth.get_user_model()
+    slug_field = 'username'
+    fields = ['first_name', 'last_name']
+
+    def get_object(self):
+        target_user = super(CvUserUpdate, self).get_object()
+        if can_edit_user(logged_user=self.request.user, target_user=target_user):
+            return target_user
+
+        # Todo: Smarter way to handle this
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        context = super(CvUserUpdate, self).get_context_data(**kwargs)
+        context['message'] = self.request.GET.get('message', '')
+        return context
+
+    def get_success_url(self):
+        if self.object:
+            return reverse_lazy('user_detail', args=[self.object.username])
+        else:
+            return reverse('user_list')
 
 
 class CvUserDelete(DeleteView):

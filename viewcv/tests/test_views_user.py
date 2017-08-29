@@ -56,7 +56,7 @@ class UserDetailTest(ExtTestCase):
         self.assertInHTML('Delete account', html)
 
     def test_viewing_other_user(self):
-        target_user = auth.models.User.objects.create(username='shinji', email='shinji@nerv.org')
+        target_user = auth.get_user_model().objects.create(username='shinji', email='shinji@nerv.org')
         user = self.create_and_log_in_user()
         response = self.client.get(reverse('user_detail', args=[target_user.username]))
         # self.assertEqual(response.context['user'], user)
@@ -69,9 +69,64 @@ class UserDetailTest(ExtTestCase):
         self.assertNotIn('Delete account', html)
 
     def test_cant_view_profile_if_not_logged_in(self):
-        auth.models.User.objects.create(username='user')
+        auth.get_user_model().objects.create(username='user')
         response = self.client.get(reverse('profile'), follow=True)
         self.assertTemplateUsed(response, 'account/login.html')
+
+
+class UpdateUserTest(ExtTestCase):
+    def test_reverse_task_edit(self):
+        self.assertEqual(reverse('user_update', args=['test_user']),
+                         '/user/test_user/edit/')
+
+    def test_uses_correct_template(self):
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('user_update', args=[user.username]))
+        self.assertTemplateUsed(response, 'auth/user_form.html')
+
+    def test_default_context(self):
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('user_update', args=[user.username]))
+        self.assertEqual(response.context['user'], user)
+        self.assertEqual(response.context['message'], '')
+
+    def test_can_update_user(self):
+        user = self.create_and_log_in_user()
+        response = self.client.post(reverse('user_update', args=[user.username]), {
+            'first_name': 'Bruce',
+            'last_name': 'Wayne'
+        }, follow=True)
+        self.assertEqual(auth.get_user_model().objects.all().count(), 1)
+        user = auth.get_user_model().objects.all()[0]
+        self.assertEqual(user.first_name, 'Bruce')
+        self.assertEqual(user.last_name, 'Wayne')
+        self.assertTemplateUsed(response, 'viewcv/profile.html')
+
+    def test_cant_update_user_if_not_logged_in(self):
+        user = auth.get_user_model().objects.create(username='user', email='user@default.com',
+                                                    first_name='Clark', last_name='Kent')
+        response = self.client.post(reverse('user_update', args=[user.username]), {
+            'first_name': 'Bruce',
+            'last_name': 'Wayne'
+        }, follow=True)
+        self.assertEqual(auth.get_user_model().objects.all().count(), 1)
+        user = auth.get_user_model().objects.all()[0]
+        self.assertEqual(user.first_name, 'Clark')
+        self.assertEqual(user.last_name, 'Kent')
+        self.assertTemplateUsed(response, 'account/login.html')
+
+    def test_cant_update_other_users(self):
+        logged_user = self.create_and_log_in_user()
+        other_user = auth.get_user_model().objects.create(username='other', email='other@default.com',
+                                                          first_name='Clark', last_name='Kent')
+        self.assertEqual(auth.get_user_model().objects.all().count(), 2)
+        response = self.client.post(reverse('user_update', args=[other_user.username]),
+                                    {'username': 'other', 'first_name': 'Bruce'},
+                                    follow=True)
+        self.assertEqual(auth.get_user_model().objects.all().count(), 2)
+        user = auth.get_user_model().objects.get(username='other')
+        self.assertEqual(user.first_name, 'Clark')
+        self.assertTemplateUsed(response, '404.html')
 
 
 class DeleteUserPageTest(ExtTestCase):
