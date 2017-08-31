@@ -30,7 +30,7 @@ SITE_DIR = os.path.dirname(BASE_DIR)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 SITE_ID = 1
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'makecv.net', 'www.makecv.net', 'jarnoln.net', 'cvdb.jarnoln.net']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'makecv.net', 'www.makecv.net', 'cvdb.fi', 'www.cvdb.fi', 'cvdb.jarnoln.net']
 
 
 # Application definition
