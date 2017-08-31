@@ -12,3 +12,32 @@ class ApiRootTest(TestCase):
         print(data)
         # self.assertEqual(data['process'], 'http://testserver/api/01/process/')
         # self.assertEqual(data['drive'], 'http://testserver/api/01/drive/')
+
+
+class SubmitResumeTest(TestCase):
+    def test_submit_resume(self):
+        resume = {
+            "basics": {
+                "label": "Journalist",
+                "summary": ""
+            },
+            "work": [
+                {
+                    "company": "Daily Bugle",
+                    "position": "Reporter",
+                    "startDate": "1945-01-01",
+                    "endDate": "2020-01-01",
+                }
+            ]
+        }
+
+        resume_json = json.dumps(resume)
+        # self.assertEqual(Work.objects.count(), 0)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        # self.assertEqual(Work.objects.count(), 1)
+        # work_1 = Work.objects.first()
+        # print(response.content)
+        data = json.loads(response.content.decode('utf8'))
+        print(data)
+        # self.assertEqual(data['id'], trace_1.id)
+        # self.assertEqual(trace_1.name, trace['name'])
