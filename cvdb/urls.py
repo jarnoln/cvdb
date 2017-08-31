@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^', include('users.urls')),
     url(r'^', include('viewcv.urls')),
 ]
