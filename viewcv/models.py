@@ -23,3 +23,6 @@ class Work(models.Model):
 
     def __str__(self):
         return '{}:{}'.format(self.company, self.position)
+
+    class Meta:
+        ordering = ['start_date']
