@@ -2,6 +2,7 @@ import json
 import datetime
 from django.test import TestCase
 from viewcv.models import Cv, Work
+from users.tests.ext_test_case import ExtTestCase
 
 
 class ApiRootTest(TestCase):
@@ -38,8 +39,9 @@ def get_resume():
     return resume
 
 
-class SubmitResumeTest(TestCase):
+class SubmitResumeTest(ExtTestCase):
     def test_submit_resume_with_two_work_entries(self):
+        user = self.create_and_log_in_user()
         resume = get_resume()
         work_1 = get_work_bugle()
         work_2 = {
@@ -57,6 +59,7 @@ class SubmitResumeTest(TestCase):
         print(response.content)
         self.assertEqual(Cv.objects.count(), 1)
         cv = Cv.objects.first()
+        self.assertEqual(cv.user, user)
         self.assertEqual(cv.name, "default")
         self.assertEqual(Work.objects.count(), 2)
         work_1 = Work.objects.all()[0]
