@@ -5,4 +5,4 @@ from viewcv.models import Cv, Work
 class WorkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Work
-        fields = ['company', 'position', 'summary']
+        fields = ['company', 'position', 'start_date', 'end_date', 'summary']

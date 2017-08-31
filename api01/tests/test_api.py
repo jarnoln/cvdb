@@ -1,4 +1,5 @@
 import json
+import datetime
 from django.test import TestCase
 from viewcv.models import Cv, Work
 
@@ -44,3 +45,5 @@ class SubmitResumeTest(TestCase):
         self.assertEqual(work_1.company, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
         self.assertEqual(work_1.summary, "Specialized in Superman stories")
+        self.assertEqual(work_1.start_date, datetime.date(1945, 1, 1))
+        self.assertEqual(work_1.end_date, datetime.date(2020, 1, 1))
