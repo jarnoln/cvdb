@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy
 
 class Cv(models.Model):
     user = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
-    name = models.SlugField(max_length=100, unique=True, verbose_name=ugettext_lazy('name'),
+    name = models.SlugField(max_length=100, default='default', verbose_name=ugettext_lazy('name'),
                             help_text=ugettext_lazy('Must be unique. Used in URL.'))
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
 

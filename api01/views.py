@@ -10,8 +10,12 @@ def submit_resume(request):
     """ Submit trace """
     data = JSONParser().parse(request)
     work_list = data['work']
+    if len(work_list) > 0:
+        cv = Cv.objects.create()
+
     for work_item in work_list:
         serial_data = work_item
+        serial_data['cv'] = cv.id
         serial_data['start_date'] = work_item['startDate']
         serial_data['end_date'] = work_item['endDate']
         work_serializer = WorkSerializer(data=serial_data)
