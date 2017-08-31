@@ -32,7 +32,7 @@ def get_resume():
     resume = {
         "basics": {
             "label": "Journalist",
-            "summary": ""
+            "summary": "Applying for JLA"
         },
         "work": []
     }
@@ -43,15 +43,15 @@ class SubmitResumeTest(ExtTestCase):
     def test_submit_resume_with_two_work_entries(self):
         user = self.create_and_log_in_user()
         resume = get_resume()
-        work_1 = get_work_bugle()
-        work_2 = {
+        work_1_data = get_work_bugle()
+        work_2_data = {
             "company": "Jonah's farm",
             "position": "Farmhand",
             "startDate": "1940-01-01",
             "endDate": "1944-12-01",
             "summary": "Helping my parents at farm",
         }
-        resume['work'] = [work_1, work_2]
+        resume['work'] = [work_1_data, work_2_data]
         resume_json = json.dumps(resume)
         self.assertEqual(Cv.objects.count(), 0)
         self.assertEqual(Work.objects.count(), 0)
@@ -61,6 +61,7 @@ class SubmitResumeTest(ExtTestCase):
         cv = Cv.objects.first()
         self.assertEqual(cv.user, user)
         self.assertEqual(cv.name, "default")
+        self.assertEqual(cv.summary, resume['basics']['summary'])
         self.assertEqual(Work.objects.count(), 2)
         work_1 = Work.objects.all()[0]
         work_2 = Work.objects.all()[1]

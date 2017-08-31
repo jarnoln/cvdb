@@ -11,7 +11,7 @@ def submit_resume(request):
     data = JSONParser().parse(request)
     work_list = data['work']
     if len(work_list) > 0:
-        cv = Cv.objects.create(user=request.user)
+        cv = Cv.objects.create(user=request.user, summary=data['basics']['summary'])
 
     for work_item in work_list:
         serial_data = work_item

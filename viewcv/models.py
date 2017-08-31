@@ -8,6 +8,7 @@ class Cv(models.Model):
     name = models.SlugField(max_length=100, default='default', verbose_name=ugettext_lazy('name'),
                             help_text=ugettext_lazy('Must be unique. Used in URL.'))
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
+    summary = models.TextField(blank=True, default='')
 
     def __str__(self):
         return '{}'.format(self.name)
