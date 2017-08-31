@@ -18,6 +18,6 @@ jobs:
       - run:
           name: Run coverage
           command: |
-            coverage run --source='./viewcv' manage.py test -v2 viewcv
+            coverage run --source=api01,users,viewcv manage.py test -v2
             codecov
             coverage report

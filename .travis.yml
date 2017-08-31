@@ -16,8 +16,8 @@ before_script:
   - python manage.py migrate
 
 script:
-  - coverage run --source='./viewcv' manage.py test -v2 viewcv
+  - coverage run --source=api01,users,viewcv manage.py test -v2
   - coverage report
 
-after_success:
-  - codecov
+# after_success:
+#   - codecov
