@@ -37,7 +37,7 @@ def deploy():
     virtualenv = site_folder + '/virtualenv'
     python = virtualenv + '/bin/python'
     pip = virtualenv + '/bin/pip'
-    app_list = ['viewcv']
+    app_list = ['api01', 'users', 'viewcv']
     _create_directory_structure_if_necessary(site_folder)
     _init_virtualenv(site_folder)
     _get_latest_source(source_folder)
