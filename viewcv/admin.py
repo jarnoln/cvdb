@@ -1,3 +1,6 @@
 from django.contrib import admin
+from viewcv import models
 
-# Register your models here.
+
+admin.site.register(models.Cv)
+admin.site.register(models.Work)
