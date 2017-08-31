@@ -56,7 +56,7 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(Cv.objects.count(), 0)
         self.assertEqual(Work.objects.count(), 0)
         response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
-        print(response.content)
+        # print(response.content)
         self.assertEqual(Cv.objects.count(), 1)
         cv = Cv.objects.first()
         self.assertEqual(cv.user, user)
