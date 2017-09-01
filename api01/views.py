@@ -6,18 +6,10 @@ from viewcv.models import Cv, Work
 from .serializers import WorkSerializer
 
 
-@api_view(['POST'])
-def submit_resume(request):
-    """ Submit resume """
-    if request.FILES:
-        resume_file = request.FILES['json_file']
-        file_content = resume_file.read()
-        data = json.loads(file_content.decode('utf-8'))
-    else:
-        data = JSONParser().parse(request)
+def create_resume(data, user):
     work_list = data['work']
     if len(work_list) > 0:
-        cv = Cv.objects.create(user=request.user, summary=data['basics']['summary'])
+        cv = Cv.objects.create(user=user, summary=data['basics']['summary'])
 
     for work_item in work_list:
         serial_data = work_item
@@ -31,3 +23,23 @@ def submit_resume(request):
             return JsonResponse(work_serializer.errors, status=400)
 
     return JsonResponse(data, status=201, safe=False)
+
+
+@api_view(['POST'])
+def submit_resume(request):
+    """ Submit resume """
+    data = JSONParser().parse(request)
+    response = create_resume(data, request.user)
+    return response
+
+
+@api_view(['POST'])
+def submit_resume_file(request):
+    """ Submit resume """
+    resume_file = request.FILES['json_file']
+    print('resume file=%s' % resume_file)
+    file_content = resume_file.read()
+    data = json.loads(file_content.decode('utf-8'))
+    print(str(data))
+    response = create_resume(data, request.user)
+    return response
