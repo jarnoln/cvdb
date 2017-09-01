@@ -1,0 +1,25 @@
+{% extends "viewcv/base.html" %}
+{% load i18n %}
+{% block head_title %} {% trans 'Confirm delete CV' %} {% endblock %}
+
+{% block content %}
+<h1> {% trans 'Are you sure you want to delete CV' %}: {{ cv.name }}? </h1>
+
+<table class="table">
+    <tr>
+        <td>
+    <form action="{% url 'cv_delete' cv.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" id="button_delete">{% trans 'Delete' %}</button>
+    </form>
+    </td>
+        <td>
+    <form action="{% url 'cv' cv.id %}" method="get">
+    {% csrf_token %}
+        <button class="btn btn-primary" id="button_cancel">{% trans 'Cancel' %}</button>
+    </form>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

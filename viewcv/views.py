@@ -20,7 +20,7 @@ class UploadCvView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        print('form_valid')
+        # print('form_valid')
         resume_file = self.request.FILES['json_file']
         # print('resume file=%s' % resume_file)
         file_content = resume_file.read()

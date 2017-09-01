@@ -51,14 +51,13 @@ class CvUpdate(UpdateView):
 
 
 class CvDelete(DeleteView):
-    slug_field = 'username'
-    model = auth.models.User
-    success_url = reverse_lazy('home')
+    model = Cv
+    success_url = reverse_lazy('cv_list')
 
     def get_object(self):
-        target_user = super(CvDelete, self).get_object()
-        if can_edit_user(logged_user=self.request.user, target_user=target_user):
-            return target_user
+        cv = super(CvDelete, self).get_object()
+        if cv.user == self.request.user:
+            return cv
 
         # Todo: Smarter way to handle this
         raise Http404
