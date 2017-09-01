@@ -1,6 +1,8 @@
+import json
 from django import forms
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from api01.views import create_resume
 
 
 class HomeView(TemplateView):
@@ -16,8 +18,14 @@ class UploadCvView(FormView):
     form_class = UploadForm
     success_url = '/'
 
-    # def form_valid(self, form):
-    #    print('form_valid')
-    #    uploaded_file = self.request.FILES['file']
-    #    print('Uploaded file:' + uploaded_file)
-    #    return super(UploadCvView, self).form_valid(form)
+    def form_valid(self, form):
+        print('form_valid')
+        resume_file = self.request.FILES['json_file']
+        # print('resume file=%s' % resume_file)
+        file_content = resume_file.read()
+        data = json.loads(file_content.decode('utf-8'))
+        response = create_resume(data, self.request.user)
+        # return response
+        return super(UploadCvView, self).form_valid(form)
+
+
