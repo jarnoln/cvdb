@@ -14,7 +14,7 @@
 {% for cv in cv_list %}
         <tr>
             <td> <a href="{% url 'user_detail' user.username %}"> {{ cv.user.username }} </a> </td>
-            <td> {{ cv.name }} </td>
+            <td> <a href="{% url 'cv' cv.id %}">{{ cv.name }} </a> </td>
             <td> {{ cv.title }} </td>
             <td> {{ cv.summary }} </td>
         </tr>

@@ -1,0 +1,30 @@
+{% extends "viewcv/base.html" %}
+
+{% load account %}
+{% load i18n %}
+
+{% block head_title %}{{ cv.title }}{% endblock %}
+{% block content %}
+<h1> CV: {{ cv.title }} </h1>
+
+<table class="table">
+  <tr>
+    <th> {% trans 'Username' %} </th>
+    <td> {{ cv.user.username }} </td>
+    <td> &nbsp; </td>
+  </tr>
+  <tr>
+    <th> {% trans 'Email' %} </th>
+    <td> {{ cv.user.email }} </td>
+  </tr>
+  <tr>
+    <th> {% trans 'First name' %} </th>
+    <td colspan="2"> {{ cv.user.first_name }} </td>
+  </tr>
+  <tr>
+    <th> {% trans 'Last name' %} </th>
+    <td colspan="2"> {{ cv.user.last_name }} </td>
+  </tr>
+</table>
+
+{% endblock content %}
