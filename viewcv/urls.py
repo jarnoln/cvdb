@@ -4,5 +4,5 @@ from .views import HomeView, UploadCvView
 
 urlpatterns = [
     url(r'^upload/$', UploadCvView.as_view(), name='upload'),
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', UploadCvView.as_view(), name='home'),
 ]

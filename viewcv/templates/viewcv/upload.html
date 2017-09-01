@@ -1,13 +1,18 @@
 {% extends "viewcv/base.html" %}
+{% load i18n %}
 
 {% block title %}Upload CV{% endblock %}
 {% block content %}
-<h1> Upload CV </h1>
+<h1> CVDB </h1>
+
+{% if user.is_authenticated %}
+<h2> {% trans "Upload CV" %} </h2>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="save btn btn-default">Send</button>
+    <button class="save btn btn-primary">{% trans "Send" %}</button>
 </form>
+{% endif %}
 
 {% endblock content %}

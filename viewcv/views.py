@@ -5,12 +5,13 @@ from django.views.generic.edit import FormView
 from api01.views import create_resume
 
 
-class HomeView(TemplateView):
-    template_name = 'viewcv/home.html'
-
-
 class UploadForm(forms.Form):
-    json_file = forms.FileField()
+    json_file = forms.FileField(label='Resume')
+
+
+class HomeView(FormView):
+    template_name = 'viewcv/home.html'
+    form_class = UploadForm
 
 
 class UploadCvView(FormView):
@@ -27,5 +28,3 @@ class UploadCvView(FormView):
         response = create_resume(data, self.request.user)
         # return response
         return super(UploadCvView, self).form_valid(form)
-
-
