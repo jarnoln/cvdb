@@ -1,0 +1,27 @@
+{
+  "basics": {
+    "name": "Clark Kent",
+    "label": "Reporter",
+    "picture": "",
+    "email": "clark.kent@dailybugle.com",
+    "phone": "555-CLARKKENT",
+    "website": "http://clarkkent.com",
+    "summary": "A summary of Clark Kent",
+    "profiles": [{
+      "network": "Twitter",
+      "username": "ckent",
+      "url": "http://twitter.com/ckent"
+    }]
+  },
+  "work": [{
+    "company": "Daily Bugle",
+    "position": "Reporter",
+    "website": "http://dailybugle.com",
+    "startDate": "2013-01-01",
+    "endDate": "2014-01-01",
+    "summary": "Description...",
+    "highlights": [
+      "Got Pulizer"
+    ]
+  }]
+}
