@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
@@ -7,8 +8,13 @@ from .serializers import WorkSerializer
 
 @api_view(['POST'])
 def submit_resume(request):
-    """ Submit trace """
-    data = JSONParser().parse(request)
+    """ Submit resume """
+    if request.FILES:
+        resume_file = request.FILES['json_file']
+        file_content = resume_file.read()
+        data = json.loads(file_content.decode('utf-8'))
+    else:
+        data = JSONParser().parse(request)
     work_list = data['work']
     if len(work_list) > 0:
         cv = Cv.objects.create(user=request.user, summary=data['basics']['summary'])

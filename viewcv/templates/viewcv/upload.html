@@ -2,5 +2,12 @@
 
 {% block title %}Upload CV{% endblock %}
 {% block content %}
-    <h1> Upload CV </h1>
+<h1> Upload CV </h1>
+
+<form method="POST" action="/api/01/resume/" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="save btn btn-default">Send</button>
+</form>
+
 {% endblock content %}
