@@ -2,6 +2,7 @@ import json
 from django import forms
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from django.core.urlresolvers import reverse, reverse_lazy
 from api01.views import create_resume
 
 
@@ -17,7 +18,7 @@ class HomeView(FormView):
 class UploadCvView(FormView):
     template_name = 'viewcv/upload.html'
     form_class = UploadForm
-    success_url = '/'
+    cv_id = 0
 
     def form_valid(self, form):
         # print('form_valid')
@@ -26,5 +27,12 @@ class UploadCvView(FormView):
         file_content = resume_file.read()
         data = json.loads(file_content.decode('utf-8'))
         response = create_resume(data, self.request.user)
-        # return response
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.cv_id = response_data['id']
         return super(UploadCvView, self).form_valid(form)
+
+    def get_success_url(self):
+        if self.cv_id:
+            return reverse_lazy('cv', args=[self.cv_id])
+        else:
+            return reverse('home')

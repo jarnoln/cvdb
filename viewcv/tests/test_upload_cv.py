@@ -32,4 +32,5 @@ class UploadCvTest(ExtTestCase):
         self.assertEqual(work_1.cv, cv)
         self.assertEqual(work_1.company, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
-        self.assertTemplateUsed(response, 'viewcv/upload.html')
+        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
+        self.assertEqual(response.context['cv'], cv)

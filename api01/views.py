@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from viewcv.models import Cv, Work
-from .serializers import WorkSerializer
+from .serializers import CvSerializer, WorkSerializer
 
 
 def create_resume(data, user):
@@ -21,7 +21,11 @@ def create_resume(data, user):
             else:
                 return JsonResponse(work_serializer.errors, status=400)
 
-    return JsonResponse(data, status=201, safe=False)
+    if cv:
+        cv_serializer = CvSerializer(cv)
+        return JsonResponse(cv_serializer.data, status=201, safe=False)
+    else:
+        return JsonResponse(data, status=201, safe=False)
 
 
 @api_view(['POST'])

@@ -70,6 +70,7 @@ class SubmitResumeTest(ExtTestCase):
         work_2 = Work.objects.all()[1]
         data = json.loads(response.content.decode('utf8'))
         # print(data)
+        self.assertEqual(data['id'], cv.id)
         self.assertEqual(work_1.cv, cv)
         self.assertEqual(work_1.company, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
