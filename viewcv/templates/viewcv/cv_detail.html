@@ -9,15 +9,6 @@
 
 <table class="table">
   <tr>
-    <th> {% trans 'Username' %} </th>
-    <td> {{ cv.user.username }} </td>
-    <td> &nbsp; </td>
-  </tr>
-  <tr>
-    <th> {% trans 'Email' %} </th>
-    <td> {{ cv.user.email }} </td>
-  </tr>
-  <tr>
     <th> {% trans 'First name' %} </th>
     <td colspan="2"> {{ cv.user.first_name }} </td>
   </tr>
@@ -25,6 +16,18 @@
     <th> {% trans 'Last name' %} </th>
     <td colspan="2"> {{ cv.user.last_name }} </td>
   </tr>
+</table>
+
+<table class="table">
+{%  for work in cv.work_set.all  %}
+  <tr>
+    <th> {{ work.company }}</th>
+    <th> {{ work.start_date|date:"Y-m" }} / {{  work.end_date|date:"Y-m" }}</th>
+  </tr>
+  <tr>
+    <td colspan="2">{{ work.summary }}</td>
+  </tr>
+{% endfor %}
 </table>
 
 {% endblock content %}
