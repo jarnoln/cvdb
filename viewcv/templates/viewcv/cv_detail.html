@@ -3,25 +3,21 @@
 {% load account %}
 {% load i18n %}
 
-{% block head_title %}{{ cv.title }}{% endblock %}
+{% block head_title %}{% if cv.title %}{{ cv.title }}{% else %}CV{% endif %}{% endblock %}
 {% block content %}
-<h1> CV: {{ cv.title }} </h1>
+<h1> {{ cv.title }} </h1>
 
 <table class="table">
   <tr>
-    <th> {% trans 'First name' %} </th>
-    <td colspan="2"> {{ cv.user.first_name }} </td>
-  </tr>
-  <tr>
-    <th> {% trans 'Last name' %} </th>
-    <td colspan="2"> {{ cv.user.last_name }} </td>
+    <th> {% trans 'Name' %} </th>
+    <td> {{ cv.user.first_name }} {{ cv.user.last_name }} </td>
   </tr>
 </table>
 
 <table class="table">
 {%  for work in cv.work_set.all  %}
   <tr>
-    <th> {{ work.company }}</th>
+    <th> <a href="{{ work.website }}">{{ work.company }}</a> </th>
     <th> {{ work.start_date|date:"Y-m" }} / {{ work.end_date|date:"Y-m" }} ({{ work.duration_str }})</th>
   </tr>
   <tr>

@@ -71,4 +71,4 @@ class Work(models.Model):
         return '{}:{}'.format(self.company, self.position)
 
     class Meta:
-        ordering = ['start_date']
+        ordering = ['-start_date']
