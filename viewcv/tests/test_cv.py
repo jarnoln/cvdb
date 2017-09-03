@@ -10,6 +10,7 @@ class CvListTest(ExtTestCase):
         self.assertEqual(reverse('cv_list'), '/cvs/')
 
     def test_uses_correct_template(self):
+        self.create_and_log_in_user()
         response = self.client.get(reverse('cv_list'))
         self.assertTemplateUsed(response, 'viewcv/cv_list.html')
 

@@ -9,6 +9,7 @@ class UploadCvTest(ExtTestCase):
         self.assertEqual(reverse('upload'), '/upload/')
 
     def test_uses_correct_template(self):
+        self.create_and_log_in_user()
         response = self.client.get(reverse('upload'))
         self.assertTemplateUsed(response, 'viewcv/upload.html')
 
