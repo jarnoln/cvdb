@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.utils.translation import ugettext_lazy
 
@@ -10,8 +11,14 @@ class Cv(models.Model):
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
 
+    def can_edit(self, user):
+        return user == self.user
+
     def __str__(self):
         return '{}'.format(self.name)
+
+    def get_absolute_url(self):
+        return reverse('cv', args=[self.id])
 
 
 class Work(models.Model):

@@ -56,7 +56,7 @@ class CvDelete(DeleteView):
 
     def get_object(self):
         cv = super(CvDelete, self).get_object()
-        if cv.user == self.request.user:
+        if cv.can_edit(self.request.user):
             return cv
 
         # Todo: Smarter way to handle this

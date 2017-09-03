@@ -17,6 +17,18 @@ class CvModelTest(TestCase):
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         self.assertEqual(str(cv), cv.name)
 
+    def test_url(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.get_absolute_url(), '/cv/%d/' % cv.id)
+
+    def test_can_edit_only_if_creator(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=creator, name='cv', title='CV')
+        self.assertTrue(cv.can_edit(creator))
+        user = auth.get_user_model().objects.create(username='random')
+        self.assertFalse(cv.can_edit(user))
+
 
 class WorkModelTest(TestCase):
     def test_can_save_and_load(self):
