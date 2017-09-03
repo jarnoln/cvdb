@@ -3,23 +3,26 @@
 {% block head_title %} {% trans 'CV list' %} {% endblock %}
 
 {% block content %}
-    <h1> {% trans 'CV list' %} </h1>
-    <table class="table">
-        <thead>
-            <th> {% trans 'Username' %} </th>
-            <th colspan="2"> {% trans 'Name' %} </th>
-            <th> {% trans 'Summary' %} </th>
-        </thead>
-        <tbody>
+<h1> {% trans 'CV list' %} </h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th> {% trans 'Username' %} </th>
+      <th> colspan="2"> {% trans 'Name' %} </th>
+      <th> {% trans 'Summary' %} </th>
+    </tr>
+  </thead>
+  <tbody>
 {% for cv in cv_list %}
-        <tr>
-            <td> <a href="{% url 'user_detail' user.username %}"> {{ cv.user.username }} </a> </td>
-            <td> <a href="{% url 'cv' cv.id %}">{{ cv.name }} </a> </td>
-            <td> {{ cv.title }} </td>
-            <td> {{ cv.summary }} </td>
-            <td> <a class="btn btn-danger" href="{% url 'cv_delete' cv.id %}">{% trans 'Delete' %} </a> </td>
-        </tr>
+    <tr>
+      <td> <a href="{% url 'user_detail' user.username %}"> {{ cv.user.username }} </a> </td>
+      <td> <a href="{% url 'cv' cv.id %}">{{ cv.name }} </a> </td>
+      <td> {{ cv.title }} </td>
+      <td> {{ cv.summary }} </td>
+      <td> <a class="btn btn-danger" href="{% url 'cv_delete' cv.id %}">{% trans 'Delete' %} </a> </td>
+    </tr>
 {% endfor %}
-        </tbody>
-    </table>
+  </tbody>
+</table>
 {% endblock %}
