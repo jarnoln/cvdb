@@ -28,6 +28,19 @@ class CvListTest(ExtTestCase):
         response = self.client.get(reverse('cv_list'))
         self.assertEqual(response.context['cv_list'].count(), 2)
 
+    def test_list_only_own_cvs(self):
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('cv_list'))
+        self.assertEqual(response.context['cv_list'].count(), 0)
+        another_user = auth.get_user_model().objects.create(username='another_user')
+        cv_1 = Cv.objects.create(name='test_cv', title='Test CV', user=another_user)
+        response = self.client.get(reverse('cv_list'))
+        self.assertEqual(response.context['cv_list'].count(), 0)
+        cv_2 = Cv.objects.create(name='test_cv', title='Test CV', user=user)
+        response = self.client.get(reverse('cv_list'))
+        self.assertEqual(response.context['cv_list'].count(), 1)
+        self.assertEqual(response.context['cv_list'][0], cv_2)
+
 
 class CvDetailTest(ExtTestCase):
     def test_reverse(self):

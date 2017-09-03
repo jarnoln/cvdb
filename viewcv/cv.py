@@ -9,6 +9,10 @@ from .models import Cv
 class CvList(ListView):
     model = Cv
 
+    def get_queryset(self):
+        # Only list own CVs
+        return Cv.objects.filter(user=self.request.user)
+
     def get_context_data(self, **kwargs):
         context = super(CvList, self).get_context_data(**kwargs)
         context['messages'] = self.request.GET.get('message', '')
