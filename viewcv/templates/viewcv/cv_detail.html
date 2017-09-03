@@ -5,6 +5,9 @@
 
 {% block head_title %}{% if cv.title %}{{ cv.title }}{% else %}CV{% endif %}{% endblock %}
 {% block content %}
+<div class="row">
+  <div class="col-2"> &nbsp; </div>
+  <div class="col-8">
 <h1> {{ cv.title }} </h1>
 
 <table class="table">
@@ -14,16 +17,17 @@
   </tr>
 </table>
 
-<table class="table">
-{%  for work in cv.work_set.all  %}
-  <tr>
-    <th> <a href="{{ work.website }}">{{ work.company }}</a> </th>
-    <th> {{ work.start_date|date:"Y-m" }} / {{ work.end_date|date:"Y-m" }} ({{ work.duration_str }})</th>
-  </tr>
-  <tr>
-    <td colspan="2">{{ work.summary }}</td>
-  </tr>
-{% endfor %}
-</table>
+<h3> {%  trans 'Work experience' %} </h3>
 
+<ul>
+{% for work in cv.work_set.all %}
+  <li> <strong> {{ work.start_date|date:"Y-m" }} / {{ work.end_date|date:"Y-m" }} ({{ work.duration_str }})
+      {{ work.position }} at <a href="{{ work.website }}">{{ work.company }}</a> </strong>
+    <ul> <li> {{ work.summary }} </li> </ul>
+  </li>
+{% endfor %}
+</ul>
+  </div>
+  <div class="col-2"> &nbsp; </div>
+</div>
 {% endblock content %}
