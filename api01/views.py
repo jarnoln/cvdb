@@ -9,7 +9,7 @@ from .serializers import WorkSerializer
 def create_resume(data, user):
     work_list = data['work']
     if len(work_list) > 0:
-        cv = Cv.objects.create(user=user, summary=data['basics']['summary'])
+        cv = Cv.objects.create(user=user, summary=data['basics']['summary'], title=data['basics']['label'])
         for work_item in work_list:
             serial_data = work_item
             serial_data['cv'] = cv.id

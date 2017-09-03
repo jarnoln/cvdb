@@ -48,6 +48,7 @@ class SubmitResumeTest(ExtTestCase):
         work_2_data = {
             "company": "Jonah's farm",
             "position": "Farmhand",
+            "website": "http://www.jonahs-farm.com",
             "startDate": "1940-01-01",
             "endDate": "1944-12-01",
             "summary": "Helping my parents at farm",
@@ -62,6 +63,7 @@ class SubmitResumeTest(ExtTestCase):
         cv = Cv.objects.first()
         self.assertEqual(cv.user, user)
         self.assertEqual(cv.name, "default")
+        self.assertEqual(cv.title, "Journalist")
         self.assertEqual(cv.summary, resume['basics']['summary'])
         self.assertEqual(Work.objects.count(), 2)
         work_1 = Work.objects.all()[0]
@@ -71,6 +73,7 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(work_1.cv, cv)
         self.assertEqual(work_1.company, "Jonah's farm")
         self.assertEqual(work_1.position, "Farmhand")
+        self.assertEqual(work_1.website, "http://www.jonahs-farm.com")
         self.assertEqual(work_1.summary, "Helping my parents at farm")
         self.assertEqual(work_1.start_date, datetime.date(1940, 1, 1))
         self.assertEqual(work_1.end_date, datetime.date(1944, 12, 1))
