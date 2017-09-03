@@ -22,7 +22,7 @@
 {%  for work in cv.work_set.all  %}
   <tr>
     <th> {{ work.company }}</th>
-    <th> {{ work.start_date|date:"Y-m" }} / {{  work.end_date|date:"Y-m" }}</th>
+    <th> {{ work.start_date|date:"Y-m" }} / {{ work.end_date|date:"Y-m" }} ({{ work.duration_str }})</th>
   </tr>
   <tr>
     <td colspan="2">{{ work.summary }}</td>
