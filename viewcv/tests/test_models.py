@@ -52,7 +52,7 @@ class WorkModelTest(TestCase):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter')
-        self.assertEqual(str(work), '{}:{}'.format(work.company, work.position))
+        self.assertEqual(str(work), '{}:{}'.format(work.name, work.position))
 
     def test_duration(self):
         user = auth.get_user_model().objects.create(username='creator')

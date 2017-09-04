@@ -1,8 +1,9 @@
-from unittest import skip
+import datetime
+# from unittest import skip
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv
+from viewcv.models import Cv, Work
 
 
 class CvListTest(ExtTestCase):
@@ -55,10 +56,17 @@ class CvDetailTest(ExtTestCase):
     def test_default_content(self):
         user = self.create_and_log_in_user()
         cv = Cv.objects.create(name='test_cv', title='Test CV', user=user)
+        work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter', url='http://dailybugle.com',
+                                   start_date=datetime.date(2000, 1, 1),
+                                   end_date=datetime.date(2001, 2, 1))
         response = self.client.get(reverse('cv', args=[cv.id]))
+        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['cv'], cv)
         self.assertContains(response, cv.title)
+        self.assertContains(response, work.name)
+        self.assertContains(response, work.position)
+        self.assertContains(response, work.url)
 
 
 class UpdateCvTest(ExtTestCase):

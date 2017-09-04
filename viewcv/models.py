@@ -25,10 +25,8 @@ class Cv(models.Model):
 class Work(models.Model):
     cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')
-    company = models.CharField(max_length=250, blank=True, default='')  # Deprecated
     position = models.CharField(max_length=250, blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
-    website = models.URLField(max_length=250, blank=True, default='')  # Deprecated
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     summary = models.TextField(blank=True, default='')
@@ -53,7 +51,7 @@ class Work(models.Model):
         return duration_as_string(years, months)
 
     def __str__(self):
-        return '{}:{}'.format(self.company, self.position)
+        return '{}:{}'.format(self.name, self.position)
 
     class Meta:
         ordering = ['-start_date']
