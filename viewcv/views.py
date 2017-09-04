@@ -21,9 +21,7 @@ class UploadCvView(FormView):
     cv_id = 0
 
     def form_valid(self, form):
-        # print('form_valid')
         resume_file = self.request.FILES['json_file']
-        # print('resume file=%s' % resume_file)
         file_content = resume_file.read()
         data = json.loads(file_content.decode('utf-8'))
         response = create_resume(data, self.request.user)

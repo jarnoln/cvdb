@@ -13,10 +13,10 @@ class UploadCvTest(ExtTestCase):
         response = self.client.get(reverse('upload'))
         self.assertTemplateUsed(response, 'viewcv/upload.html')
 
-    def test_submit_resume_file(self):
+    def test_submit_small_resume_file(self):
         user = self.create_and_log_in_user()
-        resume_file = open('example_resume.json', 'r')
-        resume_file_object = File(resume_file, name='example_resume.json')
+        resume_file = open('examples/small.json', 'r')
+        resume_file_object = File(resume_file, name='small.json')
         self.assertEqual(Cv.objects.count(), 0)
         self.assertEqual(Work.objects.count(), 0)
         data = {'json_file': resume_file_object}

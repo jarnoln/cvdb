@@ -87,11 +87,11 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(work_2.end_date, datetime.date(1944, 12, 1))
 
 
-class SubmitResumeFileTest(ExtTestCase):
+class SubmitSmallResumeFileTest(ExtTestCase):
     def test_submit_resume_file(self):
         user = self.create_and_log_in_user()
-        resume_file = open('example_resume.json', 'r')
-        resume_file_object = File(resume_file, name='example_resume.json')
+        resume_file = open('examples/small.json', 'r')
+        resume_file_object = File(resume_file, name='small.json')
         self.assertEqual(Cv.objects.count(), 0)
         self.assertEqual(Work.objects.count(), 0)
         data = {'json_file': resume_file_object}

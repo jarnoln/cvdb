@@ -40,7 +40,7 @@ def submit_resume(request):
 def submit_resume_file(request):
     """ Submit resume """
     resume_file = request.FILES['json_file']
-    print('resume file=%s' % resume_file)
+    # print('resume file=%s' % resume_file)
     file_content = resume_file.read()
     data = json.loads(file_content.decode('utf-8'))
     response = create_resume(data, request.user)
