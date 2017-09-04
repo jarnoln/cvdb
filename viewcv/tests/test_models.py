@@ -2,7 +2,7 @@ import datetime
 # from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
-from viewcv.models import Cv, Personal, Work, Education
+from viewcv.models import Cv, Personal, Work, Education, Project
 
 
 class CvModelTest(TestCase):
@@ -142,3 +142,26 @@ class EducationModelTest(TestCase):
                                              start_date=datetime.date(2011, 6, 1),
                                              end_date=datetime.date(2014, 1, 1))
         self.assertEqual(str(education), '{}:{}:{}'.format(education.institution, education.area, education.study_type))
+
+
+class ProjectModelTest(TestCase):
+    def test_can_save_and_load(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        project = Project(cv=cv, name='Miss Direction', description="A mapping engine that misguides you",
+                          type='application',
+                          start_date=datetime.date(2016, 8, 24),
+                          end_date=datetime.date(2016, 8, 24))
+        project.save()
+        self.assertEqual(Project.objects.all().count(), 1)
+        self.assertEqual(Project.objects.all()[0], project)
+
+    def test_string(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         start_date=datetime.date(2016, 8, 24),
+                                         end_date=datetime.date(2016, 8, 24))
+        self.assertEqual(str(project), project.name)
