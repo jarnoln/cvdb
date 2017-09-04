@@ -11,6 +11,8 @@ class Cv(models.Model):
                             help_text=ugettext_lazy('Must be unique. Used in URL.'))
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    edited = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     @property
     def personal(self):

@@ -8,18 +8,19 @@
 <table class="table">
   <thead>
     <tr>
+      <th> {% trans 'Created' %} </th>
       <th> {% trans 'Username' %} </th>
       <th> {% trans 'Name' %} </th>
-      <th> {% trans 'Summary' %} </th>
+      <th colspan="2"> {% trans 'Title' %} </th>
     </tr>
   </thead>
   <tbody>
 {% for cv in cv_list %}
     <tr>
-      <td> <a href="{% url 'user_detail' user.username %}"> {{ cv.user.username }} </a> </td>
+      <td> {{ cv.created|date:"Y-m-d H:i" }}</td>
+      <td> {{ cv.user.username }} </td>
       <td> <a href="{% url 'cv' cv.id %}">{{ cv.name }} </a> </td>
       <td> {{ cv.title }} </td>
-      <td> {{ cv.summary }} </td>
       <td>
           <a class="btn btn-primary" href="{% url 'cv_update' cv.id %}">{% trans 'Edit' %} </a>
           <a class="btn btn-danger" href="{% url 'cv_delete' cv.id %}">{% trans 'Delete' %} </a>
