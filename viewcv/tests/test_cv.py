@@ -3,7 +3,7 @@ import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv, Work
+from viewcv.models import Cv, Personal, Work
 
 
 class CvListTest(ExtTestCase):
@@ -56,6 +56,10 @@ class CvDetailTest(ExtTestCase):
     def test_default_content(self):
         user = self.create_and_log_in_user()
         cv = Cv.objects.create(name='test_cv', title='Test CV', user=user)
+        personal = Personal.objects.create(cv=cv, email='richard.hendriks@mail.com', phone='(912) 555 - 4321',
+                                           url='http://richardhendricks.example.com',
+                                           summary='Richard hails from Tulsa',
+                                           image='http://richardhendricks.example.com/richard.png')
         work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter', url='http://dailybugle.com',
                                    start_date=datetime.date(2000, 1, 1),
                                    end_date=datetime.date(2001, 2, 1))
@@ -64,6 +68,10 @@ class CvDetailTest(ExtTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['cv'], cv)
         self.assertContains(response, cv.title)
+        self.assertContains(response, personal.email)
+        self.assertContains(response, personal.phone)
+        self.assertContains(response, personal.url)
+        self.assertContains(response, personal.summary)
         self.assertContains(response, work.name)
         self.assertContains(response, work.position)
         self.assertContains(response, work.url)

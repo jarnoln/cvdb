@@ -23,6 +23,16 @@ class CvModelTest(TestCase):
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         self.assertEqual(cv.get_absolute_url(), '/cv/%d/' % cv.id)
 
+    def test_get_personal_info(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.personal, None)
+        personal = Personal.objects.create(cv=cv, email='richard.hendriks@mail.com', phone='(912) 555 - 4321',
+                                           url='http://richardhendricks.example.com',
+                                           summary='Richard hails from Tulsa',
+                                           image='http://richardhendricks.example.com/richard.png')
+        self.assertEqual(cv.personal, personal)
+
     def test_list_works(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')

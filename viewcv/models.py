@@ -12,6 +12,13 @@ class Cv(models.Model):
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
 
+    @property
+    def personal(self):
+        personal = Personal.objects.filter(cv=self)
+        if personal.count() == 1:
+            return personal.first()
+        return None
+
     def can_edit(self, user):
         return user == self.user
 
