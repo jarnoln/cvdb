@@ -3,6 +3,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.http import Http404
 from django.contrib import auth
+from django.shortcuts import get_object_or_404
 from .models import Cv
 
 
@@ -22,10 +23,23 @@ class CvList(ListView):
 class CvDetail(DetailView):
     model = Cv
 
+    def get_object(self, queryset=None):
+        if 'slug' in self.kwargs:
+            user = get_object_or_404(auth.get_user_model(), username=self.kwargs['slug'])
+            cv = Cv.objects.filter(user=user, public=True, primary=True)
+            if cv.count() == 0:
+                raise Http404
+            elif cv.count() == 1:
+                return cv.first()
+            else:
+                return cv.first()
+        else:
+            return super(CvDetail, self).get_object()
+
 
 class CvUpdate(UpdateView):
     model = Cv
-    fields = ['name', 'title', 'summary']
+    fields = ['name', 'title', 'summary', 'public', 'primary']
 
     def get_object(self):
         cv = super(CvUpdate, self).get_object()

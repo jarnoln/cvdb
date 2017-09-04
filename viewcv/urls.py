@@ -5,6 +5,7 @@ from .cv import CvList, CvDetail, CvUpdate, CvDelete
 
 
 urlpatterns = [
+    url(r'^u/(?P<slug>\w+)/cv/$', CvDetail.as_view(), name='cv_public'),
     url(r'^cv/(?P<pk>\d+)/edit/$', login_required(CvUpdate.as_view()), name='cv_update'),
     url(r'^cv/(?P<pk>\d+)/delete/$', login_required(CvDelete.as_view()), name='cv_delete'),
     url(r'^cv/(?P<pk>\d+)/$', login_required(CvDetail.as_view()), name='cv'),

@@ -22,6 +22,16 @@
         <td> {{ form.summary.help_text }} </td>
     </tr>
     <tr>
+        <th class="nowrap"> {{ form.public.label_tag }} </th>
+        <td> {{ form.public }} </td>
+        <td> {{ form.public.help_text }} </td>
+    </tr>
+    <tr>
+        <th class="nowrap"> {{ form.primary.label_tag }} </th>
+        <td> {{ form.primary }} </td>
+        <td> {{ form.primary.help_text }} </td>
+    </tr>
+    <tr>
         <td colspan="2">
             <input type="submit" id="id_button_login" class="btn btn-primary" value="{% trans 'Save' %}" />
         </td>
