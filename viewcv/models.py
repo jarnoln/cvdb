@@ -70,15 +70,17 @@ class Work(models.Model):
         return '{}:{}'.format(self.name, self.position)
 
     class Meta:
-        ordering = ['-start_date']
+        ordering = ['-end_date']
 
 
 class Education(models.Model):
     cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
     institution = models.CharField(max_length=250, blank=True, default='')
+    url = models.URLField(max_length=250, blank=True, default='')
     area = models.CharField(max_length=250, blank=True, default='')
     study_type = models.CharField(max_length=250, blank=True, default='')
     gpa = models.CharField(max_length=50, blank=True, default='')
+    summary = models.TextField(blank=True, default='')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
 
@@ -105,4 +107,4 @@ class Education(models.Model):
         return '{}:{}:{}'.format(self.institution, self.area, self.study_type)
 
     class Meta:
-        ordering = ['-start_date']
+        ordering = ['-end_date']

@@ -17,10 +17,10 @@ class PersonalSerializer(serializers.ModelSerializer):
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['cv', 'name', 'position', 'url', 'start_date', 'end_date', 'summary']
+        fields = ['cv', 'name', 'position', 'url', 'summary', 'start_date', 'end_date']
 
 
 class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
-        fields = ['cv', 'institution', 'area', 'study_type', 'gpa', 'start_date', 'end_date']
+        fields = ['cv', 'institution', 'url', 'area', 'study_type', 'gpa', 'summary', 'start_date', 'end_date']

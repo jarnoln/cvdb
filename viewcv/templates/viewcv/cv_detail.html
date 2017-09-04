@@ -44,8 +44,17 @@
 <ul>
 {% for edu in cv.education_set.all %}
   <li> <strong> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date|date:"Y-m" }} ({{ edu.duration_str }})
-      {{ edu.study_type }} of {{ edu.area }} at {{ edu.institution }} </strong>
-    <ul> <li> Area: {{ edu.area }} GPA: {{ edu.gpa }} </li> </ul>
+    {% if edu.study_type and edu.area and edu.institution %}
+      {{ edu.study_type }} of {{ edu.area }} at {{ edu.institution }}
+    {% elif edu.study_type and edu.institution %}
+      {{ edu.study_type }} at {{ edu.institution }}
+    {% elif edu.area and edu.institution %}
+      {{ edu.area }} at {{ edu.institution }}
+    {% else %}
+      {{ edu.institution }}
+    {% endif %}
+   </strong>
+    {% if edu.gpa %}<ul> <li> GPA: {{ edu.gpa }} </li> </ul>{% endif %}
   </li>
 {% endfor %}
 </ul>

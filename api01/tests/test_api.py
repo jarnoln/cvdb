@@ -37,6 +37,8 @@ def get_education():
         "startDate": "1940-06-01",
         "endDate": "1944-01-01",
         "gpa": "3.5",
+        "url": "http://college.smallville.org",
+        "summary": "Summary",
         "courses": [
             "J101 - Introduction to Journalism",
             "J201 - Advanced Journalism"
@@ -130,9 +132,11 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(Education.objects.count(), 1)
         edu = Education.objects.first()
         self.assertEqual(edu.institution, education['institution'])
+        self.assertEqual(edu.url, education['url'])
         self.assertEqual(edu.area, education['area'])
         self.assertEqual(edu.gpa, education['gpa'])
         self.assertEqual(edu.study_type, education['studyType'])
+        self.assertEqual(edu.summary, education['summary'])
         self.assertEqual(edu.start_date, datetime.date(1940, 6, 1))
         self.assertEqual(edu.end_date, datetime.date(1944, 1, 1))
 
