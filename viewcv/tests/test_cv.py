@@ -3,7 +3,7 @@ import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv, Personal, Work, Education
+from viewcv.models import Cv, Personal, Work, Education, Volunteer, Project
 
 
 class CvListTest(ExtTestCase):
@@ -67,6 +67,17 @@ class CvDetailTest(ExtTestCase):
                                              study_type='Bachelor', gpa='4.0',
                                              start_date=datetime.date(2011, 6, 1),
                                              end_date=datetime.date(2014, 1, 1))
+        volunteer = Volunteer.objects.create(cv=cv, organization='CoderDojo', position="Teacher",
+                                             url='http://coderdojo.example.com/',
+                                             summary='Global movement of free coding clubs for young people.',
+                                             start_date=datetime.date(2012, 1, 1),
+                                             end_date=datetime.date(2013, 1, 1))
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         start_date=datetime.date(2016, 8, 24),
+                                         end_date=datetime.date(2016, 8, 24))
+
         response = self.client.get(reverse('cv', args=[cv.id]))
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.status_code, 200)
@@ -81,6 +92,13 @@ class CvDetailTest(ExtTestCase):
         self.assertContains(response, work.url)
         self.assertContains(response, education.institution)
         self.assertContains(response, education.study_type)
+        self.assertContains(response, volunteer.organization)
+        self.assertContains(response, volunteer.position)
+        self.assertContains(response, volunteer.url)
+        self.assertContains(response, volunteer.summary)
+        self.assertContains(response, project.name)
+        self.assertContains(response, project.url)
+        self.assertContains(response, project.description)
 
 
 class UpdateCvTest(ExtTestCase):

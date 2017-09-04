@@ -52,6 +52,30 @@ class CvModelTest(TestCase):
         self.assertEqual(cv.education_set.count(), 1)
         self.assertEqual(cv.education_set.first(), education)
 
+    def test_list_volunteer_work(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.project_set.count(), 0)
+        volunteer = Volunteer.objects.create(cv=cv, organization='CoderDojo', position="Teacher",
+                                             url='http://coderdojo.example.com/',
+                                             summary='Global movement of free coding clubs for young people.',
+                                             start_date=datetime.date(2012, 1, 1),
+                                             end_date=datetime.date(2013, 1, 1))
+        self.assertEqual(cv.volunteer_set.count(), 1)
+        self.assertEqual(cv.volunteer_set.first(), volunteer)
+
+    def test_list_projects(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.project_set.count(), 0)
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         start_date=datetime.date(2016, 8, 24),
+                                         end_date=datetime.date(2016, 8, 24))
+        self.assertEqual(cv.project_set.count(), 1)
+        self.assertEqual(cv.project_set.first(), project)
+
     def test_can_edit_only_if_creator(self):
         creator = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=creator, name='cv', title='CV')
@@ -183,9 +207,9 @@ class VolunteerModelTest(TestCase):
     def test_string(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
-        volunteer = Volunteer(cv=cv, organization='CoderDojo', position="Teacher",
-                              url='http://coderdojo.example.com/',
-                              summary='Global movement of free coding clubs for young people.',
-                              start_date=datetime.date(2012, 1, 1),
-                              end_date=datetime.date(2013, 1, 1))
+        volunteer = Volunteer.objects.create(cv=cv, organization='CoderDojo', position="Teacher",
+                                             url='http://coderdojo.example.com/',
+                                             summary='Global movement of free coding clubs for young people.',
+                                             start_date=datetime.date(2012, 1, 1),
+                                             end_date=datetime.date(2013, 1, 1))
         self.assertEqual(str(volunteer), '{}:{}'.format(volunteer.organization, volunteer.position))

@@ -8,31 +8,28 @@
 <div class="row">
   <div class="col-2"> &nbsp; </div>
   <div class="col-8">
-<h1> {{ cv.title }} </h1>
+  <br />
+<h1> {{ cv.user.first_name }} {{ cv.user.last_name }} &nbsp; <small class="text-muted"> {{ cv.title }} </small> </h1>
 
 {% with info=cv.personal %}
-<table class="table">
+<table class="table table-sm">
   <tbody>
   {% if info.image %}
     <tr>
-      <td rowspan="5" width="10%">
+      <td rowspan="6" width="10%">
         <img alt="{{ user.username }}" src="{{ info.image }}" />
       </td>
     </tr>
   {% endif %}
-    <tr>
-      <th> {% trans 'Name' %} </th>
-      <td> {{ cv.user.first_name }} {{ cv.user.last_name }} </td>
-    </tr>
-    {% if info.email %} <tr> <th> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
-    {% if info.phone %} <tr> <th> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
+    {% if info.email %} <tr> <th width="20%"> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
+    {% if info.phone %} <tr> <th width="20%"> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
     {% if info.url %}
     <tr>
       <th> {% trans 'Home page' %} </th>
       <td> <a href="{{ info.url }}"> {{ info.url }} </a> </td>
     </tr>
   {% endif %}
-  {% if info.summary %} <tr> <td colspan="2"> {{ info.summary }} </td> </tr> {% endif %}
+  {% if info.summary %} <tr> <td colspan="2"> {{ info.summary|safe }} </td> </tr> {% endif %}
   </tbody>
 </table>
 {% endwith %}
@@ -76,6 +73,55 @@
   </li>
 {% endfor %}
 </ul>
+
+{% if cv.volunteer_set.count > 0 %}
+<h3> {%  trans 'Other experience' %} </h3>
+<ul>
+  {% for vol in cv.volunteer_set.all %}
+  <li>
+    <strong>
+      {{ vol.start_date|date:"Y" }}
+    {% if vol.duration_years %}
+      / {{ vol.end_date|date:"Y" }}
+    {% endif %}
+      {{ vol.position }} in
+    {% if vol.url %}
+      <a href="{{ vol.url }}">{{ vol.organization }}</a>
+    {% else %}
+      {{ vol.organization }}
+    {% endif %}
+    </strong>
+    {% if vol.summary %}
+    <ul> <li> {{ vol.summary|safe }} </li> </ul>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if cv.project_set.count > 0 %}
+<h3> {%  trans 'Hobby projects' %} </h3>
+<ul>
+  {% for project in cv.project_set.all %}
+  <li>
+    <strong>
+      {{ project.start_date|date:"Y" }}
+    {% if vol.duration_years %}
+      / {{ project.end_date|date:"Y" }}
+    {% endif %}
+    {% if project.url %}
+      <a href="{{ project.url }}">{{ project.name }}</a>
+    {% else %}
+      {{ project.name }}
+    {% endif %}
+    </strong>
+    {% if project.description %}
+    <ul> <li> {{ project.description|safe }} </li> </ul>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
 
   </div>
   <div class="col-2"> &nbsp; </div>
