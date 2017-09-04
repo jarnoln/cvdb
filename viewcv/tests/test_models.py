@@ -2,7 +2,7 @@ import datetime
 # from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
-from viewcv.models import Cv, Personal, Work, Education, Project, Volunteer
+from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project
 
 
 class CvModelTest(TestCase):
@@ -189,6 +189,38 @@ class ProjectModelTest(TestCase):
                                          start_date=datetime.date(2016, 8, 24),
                                          end_date=datetime.date(2016, 8, 24))
         self.assertEqual(str(project), project.name)
+
+
+class SkillModelTest(TestCase):
+    def test_can_save_and_load(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        skill = Skill(cv=cv, name='Compression', level='Master', keywords='["MPEG","MP4","GIF"]')
+        skill.save()
+        self.assertEqual(Skill.objects.all().count(), 1)
+        self.assertEqual(Skill.objects.all()[0], skill)
+
+    def test_string(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        skill = Skill.objects.create(cv=cv, name='Compression', level='Master', keywords='["MPEG","MP4","GIF"]')
+        self.assertEqual(str(skill), '{}:{}'.format(skill.name, skill.level))
+
+
+class LanguageModelTest(TestCase):
+    def test_can_save_and_load(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        language = Language(cv=cv, name='English', fluency='Native')
+        language.save()
+        self.assertEqual(Language.objects.all().count(), 1)
+        self.assertEqual(Language.objects.all()[0], language)
+
+    def test_string(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        language = Language.objects.create(cv=cv, name='English', fluency='Native')
+        self.assertEqual(str(language), '{}:{}'.format(language.name, language.fluency))
 
 
 class VolunteerModelTest(TestCase):
