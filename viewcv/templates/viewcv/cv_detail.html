@@ -38,6 +38,18 @@
   </li>
 {% endfor %}
 </ul>
+
+<h3> {%  trans 'Education' %} </h3>
+
+<ul>
+{% for edu in cv.education_set.all %}
+  <li> <strong> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date|date:"Y-m" }} ({{ edu.duration_str }})
+      {{ edu.study_type }} of {{ edu.area }} at {{ edu.institution }} </strong>
+    <ul> <li> Area: {{ edu.area }} GPA: {{ edu.gpa }} </li> </ul>
+  </li>
+{% endfor %}
+</ul>
+
   </div>
   <div class="col-2"> &nbsp; </div>
 </div>

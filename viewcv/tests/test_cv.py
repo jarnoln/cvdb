@@ -3,7 +3,7 @@ import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv, Personal, Work
+from viewcv.models import Cv, Personal, Work, Education
 
 
 class CvListTest(ExtTestCase):
@@ -63,6 +63,10 @@ class CvDetailTest(ExtTestCase):
         work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter', url='http://dailybugle.com',
                                    start_date=datetime.date(2000, 1, 1),
                                    end_date=datetime.date(2001, 2, 1))
+        education = Education.objects.create(cv=cv, institution='University of Oklahoma', area="IT",
+                                             study_type='Bachelor', gpa='4.0',
+                                             start_date=datetime.date(2011, 6, 1),
+                                             end_date=datetime.date(2014, 1, 1))
         response = self.client.get(reverse('cv', args=[cv.id]))
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.status_code, 200)
@@ -75,6 +79,8 @@ class CvDetailTest(ExtTestCase):
         self.assertContains(response, work.name)
         self.assertContains(response, work.position)
         self.assertContains(response, work.url)
+        self.assertContains(response, education.institution)
+        self.assertContains(response, education.study_type)
 
 
 class UpdateCvTest(ExtTestCase):

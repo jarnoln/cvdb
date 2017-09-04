@@ -41,6 +41,17 @@ class CvModelTest(TestCase):
         self.assertEqual(cv.work_set.count(), 1)
         self.assertEqual(cv.work_set.first(), work)
 
+    def test_list_educations(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.education_set.count(), 0)
+        education = Education.objects.create(cv=cv, institution='University of Oklahoma', area="IT",
+                                             study_type='Bachelor', gpa='4.0',
+                                             start_date=datetime.date(2011, 6, 1),
+                                             end_date=datetime.date(2014, 1, 1))
+        self.assertEqual(cv.education_set.count(), 1)
+        self.assertEqual(cv.education_set.first(), education)
+
     def test_can_edit_only_if_creator(self):
         creator = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=creator, name='cv', title='CV')
