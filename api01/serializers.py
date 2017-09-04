@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from viewcv.models import Cv, Personal, Work, Education, Project, Volunteer
+from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project
 
 
 class CvSerializer(serializers.ModelSerializer):
@@ -26,13 +26,27 @@ class EducationSerializer(serializers.ModelSerializer):
         fields = ['cv', 'institution', 'url', 'area', 'study_type', 'gpa', 'summary', 'start_date', 'end_date']
 
 
+class VolunteerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Volunteer
+        fields = ['cv', 'organization', 'position', 'url', 'summary', 'start_date', 'end_date']
+
+
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ['cv', 'name', 'level', 'keywords']
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ['cv', 'name', 'fluency']
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ['cv', 'name', 'description', 'url', 'entity', 'type', 'start_date', 'end_date']
 
 
-class VolunteerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Volunteer
-        fields = ['cv', 'organization', 'position', 'url', 'summary', 'start_date', 'end_date']

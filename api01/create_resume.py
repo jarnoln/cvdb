@@ -1,7 +1,8 @@
+import json
 from django.http import JsonResponse
-from viewcv.models import Cv, Work
+from viewcv.models import Cv
 from .serializers import CvSerializer, PersonalSerializer, WorkSerializer, EducationSerializer, VolunteerSerializer
-from .serializers import ProjectSerializer
+from .serializers import SkillSerializer, LanguageSerializer, ProjectSerializer
 
 
 def create_resume(data, user):
@@ -50,6 +51,30 @@ def create_resume(data, user):
             volunteer_serializer.save()
         else:
             return JsonResponse(volunteer_serializer.errors, status=400)
+
+    skill_list = data.get('skills', [])
+    for item in skill_list:
+        skill_data = item
+        skill_data['cv'] = cv.id
+        skill_data['keywords'] = json.dumps(item['keywords'])
+        skill_serializer = SkillSerializer(data=skill_data)
+        if skill_serializer.is_valid():
+            skill_serializer.save()
+        else:
+            return JsonResponse(skill_serializer.errors, status=400)
+
+    language_list = data.get('languages', [])
+    for item in language_list:
+        language_data = item
+        language_data['cv'] = cv.id
+        if 'language' in item:
+            language_data['name'] = item['language']
+
+        language_serializer = LanguageSerializer(data=language_data)
+        if language_serializer.is_valid():
+            language_serializer.save()
+        else:
+            return JsonResponse(language_serializer.errors, status=400)
 
     project_list = data.get('projects', [])
     for item in project_list:

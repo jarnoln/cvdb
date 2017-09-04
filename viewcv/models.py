@@ -156,6 +156,9 @@ class Skill(models.Model):
     def __str__(self):
         return '{}:{}'.format(self.name, self.level)
 
+    class Meta:
+        ordering = ['name']
+
 
 class Language(models.Model):
     cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
