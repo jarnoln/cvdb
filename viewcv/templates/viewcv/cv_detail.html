@@ -10,23 +10,32 @@
   <div class="col-8">
 <h1> {{ cv.title }} </h1>
 
-<table class="table">
-  <tr>
-    <th> {% trans 'Name' %} </th>
-    <td> {{ cv.user.first_name }} {{ cv.user.last_name }} </td>
-  </tr>
 {% with info=cv.personal %}
-  {% if info.email %} <tr> <th> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
-  {% if info.phone %} <tr> <th> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
-  {% if info.url %}
+<table class="table">
+  <tbody>
+  {% if info.image %}
+    <tr>
+      <td rowspan="5" width="10%">
+        <img alt="{{ user.username }}" src="{{ info.image }}" />
+      </td>
+    </tr>
+  {% endif %}
+    <tr>
+      <th> {% trans 'Name' %} </th>
+      <td> {{ cv.user.first_name }} {{ cv.user.last_name }} </td>
+    </tr>
+    {% if info.email %} <tr> <th> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
+    {% if info.phone %} <tr> <th> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
+    {% if info.url %}
     <tr>
       <th> {% trans 'Home page' %} </th>
       <td> <a href="{{ info.url }}"> {{ info.url }} </a> </td>
     </tr>
   {% endif %}
   {% if info.summary %} <tr> <td colspan="2"> {{ info.summary }} </td> </tr> {% endif %}
-{%  endwith %}
+  </tbody>
 </table>
+{% endwith %}
 
 <h3> {%  trans 'Work experience' %} </h3>
 
