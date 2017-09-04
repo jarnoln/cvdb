@@ -148,3 +148,38 @@ class Project(models.Model):
 
     class Meta:
         ordering = ['-end_date']
+
+
+class Volunteer(models.Model):
+    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    organization = models.CharField(max_length=250, blank=True, default='')
+    position = models.CharField(max_length=250, blank=True, default='')
+    url = models.URLField(max_length=250, blank=True, default='')
+    summary = models.TextField(blank=True, default='')
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+
+    @property
+    def duration(self):
+        return calculate_duration(self.start_date, self.end_date)
+
+    @property
+    def duration_years(self):
+        years, months = self.duration
+        return years
+
+    @property
+    def duration_months(self):
+        years, months = self.duration
+        return months
+
+    @property
+    def duration_str(self):
+        years, months = self.duration
+        return duration_as_string(years, months)
+
+    def __str__(self):
+        return '{}:{}'.format(self.organization, self.position)
+
+    class Meta:
+        ordering = ['-end_date']

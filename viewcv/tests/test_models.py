@@ -2,7 +2,7 @@ import datetime
 # from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
-from viewcv.models import Cv, Personal, Work, Education, Project
+from viewcv.models import Cv, Personal, Work, Education, Project, Volunteer
 
 
 class CvModelTest(TestCase):
@@ -165,3 +165,27 @@ class ProjectModelTest(TestCase):
                                          start_date=datetime.date(2016, 8, 24),
                                          end_date=datetime.date(2016, 8, 24))
         self.assertEqual(str(project), project.name)
+
+
+class VolunteerModelTest(TestCase):
+    def test_can_save_and_load(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        volunteer = Volunteer(cv=cv, organization='CoderDojo', position="Teacher",
+                              url='http://coderdojo.example.com/',
+                              summary='Global movement of free coding clubs for young people.',
+                              start_date=datetime.date(2012, 1, 1),
+                              end_date=datetime.date(2013, 1, 1))
+        volunteer.save()
+        self.assertEqual(Volunteer.objects.all().count(), 1)
+        self.assertEqual(Volunteer.objects.all()[0], volunteer)
+
+    def test_string(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        volunteer = Volunteer(cv=cv, organization='CoderDojo', position="Teacher",
+                              url='http://coderdojo.example.com/',
+                              summary='Global movement of free coding clubs for young people.',
+                              start_date=datetime.date(2012, 1, 1),
+                              end_date=datetime.date(2013, 1, 1))
+        self.assertEqual(str(volunteer), '{}:{}'.format(volunteer.organization, volunteer.position))
