@@ -2,7 +2,7 @@ import json
 import datetime
 from django.test import TestCase
 from django.core.files.base import File
-from viewcv.models import Cv, Personal, Work, Education
+from viewcv.models import Cv, Personal, Work, Education, Project, Volunteer
 from users.tests.ext_test_case import ExtTestCase
 
 
@@ -139,6 +139,76 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(edu.summary, education['summary'])
         self.assertEqual(edu.start_date, datetime.date(1940, 6, 1))
         self.assertEqual(edu.end_date, datetime.date(1944, 1, 1))
+
+    def test_submit_resume_with_project(self):
+        self.create_and_log_in_user()
+        resume = get_resume()
+        project_data = {
+            "name": "Miss Direction",
+            "description": "A mapping engine that misguides you",
+            "highlights": [
+                "Won award at AIHacks 2016",
+                "Built by all women team of newbie programmers",
+                "Using modern technologies such as GoogleMaps, Chrome Extension and Javascript"
+            ],
+            "keywords": [
+                "GoogleMaps", "Chrome Extension", "Javascript"
+            ],
+            "startDate": "2016-08-24",
+            "endDate": "2016-08-24",
+            "url": "http://missdirection.example.com",
+            "roles": [
+                "Team lead", "Designer"
+            ],
+            "entity": "Smoogle",
+            "type": "application"
+        }
+        resume['projects'] = [project_data]
+        resume_json = json.dumps(resume)
+        self.assertEqual(Cv.objects.count(), 0)
+        self.assertEqual(Project.objects.count(), 0)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        # print(response.content)
+        self.assertEqual(Cv.objects.count(), 1)
+        self.assertEqual(Project.objects.count(), 1)
+        project = Project.objects.first()
+        self.assertEqual(project.name, project_data['name'])
+        self.assertEqual(project.description, project_data['description'])
+        self.assertEqual(project.url, project_data['url'])
+        self.assertEqual(project.entity, project_data['entity'])
+        self.assertEqual(project.type, project_data['type'])
+        self.assertEqual(project.start_date, datetime.date(2016, 8, 24))
+        self.assertEqual(project.end_date, datetime.date(2016, 8, 24))
+
+    def test_submit_resume_with_volunteer_project(self):
+        self.create_and_log_in_user()
+        resume = get_resume()
+        volunteer_data = {
+            "organization": "CoderDojo",
+            "position": "Teacher",
+            "url": "http://coderdojo.example.com/",
+            "startDate": "2012-01-01",
+            "endDate": "2013-01-01",
+            "summary": "Global movement of free coding clubs for young people.",
+            "highlights": [
+                "Awarded 'Teacher of the Month'"
+            ]
+        }
+        resume['volunteer'] = [volunteer_data]
+        resume_json = json.dumps(resume)
+        self.assertEqual(Cv.objects.count(), 0)
+        self.assertEqual(Volunteer.objects.count(), 0)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        # print(response.content)
+        self.assertEqual(Cv.objects.count(), 1)
+        self.assertEqual(Volunteer.objects.count(), 1)
+        volunteer = Volunteer.objects.first()
+        self.assertEqual(volunteer.organization, volunteer_data['organization'])
+        self.assertEqual(volunteer.position, volunteer_data['position'])
+        self.assertEqual(volunteer.url, volunteer_data['url'])
+        self.assertEqual(volunteer.summary, volunteer_data['summary'])
+        self.assertEqual(volunteer.start_date, datetime.date(2012, 1, 1))
+        self.assertEqual(volunteer.end_date, datetime.date(2013, 1, 1))
 
 
 class SubmitSmallResumeFileTest(ExtTestCase):

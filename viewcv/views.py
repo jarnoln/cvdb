@@ -26,6 +26,7 @@ class UploadCvView(FormView):
         data = json.loads(file_content.decode('utf-8'))
         response = create_resume(data, self.request.user)
         response_data = json.loads(response.content.decode('utf-8'))
+        # print(response_data)
         self.cv_id = response_data['id']
         return super(UploadCvView, self).form_valid(form)
 

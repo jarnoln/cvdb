@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from viewcv.models import Cv, Work
-from .serializers import CvSerializer, PersonalSerializer, WorkSerializer, EducationSerializer
+from .serializers import CvSerializer, PersonalSerializer, WorkSerializer, EducationSerializer, VolunteerSerializer
+from .serializers import ProjectSerializer
 
 
 def create_resume(data, user):
@@ -15,11 +16,11 @@ def create_resume(data, user):
 
     work_list = data.get('work', [])
     for work_item in work_list:
-        serial_data = work_item
-        serial_data['cv'] = cv.id
-        serial_data['start_date'] = work_item['startDate']
-        serial_data['end_date'] = work_item['endDate']
-        work_serializer = WorkSerializer(data=serial_data)
+        work_data = work_item
+        work_data['cv'] = cv.id
+        work_data['start_date'] = work_item['startDate']
+        work_data['end_date'] = work_item['endDate']
+        work_serializer = WorkSerializer(data=work_data)
         if work_serializer.is_valid():
             work_serializer.save()
         else:
@@ -37,6 +38,30 @@ def create_resume(data, user):
             education_serializer.save()
         else:
             return JsonResponse(education_serializer.errors, status=400)
+
+    volunteer_list = data.get('volunteer', [])
+    for item in volunteer_list:
+        volunteer_data = item
+        volunteer_data['cv'] = cv.id
+        volunteer_data['start_date'] = item['startDate']
+        volunteer_data['end_date'] = item['endDate']
+        volunteer_serializer = VolunteerSerializer(data=volunteer_data)
+        if volunteer_serializer.is_valid():
+            volunteer_serializer.save()
+        else:
+            return JsonResponse(volunteer_serializer.errors, status=400)
+
+    project_list = data.get('projects', [])
+    for item in project_list:
+        project_data = item
+        project_data['cv'] = cv.id
+        project_data['start_date'] = item['startDate']
+        project_data['end_date'] = item['endDate']
+        project_serializer = ProjectSerializer(data=project_data)
+        if project_serializer.is_valid():
+            project_serializer.save()
+        else:
+            return JsonResponse(project_serializer.errors, status=400)
 
     if cv:
         cv_serializer = CvSerializer(cv)
