@@ -33,7 +33,13 @@
 <ul>
 {% for work in cv.work_set.all %}
   <li> <strong> {{ work.start_date|date:"Y-m" }} / {{ work.end_date|date:"Y-m" }} ({{ work.duration_str }})
-      {{ work.position }} at <a href="{{ work.url }}">{{ work.name }}</a> </strong>
+      {{ work.position }} at
+    {% if work.url %}
+      <a href="{{ work.url }}">{{ work.name }}</a>
+    {% else %}
+      {{ work.name }}
+    {% endif %}
+     </strong>
     <ul> <li> {{ work.summary }} </li> </ul>
   </li>
 {% endfor %}
@@ -45,16 +51,19 @@
 {% for edu in cv.education_set.all %}
   <li> <strong> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date|date:"Y-m" }} ({{ edu.duration_str }})
     {% if edu.study_type and edu.area and edu.institution %}
-      {{ edu.study_type }} of {{ edu.area }} at {{ edu.institution }}
+      {{ edu.study_type }} of {{ edu.area }} at
     {% elif edu.study_type and edu.institution %}
-      {{ edu.study_type }} at {{ edu.institution }}
+      {{ edu.study_type }} at
     {% elif edu.area and edu.institution %}
-      {{ edu.area }} at {{ edu.institution }}
+      {{ edu.area }} at
+    {% endif %}
+    {% if edu.url %}
+      <a href="{{ edu.url }}">{{ edu.institution }}</a>
     {% else %}
       {{ edu.institution }}
     {% endif %}
    </strong>
-    {% if edu.gpa %}<ul> <li> GPA: {{ edu.gpa }} </li> </ul>{% endif %}
+    {% if edu.summary %}<ul> <li> {{ edu.summary|safe }} </li> </ul>{% endif %}
   </li>
 {% endfor %}
 </ul>
