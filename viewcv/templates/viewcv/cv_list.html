@@ -22,8 +22,10 @@
       <td> <a href="{% url 'cv' cv.id %}">{{ cv.name }} </a> </td>
       <td> {{ cv.title }} </td>
       <td>
+  {% if user.is_authenticated %}
           <a class="btn btn-primary" href="{% url 'cv_update' cv.id %}">{% trans 'Edit' %} </a>
           <a class="btn btn-danger" href="{% url 'cv_delete' cv.id %}">{% trans 'Delete' %} </a>
+  {% endif %}
       </td>
     </tr>
 {% endfor %}

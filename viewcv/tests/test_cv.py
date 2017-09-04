@@ -43,6 +43,30 @@ class CvListTest(ExtTestCase):
         self.assertEqual(response.context['cv_list'][0], cv_2)
 
 
+class CvPublicListTest(ExtTestCase):
+    def test_reverse(self):
+        self.assertEqual(reverse('cv_public_list'), '/public/')
+
+    def test_uses_correct_template(self):
+        self.create_and_log_in_user()
+        response = self.client.get(reverse('cv_public_list'))
+        self.assertTemplateUsed(response, 'viewcv/cv_public_list.html')
+
+    def test_default_content(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        response = self.client.get(reverse('cv_public_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['cv_list'].count(), 0)
+        Cv.objects.create(name='test_cv', title='Test CV', user=creator)
+        response = self.client.get(reverse('cv_public_list'))
+        self.assertEqual(response.context['cv_list'].count(), 0)
+        cv = Cv.objects.create(name='test_cv_2', title='Test CV 2', user=creator, public=True)
+        response = self.client.get(reverse('cv_public_list'))
+        self.assertEqual(response.context['cv_list'].count(), 1)
+        self.assertEqual(response.context['cv_list'][0], cv)
+        self.assertContains(response, cv.title)
+
+
 class CvDetailTest(ExtTestCase):
     def test_reverse(self):
         self.assertEqual(reverse('cv', args=['1337']), '/cv/1337/')
@@ -52,12 +76,6 @@ class CvDetailTest(ExtTestCase):
         user = self.create_and_log_in_user()
         cv = Cv.objects.create(name='test_cv', title='Test CV', user=user)
         response = self.client.get(reverse('cv', args=[cv.id]))
-        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
-
-    def test_public_cv(self):
-        creator = auth.get_user_model().objects.create(username='creator')
-        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator, public=True, primary=True)
-        response = self.client.get(reverse('cv_public', args=[creator.username]))
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
 
     def test_default_content(self):
@@ -110,6 +128,20 @@ class CvDetailTest(ExtTestCase):
         self.assertContains(response, project.name)
         self.assertContains(response, project.url)
         self.assertContains(response, project.description)
+
+    def test_public_cv(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator, public=True, primary=True)
+        response = self.client.get(reverse('cv_public', args=[creator.username]))
+        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
+        self.assertEqual(response.context['cv'], cv)
+
+    def cant_view_public_cv_if_none_set_as_public(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator, public=False, primary=False)
+        response = self.client.get(reverse('cv_public', args=[creator.username]))
+        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
+        self.assertEqual(response.context['cv'], cv)
 
 
 class UpdateCvTest(ExtTestCase):

@@ -1,0 +1,24 @@
+{% extends "viewcv/base.html" %}
+{% load i18n %}
+{% block head_title %} {% trans 'CV list' %} {% endblock %}
+
+{% block content %}
+<h1> {% trans 'CV list' %} </h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th> {% trans 'User' %} </th>
+      <th> {% trans 'Title' %} </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for cv in cv_list %}
+    <tr>
+      <td> {{ cv.user.first_name }} {{ cv.user.last_name }} </td>
+      <td> <a href="{% url 'cv_public' cv.user.username %}">{{ cv.title }} </a> </td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

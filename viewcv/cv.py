@@ -20,6 +20,20 @@ class CvList(ListView):
         return context
 
 
+class CvPublicList(ListView):
+    model = Cv
+    template_name = 'viewcv/cv_public_list.html'
+
+    def get_queryset(self):
+        # Only list public CVs
+        return Cv.objects.filter(public=True)
+
+    def get_context_data(self, **kwargs):
+        context = super(CvPublicList, self).get_context_data(**kwargs)
+        context['messages'] = self.request.GET.get('message', '')
+        return context
+
+
 class CvDetail(DetailView):
     model = Cv
 
