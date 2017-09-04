@@ -2,7 +2,7 @@ import json
 import datetime
 from django.test import TestCase
 from django.core.files.base import File
-from viewcv.models import Cv, Personal, Work
+from viewcv.models import Cv, Personal, Work, Education
 from users.tests.ext_test_case import ExtTestCase
 
 
@@ -27,6 +27,22 @@ def get_work_bugle():
         "summary": "Specialized in Superman stories",
     }
     return work
+
+
+def get_education():
+    education = {
+        "institution": "Smallville College",
+        "area": "Journalism",
+        "studyType": "Bachelor",
+        "startDate": "1940-06-01",
+        "endDate": "1944-01-01",
+        "gpa": "3.5",
+        "courses": [
+            "J101 - Introduction to Journalism",
+            "J201 - Advanced Journalism"
+        ]
+    }
+    return education
 
 
 def get_resume():
@@ -99,6 +115,26 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(work_2.summary, "Helping my parents at farm")
         self.assertEqual(work_2.start_date, datetime.date(1940, 1, 1))
         self.assertEqual(work_2.end_date, datetime.date(1944, 12, 1))
+
+    def test_submit_resume_with_education(self):
+        user = self.create_and_log_in_user()
+        resume = get_resume()
+        education = get_education()
+        resume['education'] = [education]
+        resume_json = json.dumps(resume)
+        self.assertEqual(Cv.objects.count(), 0)
+        self.assertEqual(Education.objects.count(), 0)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        # print(response.content)
+        self.assertEqual(Cv.objects.count(), 1)
+        self.assertEqual(Education.objects.count(), 1)
+        edu = Education.objects.first()
+        self.assertEqual(edu.institution, education['institution'])
+        self.assertEqual(edu.area, education['area'])
+        self.assertEqual(edu.gpa, education['gpa'])
+        self.assertEqual(edu.study_type, education['studyType'])
+        self.assertEqual(edu.start_date, datetime.date(1940, 6, 1))
+        self.assertEqual(edu.end_date, datetime.date(1944, 1, 1))
 
 
 class SubmitSmallResumeFileTest(ExtTestCase):

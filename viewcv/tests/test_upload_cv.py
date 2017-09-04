@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.files.base import File
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv, Personal, Work
+from viewcv.models import Cv, Personal, Work, Education
 
 
 class UploadCvTest(ExtTestCase):
@@ -58,9 +58,16 @@ class UploadCvTest(ExtTestCase):
         self.assertEqual(personal.url, 'http://richardhendricks.example.com')
         self.assertTrue(personal.summary.startswith, 'Richard hails from Tulsa.')
         self.assertEqual(Work.objects.count(), 1)
-        work_1 = Work.objects.all()[0]
-        self.assertEqual(work_1.cv, cv)
-        self.assertEqual(work_1.name, "Pied Piper")
-        self.assertEqual(work_1.position, "CEO/President")
+        work = Work.objects.all()[0]
+        self.assertEqual(work.cv, cv)
+        self.assertEqual(work.name, "Pied Piper")
+        self.assertEqual(work.position, "CEO/President")
+        self.assertEqual(Education.objects.count(), 1)
+        edu = Education.objects.all()[0]
+        self.assertEqual(edu.cv, cv)
+        self.assertEqual(edu.institution, "University of Oklahoma")
+        self.assertEqual(edu.area, "Information Technology")
+        self.assertEqual(edu.study_type, "Bachelor")
+        self.assertEqual(edu.gpa, "4.0")
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.context['cv'], cv)

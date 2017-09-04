@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from viewcv.models import Cv, Personal, Work
+from viewcv.models import Cv, Personal, Work, Education
 
 
 class CvSerializer(serializers.ModelSerializer):
@@ -18,3 +18,9 @@ class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['cv', 'name', 'position', 'url', 'start_date', 'end_date', 'summary']
+
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education
+        fields = ['cv', 'institution', 'area', 'study_type', 'gpa', 'start_date', 'end_date']
