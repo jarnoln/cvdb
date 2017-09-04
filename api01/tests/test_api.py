@@ -95,7 +95,7 @@ class SubmitSmallResumeFileTest(ExtTestCase):
         self.assertEqual(Cv.objects.count(), 0)
         self.assertEqual(Work.objects.count(), 0)
         data = {'json_file': resume_file_object}
-        response = self.client.post('/api/01/submit_resume_file/', data)
+        self.client.post('/api/01/submit_resume_file/', data)
         # print(response.content)
         self.assertEqual(Cv.objects.count(), 1)
         cv = Cv.objects.first()
@@ -107,3 +107,25 @@ class SubmitSmallResumeFileTest(ExtTestCase):
         self.assertEqual(work_1.cv, cv)
         self.assertEqual(work_1.name, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
+
+
+class SubmitCompleteResumeFileTest(ExtTestCase):
+    def test_submit_resume_file(self):
+        user = self.create_and_log_in_user()
+        resume_file = open('examples/complete.json', 'r')
+        resume_file_object = File(resume_file, name='complete.json')
+        self.assertEqual(Cv.objects.count(), 0)
+        self.assertEqual(Work.objects.count(), 0)
+        data = {'json_file': resume_file_object}
+        self.client.post('/api/01/submit_resume_file/', data)
+        # print(response.content)
+        self.assertEqual(Cv.objects.count(), 1)
+        cv = Cv.objects.first()
+        self.assertEqual(cv.user, user)
+        self.assertEqual(cv.name, "default")
+        self.assertTrue(cv.summary.startswith, 'Richard hails from Tulsa.')
+        self.assertEqual(Work.objects.count(), 1)
+        work_1 = Work.objects.all()[0]
+        self.assertEqual(work_1.cv, cv)
+        self.assertEqual(work_1.name, "Pied Piper")
+        self.assertEqual(work_1.position, "CEO/President")
