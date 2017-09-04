@@ -64,6 +64,22 @@ class CvModelTest(TestCase):
         self.assertEqual(cv.volunteer_set.count(), 1)
         self.assertEqual(cv.volunteer_set.first(), volunteer)
 
+    def test_list_skills(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.skill_set.count(), 0)
+        skill = Skill.objects.create(cv=cv, name='Compression', level='Master', keywords='["MPEG","MP4","GIF"]')
+        self.assertEqual(cv.skill_set.count(), 1)
+        self.assertEqual(cv.skill_set.first(), skill)
+
+    def test_list_languages(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.language_set.count(), 0)
+        language = Language.objects.create(cv=cv, name='English', fluency='Native')
+        self.assertEqual(cv.language_set.count(), 1)
+        self.assertEqual(cv.language_set.first(), language)
+
     def test_list_projects(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')

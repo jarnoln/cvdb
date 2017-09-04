@@ -21,14 +21,45 @@
       </td>
     </tr>
   {% endif %}
-    {% if info.email %} <tr> <th width="20%"> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
-    {% if info.phone %} <tr> <th width="20%"> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
-    {% if info.url %}
+  {% if info.email %} <tr> <th width="20%"> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
+  {% if info.phone %} <tr> <th width="20%"> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
+  {% if info.url %}
     <tr>
       <th> {% trans 'Home page' %} </th>
       <td> <a href="{{ info.url }}"> {{ info.url }} </a> </td>
     </tr>
   {% endif %}
+
+  {% if cv.skill_set.count > 0 %}
+    <tr>
+      <th> Skills </th>
+      <td>
+        {% for skill in cv.skill_set.all %}
+          {% if forloop.last %}
+            {{ skill.name }}
+          {% else %}
+            {{ skill.name }},
+          {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+  {% endif %}
+
+  {% if cv.language_set.count > 0 %}
+    <tr>
+      <th> Languages </th>
+      <td>
+        {% for lang in cv.language_set.all %}
+          {% if forloop.last %}
+            {{ lang.name }}
+          {% else %}
+            {{ lang.name }},
+          {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+  {% endif %}
+
   {% if info.summary %} <tr> <td colspan="2"> {{ info.summary|safe }} </td> </tr> {% endif %}
   </tbody>
 </table>

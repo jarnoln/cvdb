@@ -3,7 +3,7 @@ import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv, Personal, Work, Education, Volunteer, Project
+from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project
 
 
 class CvListTest(ExtTestCase):
@@ -72,6 +72,8 @@ class CvDetailTest(ExtTestCase):
                                              summary='Global movement of free coding clubs for young people.',
                                              start_date=datetime.date(2012, 1, 1),
                                              end_date=datetime.date(2013, 1, 1))
+        skill = Skill.objects.create(cv=cv, name='Compression', level='Master', keywords='["MPEG","MP4","GIF"]')
+        language = Language.objects.create(cv=cv, name='English', fluency='Native')
         project = Project.objects.create(cv=cv, name='Miss Direction',
                                          description="A mapping engine that misguides you",
                                          type='application',
@@ -96,6 +98,8 @@ class CvDetailTest(ExtTestCase):
         self.assertContains(response, volunteer.position)
         self.assertContains(response, volunteer.url)
         self.assertContains(response, volunteer.summary)
+        self.assertContains(response, skill.name)
+        self.assertContains(response, language.name)
         self.assertContains(response, project.name)
         self.assertContains(response, project.url)
         self.assertContains(response, project.description)
