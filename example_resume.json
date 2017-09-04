@@ -5,7 +5,7 @@
     "picture": "",
     "email": "clark.kent@dailybugle.com",
     "phone": "555-CLARKKENT",
-    "website": "http://clarkkent.com",
+    "url": "http://clarkkent.com",
     "summary": "A summary of Clark Kent",
     "profiles": [{
       "network": "Twitter",
@@ -14,9 +14,10 @@
     }]
   },
   "work": [{
-    "company": "Daily Bugle",
+    "name": "Daily Bugle",
+    "description": "Respectable publisher",
     "position": "Reporter",
-    "website": "http://dailybugle.com",
+    "url": "http://dailybugle.com",
     "startDate": "2013-01-01",
     "endDate": "2014-01-01",
     "summary": "Description...",

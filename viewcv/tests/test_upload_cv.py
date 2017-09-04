@@ -30,7 +30,7 @@ class UploadCvTest(ExtTestCase):
         self.assertEqual(Work.objects.count(), 1)
         work_1 = Work.objects.all()[0]
         self.assertEqual(work_1.cv, cv)
-        self.assertEqual(work_1.company, "Daily Bugle")
+        self.assertEqual(work_1.name, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.context['cv'], cv)

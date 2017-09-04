@@ -11,4 +11,4 @@ class CvSerializer(serializers.ModelSerializer):
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['cv', 'company', 'position', 'website', 'start_date', 'end_date', 'summary']
+        fields = ['cv', 'name', 'position', 'url', 'start_date', 'end_date', 'summary']

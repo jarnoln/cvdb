@@ -20,7 +20,7 @@ class ApiRootTest(TestCase):
 
 def get_work_bugle():
     work = {
-        "company": "Daily Bugle",
+        "name": "Daily Bugle",
         "position": "Reporter",
         "startDate": "1945-01-01",
         "endDate": "2020-01-01",
@@ -46,9 +46,9 @@ class SubmitResumeTest(ExtTestCase):
         resume = get_resume()
         work_1_data = get_work_bugle()
         work_2_data = {
-            "company": "Jonah's farm",
+            "name": "Jonah's farm",
             "position": "Farmhand",
-            "website": "http://www.jonahs-farm.com",
+            "url": "http://www.jonahs-farm.com",
             "startDate": "1940-01-01",
             "endDate": "1944-12-01",
             "summary": "Helping my parents at farm",
@@ -72,16 +72,16 @@ class SubmitResumeTest(ExtTestCase):
         # print(data)
         self.assertEqual(data['id'], cv.id)
         self.assertEqual(work_1.cv, cv)
-        self.assertEqual(work_1.company, "Daily Bugle")
+        self.assertEqual(work_1.name, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
         self.assertEqual(work_1.summary, "Specialized in Superman stories")
         self.assertEqual(work_1.start_date, datetime.date(1945, 1, 1))
         self.assertEqual(work_1.end_date, datetime.date(2020, 1, 1))
 
         self.assertEqual(work_2.cv, cv)
-        self.assertEqual(work_2.company, "Jonah's farm")
+        self.assertEqual(work_2.name, "Jonah's farm")
         self.assertEqual(work_2.position, "Farmhand")
-        self.assertEqual(work_2.website, "http://www.jonahs-farm.com")
+        self.assertEqual(work_2.url, "http://www.jonahs-farm.com")
         self.assertEqual(work_2.summary, "Helping my parents at farm")
         self.assertEqual(work_2.start_date, datetime.date(1940, 1, 1))
         self.assertEqual(work_2.end_date, datetime.date(1944, 12, 1))
@@ -105,5 +105,5 @@ class SubmitResumeFileTest(ExtTestCase):
         self.assertEqual(Work.objects.count(), 1)
         work_1 = Work.objects.all()[0]
         self.assertEqual(work_1.cv, cv)
-        self.assertEqual(work_1.company, "Daily Bugle")
+        self.assertEqual(work_1.name, "Daily Bugle")
         self.assertEqual(work_1.position, "Reporter")
