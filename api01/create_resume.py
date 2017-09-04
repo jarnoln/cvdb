@@ -56,7 +56,9 @@ def create_resume(data, user):
     for item in skill_list:
         skill_data = item
         skill_data['cv'] = cv.id
-        skill_data['keywords'] = json.dumps(item['keywords'])
+        if 'keywords' in item:
+            skill_data['keywords'] = json.dumps(item['keywords'])
+
         skill_serializer = SkillSerializer(data=skill_data)
         if skill_serializer.is_valid():
             skill_serializer.save()

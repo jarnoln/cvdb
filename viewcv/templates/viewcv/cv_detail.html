@@ -30,11 +30,26 @@
     </tr>
   {% endif %}
 
-  {% if cv.skill_set.count > 0 %}
+  {% if cv.specialties.count > 0 %}
     <tr>
-      <th> Skills </th>
+      <th> {% trans 'Specialties' %} </th>
       <td>
-        {% for skill in cv.skill_set.all %}
+        {% for skill in cv.specialties.all %}
+          {% if forloop.last %}
+            {{ skill.name }}
+          {% else %}
+            {{ skill.name }},
+          {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+  {% endif %}
+
+  {% if cv.non_specialties.count > 0 %}
+    <tr>
+      <th> {% trans 'Other skills' %} </th>
+      <td>
+        {% for skill in cv.non_specialties.all %}
           {% if forloop.last %}
             {{ skill.name }}
           {% else %}
@@ -60,7 +75,9 @@
     </tr>
   {% endif %}
 
-  {% if info.summary %} <tr> <td colspan="2"> {{ info.summary|safe }} </td> </tr> {% endif %}
+  {% if info.summary %}
+    <tr> <td colspan="3"> {{ info.summary|safe }} </td> </tr>
+  {% endif %}
   </tbody>
 </table>
 {% endwith %}

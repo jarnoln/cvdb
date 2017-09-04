@@ -21,6 +21,14 @@ class Cv(models.Model):
             return personal.first()
         return None
 
+    @property
+    def specialties(self):
+        return Skill.objects.filter(cv=self, level='Excellent')
+
+    @property
+    def non_specialties(self):
+        return Skill.objects.filter(cv=self).exclude(level='Excellent')
+
     def can_edit(self, user):
         return user == self.user
 

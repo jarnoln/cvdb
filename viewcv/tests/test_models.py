@@ -72,6 +72,18 @@ class CvModelTest(TestCase):
         self.assertEqual(cv.skill_set.count(), 1)
         self.assertEqual(cv.skill_set.first(), skill)
 
+    def test_list_specialties(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        self.assertEqual(cv.skill_set.count(), 0)
+        skill_1 = Skill.objects.create(cv=cv, name='Python', level='Excellent')
+        skill_2 = Skill.objects.create(cv=cv, name='JavaScript', level='Good')
+        self.assertEqual(cv.skill_set.count(), 2)
+        self.assertEqual(cv.specialties.count(), 1)
+        self.assertEqual(cv.specialties.first(), skill_1)
+        self.assertEqual(cv.non_specialties.count(), 1)
+        self.assertEqual(cv.non_specialties.first(), skill_2)
+
     def test_list_languages(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
