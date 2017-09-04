@@ -2,6 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.utils.translation import ugettext_lazy
+from viewcv.durations import calculate_duration, duration_as_string
 
 
 class Cv(models.Model):
@@ -32,12 +33,7 @@ class Work(models.Model):
 
     @property
     def duration(self):
-        years = self.end_date.year - self.start_date.year
-        months = self.end_date.month - self.start_date.month
-        if months < 0:
-            years = years - 1
-            months = months + 12
-        return years, months
+        return calculate_duration(self.start_date, self.end_date)
 
     @property
     def duration_years(self):
@@ -52,20 +48,7 @@ class Work(models.Model):
     @property
     def duration_str(self):
         years, months = self.duration
-        duration_y = ''
-        duration_m = ''
-        if years > 1:
-            duration_y = '{} years'.format(years)
-        elif years == 1:
-            duration_y = '1 year'
-        if months > 1:
-            duration_m = '{} months'.format(months)
-        elif months == 1:
-            duration_m = '1 month'
-        if duration_y and duration_m:
-            return '{}, {}'.format(duration_y, duration_m)
-
-        return duration_y + duration_m
+        return duration_as_string(years, months)
 
     def __str__(self):
         return '{}:{}'.format(self.company, self.position)
