@@ -44,7 +44,7 @@ class CvListTest(ExtTestCase):
 
 class CvDetailTest(ExtTestCase):
     def test_reverse(self):
-        self.assertEqual(reverse('cv', args=['1']), '/cv/1/')
+        self.assertEqual(reverse('cv', args=['1337']), '/cv/1337/')
 
     def test_uses_correct_template(self):
         user = self.create_and_log_in_user()
@@ -59,6 +59,38 @@ class CvDetailTest(ExtTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['cv'], cv)
         self.assertContains(response, cv.title)
+
+
+class UpdateCvTest(ExtTestCase):
+    def test_reverse_task_edit(self):
+        self.assertEqual(reverse('cv_update', args=['1337']),
+                         '/cv/1337/edit/')
+
+    def test_uses_correct_template(self):
+        creator = self.create_and_log_in_user()
+        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator)
+        response = self.client.get(reverse('cv_update', args=[cv.id]))
+        self.assertTemplateUsed(response, 'viewcv/cv_form.html')
+
+    def test_default_context(self):
+        creator = self.create_and_log_in_user()
+        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator)
+        response = self.client.get(reverse('cv_update', args=[cv.id]))
+        self.assertEqual(response.context['cv'], cv)
+        self.assertEqual(response.context['message'], '')
+
+    def test_can_update_cv(self):
+        creator = self.create_and_log_in_user()
+        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator)
+        self.assertEqual(Cv.objects.all().count(), 1)
+        response = self.client.post(reverse('cv_update', args=[cv.id]),
+                                    {'name': 'updated_name', 'title': 'CV updated'},
+                                    follow=True)
+        self.assertEqual(Cv.objects.all().count(), 1)
+        cv = Cv.objects.all()[0]
+        self.assertEqual(cv.name, 'updated_name')
+        self.assertEqual(cv.title, 'CV updated')
+        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
 
 
 class DeleteCvTest(ExtTestCase):

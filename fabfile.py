@@ -91,6 +91,8 @@ def _check_secret_key(source_folder, python):
 def _update_database(source_folder, python):
     run('cd %s && %s manage.py makemigrations' % (source_folder, python))
     run('cd %s && %s manage.py migrate' % (source_folder, python))
+    run('cd %s && %s manage.py makemigrations viewcv' % (source_folder, python))
+    run('cd %s && %s manage.py migrate viewcv' % (source_folder, python))
 
 
 def _update_static_files(source_folder):

@@ -22,22 +22,15 @@ class CvList(ListView):
 class CvDetail(DetailView):
     model = Cv
 
-    # def get_object(self, queryset=None):
-    #    target_username = self.kwargs.get('slug', '')
-    #    if target_username:
-    #        # return auth.models.User.objects.get(username=target_username)
-    #        return auth.get_user_model().objects.get(username=target_username)
-    #    return auth.get_user(self.request)
-
 
 class CvUpdate(UpdateView):
-    model = auth.get_user_model()
-    fields = ['summary']
+    model = Cv
+    fields = ['name', 'title', 'summary']
 
     def get_object(self):
-        target_user = super(CvUpdate, self).get_object()
-        if can_edit_user(logged_user=self.request.user, target_user=target_user):
-            return target_user
+        cv = super(CvUpdate, self).get_object()
+        if cv.can_edit(self.request.user):
+            return cv
 
         # Todo: Smarter way to handle this
         raise Http404
@@ -49,9 +42,9 @@ class CvUpdate(UpdateView):
 
     def get_success_url(self):
         if self.object:
-            return reverse_lazy('user_detail', args=[self.object.username])
+            return reverse_lazy('cv', args=[self.object.id])
         else:
-            return reverse('user_list')
+            return reverse('cv_list')
 
 
 class CvDelete(DeleteView):
