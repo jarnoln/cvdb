@@ -22,6 +22,15 @@ class Cv(models.Model):
         return reverse('cv', args=[self.id])
 
 
+class Personal(models.Model):
+    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    email = models.EmailField(max_length=200, blank=True, default='')
+    phone = models.CharField(max_length=100, blank=True, default='')
+    url = models.URLField(max_length=250, blank=True, default='')
+    image = models.URLField(max_length=250, blank=True, default='')
+    summary = models.TextField(blank=True, default='')
+
+
 class Work(models.Model):
     cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')

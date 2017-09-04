@@ -1,12 +1,20 @@
 from django.http import JsonResponse
 from viewcv.models import Cv, Work
-from .serializers import CvSerializer, WorkSerializer
+from .serializers import CvSerializer, PersonalSerializer, WorkSerializer
 
 
 def create_resume(data, user):
     work_list = data['work']
     if len(work_list) > 0:
         cv = Cv.objects.create(user=user, summary=data['basics']['summary'], title=data['basics']['label'])
+        personal_data = data['basics']
+        personal_data['cv'] = cv.id
+        personal_serializer = PersonalSerializer(data=personal_data)
+        if personal_serializer.is_valid():
+            personal_serializer.save()
+        else:
+            return JsonResponse(personal_serializer.errors, status=400)
+
         for work_item in work_list:
             serial_data = work_item
             serial_data['cv'] = cv.id

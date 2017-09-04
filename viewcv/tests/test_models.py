@@ -1,8 +1,8 @@
 import datetime
-from django.core.urlresolvers import reverse
+# from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
-from viewcv.models import Cv, Work
+from viewcv.models import Cv, Personal, Work
 
 
 class CvModelTest(TestCase):
@@ -37,6 +37,17 @@ class CvModelTest(TestCase):
         self.assertTrue(cv.can_edit(creator))
         user = auth.get_user_model().objects.create(username='random')
         self.assertFalse(cv.can_edit(user))
+
+
+class PersonalModelTest(TestCase):
+    def test_can_save_and_load(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=creator, name='cv', title='CV')
+        info = Personal(cv=cv, phone='(912) 555 - 4321', url='http://richardhendricks.example.com',
+                        summary='Richard hails from Tulsa', image='http://richardhendricks.example.com/richard.png')
+        info.save()
+        self.assertEqual(Personal.objects.all().count(), 1)
+        self.assertEqual(Personal.objects.all()[0], info)
 
 
 class WorkModelTest(TestCase):

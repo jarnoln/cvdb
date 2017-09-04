@@ -2,7 +2,7 @@ import json
 import datetime
 from django.test import TestCase
 from django.core.files.base import File
-from viewcv.models import Cv, Work
+from viewcv.models import Cv, Personal, Work
 from users.tests.ext_test_case import ExtTestCase
 
 
@@ -32,8 +32,13 @@ def get_work_bugle():
 def get_resume():
     resume = {
         "basics": {
+            "name": "Clark Kent",
             "label": "Journalist",
-            "summary": "Applying for JLA"
+            "image": "http://clark.kent.com/clark.jpg",
+            "email": "clark.kent@dailybugle.com",
+            "phone": "(912) 555-4321",
+            "url": "http://clark.kent.com",
+            "summary": "Clark Kent grew up in Kansas."
         },
         "work": []
     }
@@ -65,6 +70,15 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(cv.name, "default")
         self.assertEqual(cv.title, "Journalist")
         self.assertEqual(cv.summary, resume['basics']['summary'])
+        self.assertEqual(Personal.objects.count(), 1)
+        self.assertEqual(cv.summary, resume['basics']['summary'])
+        personal = Personal.objects.first()
+        self.assertEqual(personal.cv, cv)
+        self.assertEqual(personal.image, resume['basics']['image'])
+        self.assertEqual(personal.email, resume['basics']['email'])
+        self.assertEqual(personal.phone, resume['basics']['phone'])
+        self.assertEqual(personal.url, resume['basics']['url'])
+        self.assertEqual(personal.summary, resume['basics']['summary'])
         self.assertEqual(Work.objects.count(), 2)
         work_1 = Work.objects.all()[0]
         work_2 = Work.objects.all()[1]
