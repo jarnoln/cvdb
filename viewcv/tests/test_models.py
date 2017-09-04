@@ -2,7 +2,7 @@ import datetime
 # from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
-from viewcv.models import Cv, Personal, Work
+from viewcv.models import Cv, Personal, Work, Education
 
 
 class CvModelTest(TestCase):
@@ -110,3 +110,24 @@ class WorkModelTest(TestCase):
         self.assertEqual(work.duration_years, 1)
         self.assertEqual(work.duration_months, 9)
         self.assertEqual(work.duration_str, '1 year, 9 months')
+
+
+class EducationModelTest(TestCase):
+    def test_can_save_and_load(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        education = Education(cv=cv, institution='University of Oklahoma', area="IT", study_type='Bachelor', gpa='4.0',
+                              start_date=datetime.date(2011, 6, 1),
+                              end_date=datetime.date(2014, 1, 1))
+        education.save()
+        self.assertEqual(Education.objects.all().count(), 1)
+        self.assertEqual(Education.objects.all()[0], education)
+
+    def test_string(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        education = Education.objects.create(cv=cv, institution='University of Oklahoma', area="IT",
+                                             study_type='Bachelor', gpa='4.0',
+                                             start_date=datetime.date(2011, 6, 1),
+                                             end_date=datetime.date(2014, 1, 1))
+        self.assertEqual(str(education), '{}:{}:{}'.format(education.institution, education.area, education.study_type))
