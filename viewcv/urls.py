@@ -1,16 +1,16 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from .views import HomeView, UploadCvView
-from .cv import CvList, CvPublicList, CvDetail, CvUpdate, CvDelete
+from .cv import CvOwnList, CvPublicList, CvDetail, CvUpdate, CvDelete
 
 
 urlpatterns = [
-    url(r'^u/(?P<slug>\w+)/cv/$', CvDetail.as_view(), name='cv_public'),
+    url(r'^u/(?P<slug>\w+)/$', CvDetail.as_view(), name='cv_public'),
     url(r'^cv/(?P<pk>\d+)/edit/$', login_required(CvUpdate.as_view()), name='cv_update'),
     url(r'^cv/(?P<pk>\d+)/delete/$', login_required(CvDelete.as_view()), name='cv_delete'),
     url(r'^cv/(?P<pk>\d+)/$', login_required(CvDetail.as_view()), name='cv'),
     url(r'^upload/$', login_required(UploadCvView.as_view()), name='upload'),
-    url(r'^public/$', CvPublicList.as_view(), name='cv_public_list'),
-    url(r'^cvs/$', login_required(CvList.as_view()), name='cv_list'),
+    url(r'^list/$', CvPublicList.as_view(), name='cv_public_list'),
+    url(r'^my_cvs/$', login_required(CvOwnList.as_view()), name='cv_list'),
     url(r'^$', UploadCvView.as_view(), name='home'),
 ]

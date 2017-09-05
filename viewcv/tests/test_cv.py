@@ -6,9 +6,9 @@ from users.tests.ext_test_case import ExtTestCase
 from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project
 
 
-class CvListTest(ExtTestCase):
+class CvOwnListTest(ExtTestCase):
     def test_reverse(self):
-        self.assertEqual(reverse('cv_list'), '/cvs/')
+        self.assertEqual(reverse('cv_list'), '/my_cvs/')
 
     def test_uses_correct_template(self):
         self.create_and_log_in_user()
@@ -45,7 +45,7 @@ class CvListTest(ExtTestCase):
 
 class CvPublicListTest(ExtTestCase):
     def test_reverse(self):
-        self.assertEqual(reverse('cv_public_list'), '/public/')
+        self.assertEqual(reverse('cv_public_list'), '/list/')
 
     def test_uses_correct_template(self):
         self.create_and_log_in_user()
@@ -70,7 +70,7 @@ class CvPublicListTest(ExtTestCase):
 class CvDetailTest(ExtTestCase):
     def test_reverse(self):
         self.assertEqual(reverse('cv', args=['1337']), '/cv/1337/')
-        self.assertEqual(reverse('cv_public', args=['user']), '/u/user/cv/')
+        self.assertEqual(reverse('cv_public', args=['clark']), '/u/clark/')
 
     def test_uses_correct_template(self):
         user = self.create_and_log_in_user()
