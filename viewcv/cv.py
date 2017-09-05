@@ -50,6 +50,12 @@ class CvDetail(DetailView):
         else:
             return super(CvDetail, self).get_object()
 
+    def get_context_data(self, **kwargs):
+        context = super(CvDetail, self).get_context_data(**kwargs)
+        context['messages'] = self.request.GET.get('message', '')
+        context['display'] = self.request.GET.get('display', '')
+        return context
+
 
 class CvUpdate(UpdateView):
     model = Cv
