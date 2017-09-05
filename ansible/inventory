@@ -5,4 +5,5 @@
 # makecv.net ansible_user=ubuntu ansible_ssh_private_key_file=~/aws/amazonlinux.pem
 
 [digitalocean]
-makecv.net ansible_user=django
+# makecv.net ansible_user=django
+cvdb.fi ansible_user=django

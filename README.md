@@ -30,7 +30,13 @@ Using
 
 Installation
 ------------
+[Install Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
+
+Get sources:
+
+    git clone https://github.com/jarnoln/cvdb.git
+
 Add your host to ansible/inventory. Then:
 
-    ansible-playbook -i ansible/inventory ansible/provision.yaml
+    ansible-playbook -i ansible/inventory ansible/provision-deb.yaml
     fab -f fabfile.py deploy:host=user@host
