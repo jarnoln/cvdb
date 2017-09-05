@@ -10,7 +10,7 @@ def create_resume(data, user):
     personal_data = data['basics']
     personal_data['cv'] = cv.id
     if 'profiles' in data['basics']:
-        personal_data['profiles'] = json.dumps(data['basics']['profiles'])
+        personal_data['profiles'] = json.dumps(data['basics']['profiles'], sort_keys=True)
     personal_serializer = PersonalSerializer(data=personal_data)
 
     if personal_serializer.is_valid():

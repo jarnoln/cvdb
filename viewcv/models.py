@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib import auth
@@ -52,6 +53,10 @@ class Personal(models.Model):
     image = models.URLField(max_length=250, blank=True, default='')
     profiles = models.CharField(max_length=1000, blank=True, default='[]')  # Actually a list
     summary = models.TextField(blank=True, default='')
+
+    @property
+    def profile_list(self):
+        return json.loads(self.profiles)
 
 
 class Work(models.Model):

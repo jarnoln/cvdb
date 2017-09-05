@@ -122,6 +122,22 @@ class PersonalModelTest(TestCase):
         info.save()
         self.assertEqual(Personal.objects.all().count(), 1)
         self.assertEqual(Personal.objects.all()[0], info)
+        self.assertEqual(len(info.profile_list), 0)
+
+    def test_profiles(self):
+        profile_data = '[{"network": "Twitter", "username": "clark", "url": ""},' \
+                       '{"network": "SC", "username": "kent", "url": "https://soundcloud.example.com/kent"}]'
+        creator = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=creator, name='cv', title='CV')
+        info = Personal.objects.create(cv=cv, phone='(912) 555 - 4321', profiles=profile_data)
+        profile_list = info.profile_list
+        self.assertEqual(len(profile_list), 2)
+        self.assertEqual(profile_list[0]['network'], 'Twitter')
+        self.assertEqual(profile_list[0]['username'], 'clark')
+        self.assertEqual(profile_list[0]['url'], '')
+        self.assertEqual(profile_list[1]['network'], 'SC')
+        self.assertEqual(profile_list[1]['username'], 'kent')
+        self.assertEqual(profile_list[1]['url'], 'https://soundcloud.example.com/kent')
 
 
 class WorkModelTest(TestCase):

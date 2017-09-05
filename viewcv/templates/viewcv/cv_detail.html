@@ -16,7 +16,7 @@
   <tbody>
   {% if info.image %}
     <tr>
-      <td rowspan="6" width="10%">
+      <td rowspan="7" width="10%">
         <img alt="{{ user.username }}" src="{{ info.image }}" />
       </td>
     </tr>
@@ -75,6 +75,20 @@
     </tr>
   {% endif %}
 
+  {% if info.profile_list %}
+    <tr>
+      <th> Profiles </th>
+      <td>
+      {% for profile in info.profile_list %}
+        {% if profile.url %}
+          <a href="{{ profile.url }}">{{ profile.network }}</a>
+        {% else %}
+          {{ profile.network }}
+        {% endif %}
+      {% endfor %}
+      </td>
+    </tr>
+  {% endif %}
   {% if info.summary %}
     <tr> <td colspan="3"> {{ info.summary|safe }} </td> </tr>
   {% endif %}

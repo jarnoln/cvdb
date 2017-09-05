@@ -108,7 +108,7 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(personal.email, resume['basics']['email'])
         self.assertEqual(personal.phone, resume['basics']['phone'])
         self.assertEqual(personal.url, resume['basics']['url'])
-        self.assertEqual(personal.profiles, json.dumps(resume['basics']['profiles']))
+        self.assertEqual(personal.profiles, json.dumps(resume['basics']['profiles'], sort_keys=True))
         self.assertEqual(personal.summary, resume['basics']['summary'])
         self.assertEqual(Work.objects.count(), 2)
         work_1 = Work.objects.all()[0]
