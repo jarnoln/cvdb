@@ -1,0 +1,178 @@
+{
+  "basics": {
+    "name": "Jarno Luoma-Nirva",
+    "label": "SW Specialist",
+    "image": "https://luomanirva.net/static/jpg/jln_2017_200x200.jpg",
+    "email": "jln@iki.fi",
+    "phone": "+358 40 584 8782",
+    "url": "https://www.jln.fi",
+    "summary": "",
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "jarnoln",
+        "url": "https://github.com/jarnoln"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "jarnoln",
+        "url": "https://www.linkedin.com/in/jarnoln/"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "C++/Qt",
+      "level": "Excellent"
+    },
+    {
+      "name": "Python/Django",
+      "level": "Excellent"
+    },
+    {
+      "name": "TDD",
+      "level": "Excellent"
+    },
+    {
+      "name": "AWS",
+      "level": "Good"
+    },
+    {
+      "name": "HTML5",
+      "level": "Good"
+    },
+    {
+      "name": "JavaScript",
+      "level": "Good"
+    },
+    {
+      "name": "Jenkins",
+      "level": "Good"
+    },
+    {
+      "name": "MySQL",
+      "level": "Good"
+    },
+    {
+      "name": "PostgreSQL",
+      "level": "Good"
+    }
+  ],
+  "work": [
+    {
+      "name": "Symbio",
+      "position": "SW Specialist",
+      "url": "http://www.symbio.com",
+      "startDate": "2005-03-01",
+      "endDate": "2017-09-01",
+      "summary": "C++ programming for Windows and Linux platforms. UI implementation with Trolltech's Qt library. Android porting. Web services with Django. Worked for projects in Sweden, Taiwan and U.S."
+    },
+    {
+      "name": "Instrumentointi Ltd",
+      "position": "Engineer Trainee",
+      "url": "http://www.insta.fi",
+      "startDate": "2000-11-01",
+      "endDate": "2004-02-01",
+      "summary": "Department: Insta Defence, Simulation Systems. Developing military training simulator systems. C++ programming and object-oriented design."
+    },
+    {
+      "name": "Digital Media Institute",
+      "position": "Research Assistant",
+      "url": "",
+      "startDate": "1999-02-01",
+      "endDate": "2000-03-01",
+      "summary": "Developing software-based MPEG-2 decoder for Pentium III processor. Optimization and processor-specific programming in C++."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Tampere University of Technology",
+      "url": "http://www.tut.fi/",
+      "area": "Engineering",
+      "studyType": "M.Sc.",
+      "startDate": "1996-08-01",
+      "endDate": "2004-12-01",
+      "gpa": "",
+      "summary": "Degree Program in Information Technology. Main subject: Computer Science. GPA: 3.02. Degree thesis: <a href=\"https://jln.fi/thesis.html\">Training Simulator for Optical Range Finder</a>. Thesis grade: 4 <a href=\"https://jln.fi/master.html\">Details</a>"
+    },
+    {
+      "institution": "Kitami Institute of Technology",
+      "url": "http://www.kitami-it.ac.jp/",
+      "area": "",
+      "studyType": "Exchange Student",
+      "startDate": "2000-04-01",
+      "endDate": "2000-10-01",
+      "gpa": ""
+    },
+    {
+      "institution": "Kauhajoki Senior High School",
+      "url": "http://lukio.kauhajoki.fi/",
+      "area": "",
+      "studyType": "",
+      "startDate": "1992-08-01",
+      "endDate": "1995-06-01",
+      "gpa": ""
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Parliament Elections",
+      "position": "Candidate",
+      "url": "",
+      "startDate": "2015-01-01",
+      "endDate": "2015-01-01"
+    },
+    {
+      "organization": "European Parliament Elections",
+      "position": "Candidate",
+      "url": "",
+      "startDate": "2004-01-01",
+      "endDate": "2004-01-01"
+    },
+    {
+      "organization": "Finnish Liberal Party",
+      "position": "Member of the Board",
+      "url": "",
+      "startDate": "2003-01-01",
+      "endDate": "2010-01-01"
+    }
+  ],
+  "projects": [
+    {
+      "name": "CVDB",
+      "description": "CV/Resume database made with Django. Open source, available in <a href=\"https://github.com/jarnoln/cvdb/\">Github</a>.",
+      "keywords": [
+        "Python", "Django", "BDD", "CI"
+      ],
+      "startDate": "2017-01-01",
+      "endDate": "2017-01-01",
+      "url": "https://makecv.net",
+      "entity": "",
+      "type": "Web service"
+    },
+    {
+      "name": "Mitasny",
+      "description": "Simple task/project manager made with Django using TDD. Open source, available in <a href=\"https://github.com/jarnoln/mitasny/\">Github</a>.",
+      "keywords": [
+        "Python", "Django", "Javascript", "TDD", "CI"
+      ],
+      "startDate": "2016-01-01",
+      "endDate": "2017-01-01",
+      "url": "http://mitasny.com",
+      "entity": "",
+      "type": "Web service"
+    },
+    {
+      "name": "Tyranny of Majority",
+      "description": "Web based collective decision-making tool for polling, voting and elections. Made with Python/Django, also used several other tools such as git, MySQL, HTML5, JavaScript etc.",
+      "keywords": [
+        "Python", "Django", "MySQL", "HTML5", "Javascript"
+      ],
+      "startDate": "2012-01-01",
+      "endDate": "2016-01-01",
+      "url": "http://tyrannyofmajority.net",
+      "entity": "",
+      "type": "Web service"
+    }
+  ]
+}
