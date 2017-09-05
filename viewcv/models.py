@@ -40,6 +40,9 @@ class Cv(models.Model):
     def get_absolute_url(self):
         return reverse('cv', args=[self.id])
 
+    class Meta:
+        ordering = ['-created']
+
 
 class Personal(models.Model):
     cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
@@ -47,6 +50,7 @@ class Personal(models.Model):
     phone = models.CharField(max_length=100, blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
     image = models.URLField(max_length=250, blank=True, default='')
+    profiles = models.CharField(max_length=1000, blank=True, default='[]')  # Actually a list
     summary = models.TextField(blank=True, default='')
 
 

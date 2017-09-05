@@ -56,7 +56,19 @@ def get_resume():
             "email": "clark.kent@dailybugle.com",
             "phone": "(912) 555-4321",
             "url": "http://clark.kent.com",
-            "summary": "Clark Kent grew up in Kansas."
+            "summary": "Clark Kent grew up in Kansas.",
+            "profiles": [
+                {
+                    "network": "Twitter",
+                    "username": "clarkkent",
+                    "url": ""
+                },
+                {
+                    "network": "SoundCloud",
+                    "username": "clarkkent",
+                    "url": "https://soundcloud.example.com/clarkkent"
+                }
+            ]
         },
         "work": []
     }
@@ -96,6 +108,7 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(personal.email, resume['basics']['email'])
         self.assertEqual(personal.phone, resume['basics']['phone'])
         self.assertEqual(personal.url, resume['basics']['url'])
+        self.assertEqual(personal.profiles, json.dumps(resume['basics']['profiles']))
         self.assertEqual(personal.summary, resume['basics']['summary'])
         self.assertEqual(Work.objects.count(), 2)
         work_1 = Work.objects.all()[0]

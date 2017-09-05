@@ -11,7 +11,7 @@ class CvSerializer(serializers.ModelSerializer):
 class PersonalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Personal
-        fields = ['cv', 'email', 'phone', 'url', 'image', 'summary']
+        fields = ['cv', 'email', 'phone', 'url', 'image', 'profiles', 'summary']
 
 
 class WorkSerializer(serializers.ModelSerializer):

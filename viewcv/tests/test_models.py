@@ -117,7 +117,8 @@ class PersonalModelTest(TestCase):
         creator = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=creator, name='cv', title='CV')
         info = Personal(cv=cv, phone='(912) 555 - 4321', url='http://richardhendricks.example.com',
-                        summary='Richard hails from Tulsa', image='http://richardhendricks.example.com/richard.png')
+                        summary='Richard hails from Tulsa', image='http://richardhendricks.example.com/richard.png',
+                        profiles='[]')
         info.save()
         self.assertEqual(Personal.objects.all().count(), 1)
         self.assertEqual(Personal.objects.all()[0], info)

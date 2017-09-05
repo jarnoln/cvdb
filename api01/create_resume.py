@@ -9,7 +9,10 @@ def create_resume(data, user):
     cv = Cv.objects.create(user=user, summary=data['basics']['summary'], title=data['basics']['label'])
     personal_data = data['basics']
     personal_data['cv'] = cv.id
+    if 'profiles' in data['basics']:
+        personal_data['profiles'] = json.dumps(data['basics']['profiles'])
     personal_serializer = PersonalSerializer(data=personal_data)
+
     if personal_serializer.is_valid():
         personal_serializer.save()
     else:
