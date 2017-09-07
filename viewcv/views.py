@@ -7,7 +7,7 @@ from api01.views import create_resume
 
 
 class UploadForm(forms.Form):
-    json_file = forms.FileField(label='Resume')
+    json_file = forms.FileField(label='Select CV/Resume file to upload')
 
 
 class HomeView(FormView):

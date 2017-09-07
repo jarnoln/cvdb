@@ -3,16 +3,37 @@
 
 {% block title %}Upload CV{% endblock %}
 {% block content %}
-<h1> CVDB </h1>
-
+<h1 class="text-center"> CVDB </h1>
+<p class="text-center"> <em> CV/Resume database </em> </p>
 {% if user.is_authenticated %}
-<h2> {% trans "Upload CV" %} </h2>
+<h3> {% trans "Upload CV" %} </h3>
+
+{% blocktrans %}
+<p>
+  Choose a CV/resume file to upload. The file needs to be in
+  <a href="https://github.com/jsonresume/resume-schema/blob/v1.0.0/examples/valid/complete.json">JSON resume</a> format.
+  Another example: <a href="https://github.com/jarnoln/cvdb/blob/master/examples/jln.json">jln.json</a>.
+</p>
+<p>
+  Tip: Might be easiest to download one of these examples, edit it with your own information and then upload.
+</p>
+{% endblocktrans %}
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button class="save btn btn-primary">{% trans "Send" %}</button>
+  <table class="table">
+    <tr>
+        <th class="nowrap"> {{ form.json_file.label_tag }} </th>
+        <td> <input type="file" name="json_file" required id="id_json_file" /> </td>
+        <td> {{ form.json_file.help_text }} </td>
+    </tr>
+    <tr> <td colspan="3"> <button class="save btn btn-primary">{% trans "Send" %}</button> </td> </tr>
+  </table>
 </form>
+{% else %}
+    <p> You can <a href="{% url 'cv_public_list' %}">browse public CVs</a>,
+    but you need to <a href="{% url 'account_login' %}">sign in</a> to be able to upload your own CV/Resume.
+    </p>
 {% endif %}
 
 {% endblock content %}
