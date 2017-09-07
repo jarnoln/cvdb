@@ -10,7 +10,8 @@
   {% include 'viewcv/snippets/cv_core.html' %}
 {% else %}
 <div class="text-right">
-  <a href="?display=fs">[{% trans 'Fullscreen' %}]</a>
+  <a href="{% url 'cv_update' cv.id %}">[{% trans 'Edit' %}]</a>
+  <a href="?format=html">[{% trans 'HTML' %}]</a>
   <a href="?format=pdf">[PDF]</a>
 </div>
 <div class="row">

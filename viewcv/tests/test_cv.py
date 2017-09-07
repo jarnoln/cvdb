@@ -194,15 +194,27 @@ class UpdateCvTest(ExtTestCase):
 
     def test_can_update_cv(self):
         creator = self.create_and_log_in_user()
-        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator)
+        cv = Cv.objects.create(name='org_name', title='Org title', user=creator)
+        self.assertEqual(cv.name, 'org_name')
+        self.assertEqual(cv.title, 'Org title')
+        self.assertEqual(cv.public, False)
+        self.assertEqual(cv.primary, False)
+        self.assertEqual(cv.css, '')
+        self.assertEqual(cv.css_url, 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
         self.assertEqual(Cv.objects.all().count(), 1)
         response = self.client.post(reverse('cv_update', args=[cv.id]),
-                                    {'name': 'updated_name', 'title': 'CV updated'},
+                                    {'name': 'updated_name', 'title': 'CV updated', 'public': True, 'primary': True,
+                                     'css': 'font-family: Times, serif;',
+                                     'css_url': 'http://tyrannyofmajority.net/static/css/tom.css'},
                                     follow=True)
         self.assertEqual(Cv.objects.all().count(), 1)
         cv = Cv.objects.all()[0]
         self.assertEqual(cv.name, 'updated_name')
         self.assertEqual(cv.title, 'CV updated')
+        self.assertEqual(cv.public, True)
+        self.assertEqual(cv.primary, True)
+        self.assertEqual(cv.css, 'font-family: Times, serif;')
+        self.assertEqual(cv.css_url, 'http://tyrannyofmajority.net/static/css/tom.css')
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
 
 

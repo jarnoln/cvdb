@@ -2,6 +2,8 @@
 {% load i18n %}
 {% block head_title %} {% trans "Edit CV" %} {% endblock %}
 {% block content %}
+<div> {{ form.non_field_errors }}</div>
+
 <form method="post" action="{% url 'cv_update' cv.id %}">
       <input type="hidden" name="next" value="{% url 'cv' cv.id %}" />
   {% csrf_token %}
@@ -30,6 +32,16 @@
         <th class="nowrap"> {{ form.primary.label_tag }} </th>
         <td> {{ form.primary }} </td>
         <td> {{ form.primary.help_text }} </td>
+    </tr>
+    <tr>
+        <th class="nowrap"> {{ form.css_url.label_tag }} </th>
+        <td> {{ form.css_url }} </td>
+        <td> {{ form.css_url.help_text }} </td>
+    </tr>
+    <tr>
+        <th class="nowrap"> {{ form.css.label_tag }} </th>
+        <td> {{ form.css }} </td>
+        <td> {{ form.css.help_text }} </td>
     </tr>
     <tr>
         <td colspan="2">

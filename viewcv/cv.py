@@ -58,7 +58,6 @@ class CvDetail(DetailView):
         context['messages'] = self.request.GET.get('message', '')
         context['display'] = self.request.GET.get('display', '')
         context['format'] = self.request.GET.get('format', '')
-        context['css_url'] = self.request.GET.get('css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
         return context
 
     def render_to_response(self, context, **response_kwargs):
@@ -84,7 +83,7 @@ class CvDetail(DetailView):
 
 class CvUpdate(UpdateView):
     model = Cv
-    fields = ['name', 'title', 'summary', 'public', 'primary']
+    fields = ['name', 'title', 'summary', 'public', 'primary', 'css', 'css_url']
 
     def get_object(self):
         cv = super(CvUpdate, self).get_object()
