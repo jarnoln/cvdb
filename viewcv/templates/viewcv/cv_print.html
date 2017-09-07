@@ -1,0 +1,9 @@
+{% extends "viewcv/base_print.html" %}
+
+{% load account %}
+{% load i18n %}
+
+{% block head_title %}{% if cv.title %}{{ cv.title }}{% else %}CV{% endif %}{% endblock %}
+{% block content %}
+ {% include 'viewcv/snippets/cv_core.html' %}
+{% endblock content %}

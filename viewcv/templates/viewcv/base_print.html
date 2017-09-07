@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+{% load i18n %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ css_url }}">
+    <title> {% block head_title %}CVDB{% endblock %} </title>
+  </head>
+  <body>
+{% block content %}{% endblock %}
+  </body>
+</html>

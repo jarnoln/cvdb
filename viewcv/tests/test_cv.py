@@ -152,9 +152,11 @@ class CvDetailTest(ExtTestCase):
         self.assertContains(response, 'commonNavbar')
         response = self.client.get(reverse('cv_public', args=[creator.username]) + '?format=html')
         self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'viewcv/cv_print.html')
         self.assertEqual(response.context['format'], 'html')
         self.assertNotContains(response, 'commonNavbar')
         response = self.client.get(reverse('cv_public', args=[creator.username]) + '?format=pdf')
+        self.assertTemplateUsed(response, 'viewcv/cv_print.html')
         self.assertEqual(response['Content-Type'], 'application/pdf')
 
     def test_public_cv(self):
