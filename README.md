@@ -6,8 +6,13 @@
 
 CV database for storing and displaying CVs and resumes. There are many like it, but this one is mine.
 
- - Resumes can be uploaded in [JSON resume format](https://github.com/jsonresume)
- - [Open source](https://github.com/jarnoln/cvdb/) (MIT licence)
+ - CVs and resumes can be uploaded in [JSON resume format](https://github.com/jsonresume)
+ - They can be exported as HTML and PDF
+ - Can choose CSS file to be used for styling the CV or write your own CSS
+ - [Open source](https://github.com/jarnoln/cvdb/)
+   ([MIT licence](https://github.com/jarnoln/cvdb/blob/master/LICENSE))
+
+Running instance at [cvdb.fi](https://cvdb.fi).
 
 Using
 -----

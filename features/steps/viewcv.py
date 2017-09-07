@@ -33,11 +33,12 @@ def step_impl(context, text):
 @when(u'I fill signup form')
 def step_impl(context):
     context.browser.find_element_by_id('id_username').send_keys(context.username)
-    context.browser.find_element_by_id('id_email').send_keys(context.email)
+    # context.browser.find_element_by_id('id_email').send_keys(context.email)
     context.browser.find_element_by_id('id_password1').send_keys(context.password)
     context.browser.find_element_by_id('id_password2').send_keys(context.password)
-    context.browser.find_element_by_id('id_password2').send_keys(Keys.ENTER)
     sleep(2)
+    context.browser.find_element_by_id('id_password2').send_keys(Keys.ENTER)
+    sleep(4)
 
 
 @when(u'I fill login form')
