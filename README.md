@@ -7,7 +7,7 @@
 CV database for storing and displaying CVs and resumes. There are many like it, but this one is mine.
 
  - Resumes can be uploaded in [JSON resume format](https://github.com/jsonresume)
- - Open source (MIT licence)
+ - [Open source](https://github.com/jarnoln/cvdb/) (MIT licence)
 
 Using
 -----

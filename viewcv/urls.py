@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from .views import HomeView, UploadCvView
+from .about import AboutView
 from .cv import CvOwnList, CvPublicList, CvDetail, CvUpdate, CvDelete
 
 
@@ -12,5 +13,6 @@ urlpatterns = [
     url(r'^upload/$', login_required(UploadCvView.as_view()), name='upload'),
     url(r'^list/$', CvPublicList.as_view(), name='cv_public_list'),
     url(r'^my_cvs/$', login_required(CvOwnList.as_view()), name='cv_list'),
+    url(r'^about/$', AboutView.as_view(), name='about'),
     url(r'^$', UploadCvView.as_view(), name='home'),
 ]
