@@ -10,12 +10,30 @@
   {% include 'viewcv/snippets/cv_core.html' %}
 {% else %}
 <div class="text-right">
-  <a href="{% url 'cv_update' cv.id %}">[{% trans 'Edit' %}]</a>
-  <a href="?format=html">[{% trans 'HTML' %}]</a>
-  <a href="?format=pdf">[PDF]</a>
+  {% trans 'Export as:' %}
+  <a href="?format=html">{% trans 'HTML' %}</a>
+  <a href="?format=pdf">PDF</a>
 </div>
 <div class="row">
-  <div class="col-2"> &nbsp; </div>
+  <div class="col-2">
+    {% if user.is_authenticated and user == cv.user %}
+    <table class="table">
+      <tr> <td> {% trans 'Public' %}</td> <th> {{ cv.public }}</th></tr>
+      <tr> <td> {% trans 'Primary' %}</td> <th> {{ cv.primary }}</th></tr>
+      <tr>
+        <td> {% trans 'CSS' %} </td>
+        <th> {% if cv.css %} {% trans 'Yes' %} {%  else %} {%  trans 'No' %} {% endif %}</th>
+      </tr>
+      <tr> <th colspan="2"> {% trans 'CSS link' %} </th> <tr>
+      <tr> <td colspan="2"> <a href="{{ cv.css_url }}">{{ cv.css_file_name|truncatechars:20 }}</a> </td></tr>
+      <tr>
+        <td colspan="2">
+          <a class="btn btn-primary btn-sm" href="{% url 'cv_update' cv.id %}">{% trans 'Edit' %}</a>
+        </td>
+      </tr>
+    </table>
+    {% endif %}
+  </div>
   <div class="col-8">
   {% include 'viewcv/snippets/cv_core.html' %}
   </div>

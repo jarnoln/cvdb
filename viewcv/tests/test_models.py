@@ -25,6 +25,13 @@ class CvModelTest(TestCase):
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         self.assertEqual(cv.get_absolute_url(), '/cv/%d/' % cv.id)
 
+    def test_css_file_name(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV', public=False, primary=False,
+                               css_url='http://richardhendricks.example.com/default.css',
+                               css='p { font-family: "Times New Roman", Times, serif; }')
+        self.assertEqual(cv.css_file_name, 'default.css')
+
     def test_get_personal_info(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')

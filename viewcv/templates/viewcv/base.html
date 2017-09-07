@@ -36,7 +36,7 @@
           <li class="nav-item">
             <form method="post" action="{% url 'account_logout' %}">
               {% csrf_token %}
-              <button class="btn btn-primary" id="navbar_logout">{% trans 'Logout' %}</button>
+              <button class="btn btn-link nav-link" id="navbar_logout">{% trans 'Logout' %}</button>
             </form>
           </li>
   {% else %}
