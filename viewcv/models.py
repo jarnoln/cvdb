@@ -14,6 +14,12 @@ class Cv(models.Model):
     summary = models.TextField(blank=True, default='')
     public = models.BooleanField(blank=True, default=False)  # Can this CV be viewed by others
     primary = models.BooleanField(blank=True, default=False)  # Is this the primary CV for this user
+    css = models.TextField(blank=True, default='',
+                           help_text=ugettext_lazy('CSS used for styling CV'))
+    css_url = models.URLField(max_length=250, blank=True,
+                              help_text=ugettext_lazy('Link to CSS file used for styling CV'),
+                              default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     edited = models.DateTimeField(auto_now=True, null=True, blank=True)
 

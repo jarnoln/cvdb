@@ -15,7 +15,9 @@ class CvModelTest(TestCase):
 
     def test_string(self):
         user = auth.get_user_model().objects.create(username='creator')
-        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        cv = Cv.objects.create(user=user, name='cv', title='CV',
+                               css_url='http://richardhendricks.example.com/default.css',
+                               css='p { font-family: "Times New Roman", Times, serif; }')
         self.assertEqual(str(cv), cv.name)
 
     def test_url(self):
