@@ -15,6 +15,9 @@
         - nginx
         - git
         - python-virtualenv
+        - build-essential
+        - python3-dev
+        - libffi-dev
 
     - name: start nginx
       service: name=nginx state=started
