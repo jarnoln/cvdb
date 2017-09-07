@@ -141,6 +141,22 @@ class CvDetailTest(ExtTestCase):
         self.assertEqual(response.context['display'], 'fs')
         self.assertNotContains(response, 'commonNavbar')
 
+    def test_format_arg(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator, public=True, primary=True)
+        response = self.client.get(reverse('cv_public', args=[creator.username]))
+        self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
+        self.assertEqual(response.context['cv'], cv)
+        self.assertEqual(response.context['format'], '')
+        self.assertContains(response, 'commonNavbar')
+        response = self.client.get(reverse('cv_public', args=[creator.username]) + '?format=html')
+        self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
+        self.assertEqual(response.context['format'], 'html')
+        self.assertNotContains(response, 'commonNavbar')
+        response = self.client.get(reverse('cv_public', args=[creator.username]) + '?format=pdf')
+        self.assertEqual(response['Content-Type'], 'application/pdf')
+
     def test_public_cv(self):
         creator = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator, public=True, primary=True)

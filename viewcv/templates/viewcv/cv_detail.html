@@ -6,11 +6,12 @@
 {% block head_title %}{% if cv.title %}{{ cv.title }}{% else %}CV{% endif %}{% endblock %}
 {% block content %}
 
-{% if display == 'fs' %}
+{% if display == 'fs' or format %}
   {% include 'viewcv/snippets/cv_core.html' %}
 {% else %}
 <div class="text-right">
   <a href="?display=fs">[{% trans 'Fullscreen' %}]</a>
+  <a href="?format=pdf">[PDF]</a>
 </div>
 <div class="row">
   <div class="col-2"> &nbsp; </div>

@@ -1,9 +1,12 @@
+import weasyprint
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.files.storage import FileSystemStorage
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib import auth
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 from .models import Cv
 
 
@@ -54,7 +57,22 @@ class CvDetail(DetailView):
         context = super(CvDetail, self).get_context_data(**kwargs)
         context['messages'] = self.request.GET.get('message', '')
         context['display'] = self.request.GET.get('display', '')
+        context['format'] = self.request.GET.get('format', '')
         return context
+
+    def render_to_response(self, context, **response_kwargs):
+        if context['format'] == 'pdf':
+            file_name = '{}.pdf'.format(self.object.user.username)
+            html_string = render_to_string(self.get_template_names()[0], context=context)
+            html = weasyprint.HTML(string=html_string)
+            html.write_pdf(file_name)
+            # fs = FileSystemStorage('/tmp')
+            with open(file_name, 'rb') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename="{}"'.format(file_name)
+                return response
+
+        return super(CvDetail, self).render_to_response(context, **response_kwargs)
 
 
 class CvUpdate(UpdateView):
