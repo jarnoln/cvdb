@@ -49,14 +49,6 @@ class Cv(models.Model):
     edited = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     @property
-    def css_file_name(self):
-        # items = self.css_url.split('/')
-        # if len(items) == 0:
-        return ''
-
-        # return str(items[-1])
-
-    @property
     def personal(self):
         personal = Personal.objects.filter(cv=self)
         if personal.count() == 1:

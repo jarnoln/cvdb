@@ -24,12 +24,6 @@ class CvModelTest(TestCase):
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         self.assertEqual(cv.get_absolute_url(), '/cv/%d/' % cv.id)
 
-    @skip
-    def test_css_file_name(self):
-        user = auth.get_user_model().objects.create(username='creator')
-        cv = Cv.objects.create(user=user, name='cv', title='CV', public=False, primary=False)
-        self.assertEqual(cv.css_file_name, 'default.css')
-
     def test_get_personal_info(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
@@ -253,6 +247,17 @@ class EducationModelTest(TestCase):
                                              end_date=datetime.date(2014, 1, 1))
         self.assertEqual(str(education), '{}:{}:{}'.format(education.institution, education.area, education.study_type))
 
+    def test_duration(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        education = Education.objects.create(cv=cv, institution='University of Oklahoma', area="IT",
+                                             study_type='Bachelor', gpa='4.0',
+                                             start_date=datetime.date(2011, 6, 1),
+                                             end_date=datetime.date(2014, 1, 1))
+        self.assertEqual(education.duration_years, 2)
+        self.assertEqual(education.duration_months, 7)
+        self.assertEqual(education.duration_str, '2 years, 7 months')
+
 
 class ProjectModelTest(TestCase):
     def test_can_save_and_load(self):
@@ -275,6 +280,19 @@ class ProjectModelTest(TestCase):
                                          start_date=datetime.date(2016, 8, 24),
                                          end_date=datetime.date(2016, 8, 24))
         self.assertEqual(str(project), project.name)
+        self.assertEqual(project.duration_str, '')
+
+    def test_duration(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         start_date=datetime.date(2016, 8, 1),
+                                         end_date=datetime.date(2016, 9, 1))
+        self.assertEqual(project.duration_str, '1 month')
+        self.assertEqual(project.duration_years, 0)
+        self.assertEqual(project.duration_months, 1)
 
 
 class SkillModelTest(TestCase):
@@ -331,3 +349,15 @@ class VolunteerModelTest(TestCase):
                                              start_date=datetime.date(2012, 1, 1),
                                              end_date=datetime.date(2013, 1, 1))
         self.assertEqual(str(volunteer), '{}:{}'.format(volunteer.organization, volunteer.position))
+
+    def test_duration(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        volunteer = Volunteer.objects.create(cv=cv, organization='CoderDojo', position="Teacher",
+                                             url='http://coderdojo.example.com/',
+                                             summary='Global movement of free coding clubs for young people.',
+                                             start_date=datetime.date(2012, 1, 1),
+                                             end_date=datetime.date(2013, 1, 1))
+        self.assertEqual(volunteer.duration_str, '1 year')
+        self.assertEqual(volunteer.duration_years, 1)
+        self.assertEqual(volunteer.duration_months, 0)
