@@ -22,10 +22,10 @@
       <tr> <td> {% trans 'Primary' %}</td> <th> {{ cv.primary }}</th></tr>
       <tr>
         <td> {% trans 'CSS' %} </td>
-        <th> {% if cv.css %} {% trans 'Yes' %} {%  else %} {%  trans 'No' %} {% endif %}</th>
+        <th> {% if cv.css %} {{ cv.css.title }} {%  else %} {%  trans 'No' %} {% endif %}</th>
       </tr>
       <tr> <th colspan="2"> {% trans 'CSS link' %} </th> <tr>
-      <tr> <td colspan="2"> <a href="{{ cv.css_url }}">{{ cv.css_file_name|truncatechars:20 }}</a> </td></tr>
+      <tr> <td colspan="2"> <a href="{{ cv.css_url.url }}">{{ cv.css_url.title|truncatechars:20 }}</a> </td></tr>
       <tr>
         <td colspan="2">
           <a class="btn btn-primary btn-sm" href="{% url 'cv_update' cv.id %}">{% trans 'Edit' %}</a>

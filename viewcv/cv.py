@@ -1,7 +1,6 @@
 import logging
 import weasyprint
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.core.files.storage import FileSystemStorage
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.http import Http404, HttpResponse
@@ -87,7 +86,7 @@ class CvDetail(DetailView):
 
 class CvUpdate(UpdateView):
     model = Cv
-    fields = ['name', 'title', 'summary', 'public', 'primary'] #, 'css', 'css_url']
+    fields = ['name', 'title', 'summary', 'public', 'primary', 'css', 'css_url']
 
     def get_object(self):
         cv = super(CvUpdate, self).get_object()

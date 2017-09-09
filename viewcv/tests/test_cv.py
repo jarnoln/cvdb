@@ -3,7 +3,7 @@ import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from users.tests.ext_test_case import ExtTestCase
-from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project
+from viewcv.models import Cv, Personal, Css, CssUrl, Work, Education, Volunteer, Skill, Language, Project
 
 
 class CvOwnListTest(ExtTestCase):
@@ -199,14 +199,17 @@ class UpdateCvTest(ExtTestCase):
         self.assertEqual(cv.title, 'Org title')
         self.assertEqual(cv.public, False)
         self.assertEqual(cv.primary, False)
-        # self.assertEqual(cv.css, '')
-        # self.assertEqual(cv.css_url, 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+        self.assertEqual(cv.css, None)
+        self.assertEqual(cv.css_url, None)
         self.assertEqual(Cv.objects.all().count(), 1)
+
+        css = Css.objects.create(creator=creator, name='mycss', title='My CSS', summary='Summary',
+                                 css='p { font-family: "Times New Roman", Times, serif; }')
+        css_url = CssUrl.objects.create(creator=creator, name='my_css_url', title='My CSS URL', summary='Summary',
+                                        url='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.css')
         response = self.client.post(reverse('cv_update', args=[cv.id]),
                                     {'name': 'updated_name', 'title': 'CV updated', 'public': True, 'primary': True,
-                                     # 'css': 'font-family: Times, serif;',
-                                     # 'css_url': 'http://tyrannyofmajority.net/static/css/tom.css'
-                                    },
+                                     'css': css.id, 'css_url': css_url.id},
                                     follow=True)
         self.assertEqual(Cv.objects.all().count(), 1)
         cv = Cv.objects.all()[0]
@@ -214,8 +217,8 @@ class UpdateCvTest(ExtTestCase):
         self.assertEqual(cv.title, 'CV updated')
         self.assertEqual(cv.public, True)
         self.assertEqual(cv.primary, True)
-        # self.assertEqual(cv.css, 'font-family: Times, serif;')
-        # self.assertEqual(cv.css_url, 'http://tyrannyofmajority.net/static/css/tom.css')
+        self.assertEqual(cv.css, css)
+        self.assertEqual(cv.css_url, css_url)
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
 
 

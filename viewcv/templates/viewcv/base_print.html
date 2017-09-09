@@ -7,11 +7,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 {% if cv.css_url %}
-    <link rel="stylesheet" href="{{ cv.css_url }}">
+    <link rel="stylesheet" href="{{ cv.css_url.url }}">
 {% endif %}
 {% if cv.css %}
   <style type="text/css">
-    {{ cv.css }}
+    {{ cv.css.css }}
   </style>
 {% endif %}
     <title> {% block head_title %}CVDB{% endblock %} </title>

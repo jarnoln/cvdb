@@ -6,6 +6,32 @@ from django.utils.translation import ugettext_lazy
 from viewcv.durations import calculate_duration, duration_as_string
 
 
+class Css(models.Model):
+    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    name = models.SlugField(max_length=100, default='', verbose_name=ugettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
+    summary = models.TextField(blank=True, default='')
+    css = models.TextField(blank=True, default='')
+
+    def __str__(self):
+        return self.title
+        # return '{}:{}'.format(self.name, self.title)
+
+
+class CssUrl(models.Model):
+    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    name = models.SlugField(max_length=100, default='bootstrap400', verbose_name=ugettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='Bootstrap 4.0.0', verbose_name=ugettext_lazy('title'))
+    summary = models.TextField(blank=True, default='')
+    url = models.URLField(max_length=250, blank=True,
+                          help_text=ugettext_lazy('Link to CSS file'),
+                          default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+
+    def __str__(self):
+        return self.title
+        # return '{}:{}:{}'.format(self.name, self.title, self.url)
+
+
 class Cv(models.Model):
     user = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
     name = models.SlugField(max_length=100, default='default', verbose_name=ugettext_lazy('name'))
@@ -15,12 +41,10 @@ class Cv(models.Model):
                                  help_text=ugettext_lazy('Are other users allowed to see this CV'))
     primary = models.BooleanField(blank=True, default=False,
                                   help_text=ugettext_lazy('Is this the primary CV for this user'))
-    # css = models.TextField(blank=True, default='',
-    #                       help_text=ugettext_lazy('CSS used for styling CV'))
-    # css_url = models.URLField(max_length=250, blank=True,
-    #                          help_text=ugettext_lazy('Link to CSS file used for styling CV'),
-    #                          default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
-
+    css = models.ForeignKey(Css, null=True, blank=True, default=None,
+                            help_text=ugettext_lazy('CSS used for styling CV'))
+    css_url = models.ForeignKey(CssUrl, null=True, blank=True, default=None,
+                                help_text=ugettext_lazy('Link to CSS file used for styling CV'))
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     edited = models.DateTimeField(auto_now=True, null=True, blank=True)
 
@@ -72,30 +96,6 @@ class Personal(models.Model):
     @property
     def profile_list(self):
         return json.loads(self.profiles)
-
-
-class Css(models.Model):
-    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
-    name = models.SlugField(max_length=100, default='', verbose_name=ugettext_lazy('name'))
-    title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
-    summary = models.TextField(blank=True, default='')
-    css = models.TextField(blank=True, default='')
-
-    def __str__(self):
-        return '{}:{}'.format(self.name, self.title)
-
-
-class CssUrl(models.Model):
-    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
-    name = models.SlugField(max_length=100, default='bootstrap400', verbose_name=ugettext_lazy('name'))
-    title = models.CharField(max_length=250, blank=True, default='Bootstrap 4.0.0', verbose_name=ugettext_lazy('title'))
-    summary = models.TextField(blank=True, default='')
-    url = models.URLField(max_length=250, blank=True,
-                          help_text=ugettext_lazy('Link to CSS file'),
-                          default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
-
-    def __str__(self):
-        return '{}:{}:{}'.format(self.name, self.title, self.url)
 
 
 class Work(models.Model):

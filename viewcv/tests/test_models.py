@@ -160,7 +160,8 @@ class CssModelTest(TestCase):
         creator = auth.get_user_model().objects.create(username='creator')
         css = Css.objects.create(creator=creator, name='mycss', title='My CSS', summary='Summary',
                                  css='p { font-family: "Times New Roman", Times, serif; }')
-        self.assertEqual(str(css), '{}:{}'.format(css.name, css.title))
+        # self.assertEqual(str(css), '{}:{}'.format(css.name, css.title))
+        self.assertEqual(str(css), css.title)
 
 
 class CssUrlModelTest(TestCase):
@@ -176,7 +177,8 @@ class CssUrlModelTest(TestCase):
         creator = auth.get_user_model().objects.create(username='creator')
         css_url = CssUrl.objects.create(creator=creator, name='my_css_url', title='My CSS URL', summary='Summary',
                                         url='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.css')
-        self.assertEqual(str(css_url), '{}:{}:{}'.format(css_url.name, css_url.title, css_url.url))
+        # self.assertEqual(str(css_url), '{}:{}:{}'.format(css_url.name, css_url.title, css_url.url))
+        self.assertEqual(str(css_url), css_url.title)
 
 
 class WorkModelTest(TestCase):
