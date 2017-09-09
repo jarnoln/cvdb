@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
+# from django.utils.log import RequireDebugFalse, RequireDebugTrue
 
 try:
     from .passwords import SECRET_KEY
@@ -23,6 +24,8 @@ except ImportError:
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR = os.path.dirname(BASE_DIR)
+LOG_DIR = os.path.join(SITE_DIR, 'log')
+assert os.path.exists(LOG_DIR), 'Log directory {} does not exist'.format(LOG_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -144,16 +147,34 @@ LOGGING = {
             'format': '%(levelname)s %(message)s'
         },
     },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'handlers': {
         'console': {
             'level': 'DEBUG',
+            # 'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
-        }
+        },
+        'file': {
+            'level': 'DEBUG',
+            # 'filters': ['require_debug_false'],
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'cvdb.log'),
+            'maxBytes': 1024*1024,
+            'backupCount': 2,
+            'formatter': 'verbose'
+        },
     },
     'loggers': {
         'viewcv': {
-            'handlers': ['console'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False
         }
