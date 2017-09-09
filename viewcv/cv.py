@@ -87,7 +87,7 @@ class CvDetail(DetailView):
 
 class CvUpdate(UpdateView):
     model = Cv
-    fields = ['name', 'title', 'summary', 'public', 'primary', 'css', 'css_url']
+    fields = ['name', 'title', 'summary', 'public', 'primary'] #, 'css', 'css_url']
 
     def get_object(self):
         cv = super(CvUpdate, self).get_object()

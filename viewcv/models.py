@@ -15,22 +15,22 @@ class Cv(models.Model):
                                  help_text=ugettext_lazy('Are other users allowed to see this CV'))
     primary = models.BooleanField(blank=True, default=False,
                                   help_text=ugettext_lazy('Is this the primary CV for this user'))
-    css = models.TextField(blank=True, default='',
-                           help_text=ugettext_lazy('CSS used for styling CV'))
-    css_url = models.URLField(max_length=250, blank=True,
-                              help_text=ugettext_lazy('Link to CSS file used for styling CV'),
-                              default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    # css = models.TextField(blank=True, default='',
+    #                       help_text=ugettext_lazy('CSS used for styling CV'))
+    # css_url = models.URLField(max_length=250, blank=True,
+    #                          help_text=ugettext_lazy('Link to CSS file used for styling CV'),
+    #                          default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
 
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     edited = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     @property
     def css_file_name(self):
-        items = self.css_url.split('/')
-        if len(items) == 0:
-            return ''
+        # items = self.css_url.split('/')
+        # if len(items) == 0:
+        return ''
 
-        return str(items[-1])
+        # return str(items[-1])
 
     @property
     def personal(self):
