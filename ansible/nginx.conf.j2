@@ -6,6 +6,10 @@ server {
     ssl_certificate /etc/letsencrypt/live/{{ host }}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/{{ host }}/privkey.pem;
 
+    location /favicon.ico {
+        alias /home/{{ ansible_ssh_user }}/sites/jln-static/favicon.ico;
+    }
+
     location /static {
         alias /home/{{ ansible_ssh_user }}/sites/{{ host }}/static;
         autoindex on;
