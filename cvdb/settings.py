@@ -21,17 +21,18 @@ except ImportError:
     print('python cvdb/generate_passwords.py cvdb/passwords.py')
     sys.exit(1)
 
+DEBUG = True
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR = os.path.dirname(BASE_DIR)
-LOG_DIR = os.path.join(SITE_DIR, 'log')
+if DEBUG:
+    LOG_DIR = BASE_DIR
+else:
+    LOG_DIR = os.path.join(SITE_DIR, 'log')
 assert os.path.exists(LOG_DIR), 'Log directory {} does not exist'.format(LOG_DIR)
 
-# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 SITE_ID = 1
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'makecv.net', 'www.makecv.net', 'cvdb.fi', 'www.cvdb.fi', 'cvdb.jarnoln.net']
@@ -136,11 +137,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(SITE_DIR, 'static')
 
 # Security
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 X_FRAME_OPTIONS = 'DENY'
 
 LOGGING = {
@@ -179,7 +180,7 @@ LOGGING = {
             'formatter': 'verbose'
         },
         'mail_admins': {
-            'level': 'WARNING',
+            'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
             'include_html': True,
         }

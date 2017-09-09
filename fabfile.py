@@ -77,6 +77,8 @@ def _get_latest_source(source_folder):
 def _update_settings(source_folder):
     settings_path = source_folder + '/cvdb/settings.py'
     sed(settings_path, "DEBUG = True", "DEBUG = False")
+    # sed(settings_path, "CSRF_COOKIE_SECURE = False", "CSRF_COOKIE_SECURE = True")
+    # sed(settings_path, "SESSION_COOKIE_SECURE = False", "SESSION_COOKIE_SECURE = True")
 
 
 def _check_settings(source_folder, python):
