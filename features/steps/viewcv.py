@@ -8,6 +8,7 @@ from selenium.webdriver.common.keys import Keys
 def open_root_page(context):
     # context.browser.get(context.get_url('/'))
     context.browser.get('http://127.0.0.1:8000/')
+    # context.browser.get('http://cvdb.fi')
     sleep(1)
 
 
