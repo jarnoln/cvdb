@@ -183,6 +183,7 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
             'include_html': True,
+            'formatter': 'verbose'
         }
     },
     'loggers': {

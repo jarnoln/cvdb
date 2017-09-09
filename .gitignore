@@ -1,6 +1,7 @@
 *.pyc
 *.log
 *.retry
+*.pdf
 __pycache__
 db.sqlite3
 .idea
