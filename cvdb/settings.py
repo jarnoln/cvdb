@@ -32,11 +32,11 @@ assert os.path.exists(LOG_DIR), 'Log directory {} does not exist'.format(LOG_DIR
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 SITE_ID = 1
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'makecv.net', 'www.makecv.net', 'cvdb.fi', 'www.cvdb.fi', 'cvdb.jarnoln.net']
+ADMINS = [('Jarno', 'jarnoln@gmail.com')]
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -98,7 +98,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cvdb.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -136,6 +135,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(SITE_DIR, 'static')
 
+# Security
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -171,12 +173,26 @@ LOGGING = {
             'backupCount': 2,
             'formatter': 'verbose'
         },
+        'mail_admins': {
+            'level': 'WARNING',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        }
     },
     'loggers': {
         'viewcv': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'DEBUG',
             'propagate': False
+        },
+        'django.request': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'WARNING',
+            'propagate': False
+        },
+        'django': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'INFO',
         }
     }
 }
