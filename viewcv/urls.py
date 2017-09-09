@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
-from .views import HomeView, UploadCvView
+from .upload import UploadCvView
 from .about import AboutView
 from .cv import CvOwnList, CvPublicList, CvDetail, CvUpdate, CvDelete
 
