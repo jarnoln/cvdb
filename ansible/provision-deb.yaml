@@ -23,6 +23,7 @@
         - shared-mime-info
         - python3-dev
         - libffi-dev
+        - postfix
 
     - name: start nginx
       service: name=nginx state=started

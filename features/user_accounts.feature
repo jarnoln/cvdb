@@ -39,7 +39,6 @@ Feature: User account management
     Scenario: Delete account
         When I click link "Delete account"
         Then I will see title "Confirm delete user"
-         # And I will see element "button_delete"
          And I will see button "Delete"
 
         When I click button "Delete"

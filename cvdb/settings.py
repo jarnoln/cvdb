@@ -111,6 +111,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = []
 
+# Email settings
+SERVER_EMAIL = 'django@cvdb.fi'  # Used for error and log messages
+DEFAULT_FROM_EMAIL = 'accounts@cvdb.fi'  # Used for normal emails (mostly account email verifications)
+
 # Django allauth settings
 # http://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
