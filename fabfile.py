@@ -42,6 +42,7 @@ def deploy():
     _init_virtualenv(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder)
+    _check_settings(source_folder, python)
     _install_virtualenv_libraries(source_folder, pip)
     _check_secret_key(source_folder, python)
     _update_database(source_folder, python)
@@ -76,6 +77,10 @@ def _get_latest_source(source_folder):
 def _update_settings(source_folder):
     settings_path = source_folder + '/cvdb/settings.py'
     sed(settings_path, "DEBUG = True", "DEBUG = False")
+
+
+def _check_settings(source_folder, python):
+    run('cd %s && %s manage.py check --deploy' % (source_folder, python))
 
 
 def _install_virtualenv_libraries(source_folder, pip):
