@@ -74,6 +74,30 @@ class Personal(models.Model):
         return json.loads(self.profiles)
 
 
+class Css(models.Model):
+    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    name = models.SlugField(max_length=100, default='', verbose_name=ugettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
+    summary = models.TextField(blank=True, default='')
+    css = models.TextField(blank=True, default='')
+
+    def __str__(self):
+        return '{}:{}'.format(self.name, self.title)
+
+
+class CssUrl(models.Model):
+    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    name = models.SlugField(max_length=100, default='bootstrap400', verbose_name=ugettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='Bootstrap 4.0.0', verbose_name=ugettext_lazy('title'))
+    summary = models.TextField(blank=True, default='')
+    url = models.URLField(max_length=250, blank=True,
+                          help_text=ugettext_lazy('Link to CSS file'),
+                          default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+
+    def __str__(self):
+        return '{}:{}:{}'.format(self.name, self.title, self.url)
+
+
 class Work(models.Model):
     cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')

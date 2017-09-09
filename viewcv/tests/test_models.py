@@ -2,7 +2,7 @@ import datetime
 # from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
-from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project
+from viewcv.models import Cv, Personal, Css, CssUrl, Work, Education, Volunteer, Skill, Language, Project
 
 
 class CvModelTest(TestCase):
@@ -147,6 +147,38 @@ class PersonalModelTest(TestCase):
         self.assertEqual(profile_list[1]['network'], 'SC')
         self.assertEqual(profile_list[1]['username'], 'kent')
         self.assertEqual(profile_list[1]['url'], 'https://soundcloud.example.com/kent')
+
+
+class CssModelTest(TestCase):
+    def test_can_save_and_load(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        css = Css(creator=creator, name='mycss', title='My CSS', summary='Summary',
+                  css='p { font-family: "Times New Roman", Times, serif; }')
+        css.save()
+        self.assertEqual(Css.objects.all().count(), 1)
+        self.assertEqual(Css.objects.all()[0], css)
+
+    def test_string(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        css = Css.objects.create(creator=creator, name='mycss', title='My CSS', summary='Summary',
+                                 css='p { font-family: "Times New Roman", Times, serif; }')
+        self.assertEqual(str(css), '{}:{}'.format(css.name, css.title))
+
+
+class CssUrlModelTest(TestCase):
+    def test_can_save_and_load(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        css_url = CssUrl(creator=creator, name='my_css_url', title='My CSS URL', summary='Summary',
+                         url='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+        css_url.save()
+        self.assertEqual(CssUrl.objects.all().count(), 1)
+        self.assertEqual(CssUrl.objects.all()[0], css_url)
+
+    def test_string(self):
+        creator = auth.get_user_model().objects.create(username='creator')
+        css_url = CssUrl.objects.create(creator=creator, name='my_css_url', title='My CSS URL', summary='Summary',
+                                        url='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.css')
+        self.assertEqual(str(css_url), '{}:{}:{}'.format(css_url.name, css_url.title, css_url.url))
 
 
 class WorkModelTest(TestCase):
