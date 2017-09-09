@@ -166,12 +166,12 @@ class CvDetailTest(ExtTestCase):
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.context['cv'], cv)
 
-    def cant_view_public_cv_if_none_set_as_public(self):
+    def test_cant_view_public_cv_if_none_set_as_public(self):
         creator = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(name='test_cv', title='Test CV', user=creator, public=False, primary=False)
         response = self.client.get(reverse('cv_public', args=[creator.username]))
-        self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
-        self.assertEqual(response.context['cv'], cv)
+        self.assertTemplateUsed(response, '404.html')
+        self.assertNotIn('cv', response.context)
 
 
 class UpdateCvTest(ExtTestCase):

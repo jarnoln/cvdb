@@ -1,3 +1,4 @@
+import logging
 import weasyprint
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.core.files.storage import FileSystemStorage
@@ -41,15 +42,18 @@ class CvDetail(DetailView):
     model = Cv
 
     def get_object(self, queryset=None):
+        # logger = logging.getLogger(__name__)
         if 'slug' in self.kwargs:
-            user = get_object_or_404(auth.get_user_model(), username=self.kwargs['slug'])
+            username = self.kwargs['slug']
+            # logger.debug('CvDetail:username={}'.format(username))
+            user = get_object_or_404(auth.get_user_model(), username=username)
             cv = Cv.objects.filter(user=user, public=True, primary=True)
-            if cv.count() == 0:
+            cv_count = cv.count()
+            if cv_count == 0:
                 raise Http404
-            elif cv.count() == 1:
-                return cv.first()
             else:
                 return cv.first()
+
         else:
             return super(CvDetail, self).get_object()
 
