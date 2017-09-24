@@ -60,6 +60,14 @@
   ],
   "work": [
     {
+      "name": "Vaisto Solutions",
+      "position": "SW Specialist",
+      "url": "http://vaisto.io",
+      "startDate": "2017-09-01",
+      "endDate": "2017-10-01",
+      "summary": "Python/Django development. Test automation."
+    },
+    {
       "name": "Symbio",
       "position": "SW Specialist",
       "url": "http://www.symbio.com",
@@ -146,7 +154,7 @@
       ],
       "startDate": "2017-01-01",
       "endDate": "2017-01-01",
-      "url": "https://makecv.net",
+      "url": "https://cvdb.fi",
       "entity": "",
       "type": "Web service"
     },
@@ -159,6 +167,18 @@
       "startDate": "2016-01-01",
       "endDate": "2017-01-01",
       "url": "http://mitasny.com",
+      "entity": "",
+      "type": "Web service"
+    },
+    {
+      "name": "Plokkeri",
+      "description": "Simple blogging platform. Open source, available in <a href=\"https://github.com/jarnoln/plokkeri/\">Github</a>.",
+      "keywords": [
+        "Python", "Django", "TDD", "CI"
+      ],
+      "startDate": "2015-01-01",
+      "endDate": "2017-01-01",
+      "url": "https://plokkeri.fi",
       "entity": "",
       "type": "Web service"
     },
