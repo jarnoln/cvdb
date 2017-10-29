@@ -36,7 +36,7 @@ class UserDetailTest(ExtTestCase):
         response = self.client.get(reverse('user_detail', args=[user.username]))
         self.assertTemplateUsed(response, 'auth/profile.html')
 
-    def test_viewing_other_user(self):
+    def test_default_context(self):
         target_user = auth.get_user_model().objects.create(username='shinji', email='shinji@nerv.org')
         user = self.create_and_log_in_user()
         response = self.client.get(reverse('user_detail', args=[target_user.username]))
@@ -136,6 +136,14 @@ class UpdateUserTest(ExtTestCase):
         self.assertEqual(auth.get_user_model().objects.all().count(), 2)
         user = auth.get_user_model().objects.get(username='other')
         self.assertEqual(user.first_name, 'Clark')
+        self.assertTemplateUsed(response, '404.html')
+
+    def test_cant_update_missing_user(self):
+        self.create_and_log_in_user()
+        response = self.client.post(reverse('user_update', args=['dummy_user']),
+                                    {'username': 'other', 'first_name': 'Bruce'},
+                                    follow=True)
+        self.assertEqual(auth.get_user_model().objects.all().count(), 1)
         self.assertTemplateUsed(response, '404.html')
 
 
