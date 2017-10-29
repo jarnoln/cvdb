@@ -1,5 +1,5 @@
-from django.core.urlresolvers import reverse
 from django.contrib import auth
+from django.core.urlresolvers import reverse
 from .ext_test_case import ExtTestCase
 
 
@@ -72,6 +72,10 @@ class UserDetailTest(ExtTestCase):
         auth.get_user_model().objects.create(username='user')
         response = self.client.get(reverse('profile'), follow=True)
         self.assertTemplateUsed(response, 'account/login.html')
+
+    def test_try_viewing_non_existing_user(self):
+        response = self.client.get(reverse('user_detail', args=['dummy_user']))
+        self.assertTemplateUsed(response, '404.html')
 
 
 class UpdateUserTest(ExtTestCase):
