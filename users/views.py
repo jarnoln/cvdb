@@ -25,7 +25,7 @@ class CvUserList(ListView):
 
 
 class CvUserDetail(DetailView):
-    template_name = 'viewcv/profile.html'
+    template_name = 'auth/profile.html'
     context_object_name = 'target_user'
 
     def get_object(self, queryset=None):

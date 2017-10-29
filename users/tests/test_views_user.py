@@ -35,10 +35,10 @@ class UserDetailTest(ExtTestCase):
     def test_uses_correct_template(self):
         user = auth.get_user_model().objects.create(username='shinji')
         response = self.client.get(reverse('user_detail', args=[user.username]))
-        self.assertTemplateUsed(response, 'viewcv/profile.html')
+        self.assertTemplateUsed(response, 'auth/profile.html')
         self.create_and_log_in_user()
         response = self.client.get(reverse('profile'))
-        self.assertTemplateUsed(response, 'viewcv/profile.html')
+        self.assertTemplateUsed(response, 'auth/profile.html')
 
     def test_default_content(self):
         user = self.create_and_log_in_user()
@@ -104,7 +104,7 @@ class UpdateUserTest(ExtTestCase):
         user = auth.get_user_model().objects.all()[0]
         self.assertEqual(user.first_name, 'Bruce')
         self.assertEqual(user.last_name, 'Wayne')
-        self.assertTemplateUsed(response, 'viewcv/profile.html')
+        self.assertTemplateUsed(response, 'auth/profile.html')
 
     def test_cant_update_user_if_not_logged_in(self):
         user = auth.get_user_model().objects.create(username='user', email='user@default.com',
