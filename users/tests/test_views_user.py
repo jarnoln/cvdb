@@ -29,13 +29,36 @@ class UserListTest(ExtTestCase):
 
 class UserDetailTest(ExtTestCase):
     def test_reverse(self):
-        self.assertEqual(reverse('profile'), '/accounts/profile/')
         self.assertEqual(reverse('user_detail', args=['shinji']), '/user/shinji/')
 
     def test_uses_correct_template(self):
         user = auth.get_user_model().objects.create(username='shinji')
         response = self.client.get(reverse('user_detail', args=[user.username]))
         self.assertTemplateUsed(response, 'auth/profile.html')
+
+    def test_viewing_other_user(self):
+        target_user = auth.get_user_model().objects.create(username='shinji', email='shinji@nerv.org')
+        user = self.create_and_log_in_user()
+        response = self.client.get(reverse('user_detail', args=[target_user.username]))
+        # self.assertEqual(response.context['user'], user)
+        self.assertEqual(response.context['object'], target_user)
+        self.assertContains(response, 'Profile')
+        html = response.content.decode('utf8')
+        self.assertTrue(html.startswith('<!DOCTYPE html>'))
+        self.assertInHTML(target_user.username, html)
+        self.assertInHTML(target_user.email, html)
+        self.assertNotIn('Delete account', html)
+
+    def test_try_viewing_non_existing_user(self):
+        response = self.client.get(reverse('user_detail', args=['dummy_user']))
+        self.assertTemplateUsed(response, '404.html')
+
+
+class UserProfileTest(ExtTestCase):
+    def test_reverse(self):
+        self.assertEqual(reverse('profile'), '/accounts/profile/')
+
+    def test_uses_correct_template(self):
         self.create_and_log_in_user()
         response = self.client.get(reverse('profile'))
         self.assertTemplateUsed(response, 'auth/profile.html')
@@ -55,27 +78,10 @@ class UserDetailTest(ExtTestCase):
         self.assertInHTML(user.email, html)
         self.assertInHTML('Delete account', html)
 
-    def test_viewing_other_user(self):
-        target_user = auth.get_user_model().objects.create(username='shinji', email='shinji@nerv.org')
-        user = self.create_and_log_in_user()
-        response = self.client.get(reverse('user_detail', args=[target_user.username]))
-        # self.assertEqual(response.context['user'], user)
-        self.assertEqual(response.context['object'], target_user)
-        self.assertContains(response, 'Profile')
-        html = response.content.decode('utf8')
-        self.assertTrue(html.startswith('<!DOCTYPE html>'))
-        self.assertInHTML(target_user.username, html)
-        self.assertInHTML(target_user.email, html)
-        self.assertNotIn('Delete account', html)
-
     def test_cant_view_profile_if_not_logged_in(self):
         auth.get_user_model().objects.create(username='user')
         response = self.client.get(reverse('profile'), follow=True)
         self.assertTemplateUsed(response, 'account/login.html')
-
-    def test_try_viewing_non_existing_user(self):
-        response = self.client.get(reverse('user_detail', args=['dummy_user']))
-        self.assertTemplateUsed(response, '404.html')
 
 
 class UpdateUserTest(ExtTestCase):
