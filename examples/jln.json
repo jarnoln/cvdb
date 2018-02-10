@@ -2,7 +2,7 @@
   "basics": {
     "name": "Jarno Luoma-Nirva",
     "label": "SW Specialist",
-    "image": "https://jln.nyc3.digitaloceanspaces.com/jpg/jln_2017_200x200.jpg",
+    "image": "https://jln.fi/static/jpg/jln_2017_200x200.jpg",
     "email": "jln@iki.fi",
     "phone": "+358 40 584 8782",
     "url": "https://www.jln.fi",
@@ -64,7 +64,7 @@
       "position": "SW Specialist",
       "url": "http://vaisto.io",
       "startDate": "2017-09-01",
-      "endDate": "2017-10-01",
+      "endDate": "2018-02-01",
       "summary": "Python/Django development. Test automation."
     },
     {

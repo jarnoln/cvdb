@@ -7,11 +7,13 @@
 CV database for storing and displaying CVs and resumes. There are many like it, but this one is mine.
 
  - CVs and resumes can be uploaded in [JSON resume format](https://github.com/jsonresume)
+   ([examples](https://github.com/jarnoln/cvdb/tree/master/examples))
  - They can be exported as HTML and PDF
  - Can choose CSS file to be used for styling the CV or write your own CSS
  - [Open source](https://github.com/jarnoln/cvdb/)
    ([MIT licence](https://github.com/jarnoln/cvdb/blob/master/LICENSE))
 
+Sources at [GitHub](https://github.com/jarnoln/cvdb).
 Running instance at [cvdb.fi](https://cvdb.fi).
 
 Using
@@ -44,4 +46,5 @@ Get sources:
 Add your host to ansible/inventory. Then:
 
     ansible-playbook -i ansible/inventory ansible/provision-deb.yaml
+
     fab -f fabfile.py deploy:host=user@host
