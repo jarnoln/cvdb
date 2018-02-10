@@ -31,7 +31,7 @@ class SignupTest(TestCase):
             'password1': 'password',
             'password2': 'password'}, follow=True)
         self.assertEqual(auth.models.User.objects.count(), 1)
-        self.assertTrue(response.context['user'].is_authenticated())
+        self.assertTrue(response.context['user'].is_authenticated)
         self.assertEqual(response.context['user'], auth.models.User.objects.first())
         html = response.content.decode('utf8')
         self.assertInHTML('Logout', html)
@@ -61,7 +61,7 @@ class LoginTest(TestCase):
             'login': user.username,
             'password': 'password',
             'next': reverse('home')}, follow=True)
-        self.assertTrue(response.context['user'].is_authenticated())
+        self.assertTrue(response.context['user'].is_authenticated)
         self.assertEqual(response.context['user'], user)
         html = response.content.decode('utf8')
         self.assertInHTML('Logout', html)

@@ -4,6 +4,7 @@ from rest_framework import routers
 from .views import submit_resume, submit_resume_file
 
 
+app_name = 'api01'
 router = routers.DefaultRouter()
 
 urlpatterns = [

@@ -69,7 +69,7 @@ class UserProfileTest(ExtTestCase):
         self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'en-us'})
         response = self.client.get(reverse('profile'))
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context['user'].is_authenticated())
+        self.assertTrue(response.context['user'].is_authenticated)
         self.assertEqual(response.context['user'], user)
         self.assertEqual(response.context['object'], user)
         self.assertContains(response, 'Profile')
