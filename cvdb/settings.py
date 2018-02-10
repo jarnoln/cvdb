@@ -14,18 +14,20 @@ import os
 import sys
 # from django.utils.log import RequireDebugFalse, RequireDebugTrue
 
+SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(SETTINGS_DIR)
+SITE_DIR = os.path.dirname(BASE_DIR)
+PROJECT_NAME = os.path.basename(SETTINGS_DIR)
+
 try:
     from .passwords import SECRET_KEY
 except ImportError:
     print('Password file does not exist. How to create it:')
-    print('python cvdb/generate_passwords.py cvdb/passwords.py')
+    print('python {}/generate_passwords.py {}/passwords.py'.format(PROJECT_NAME, PROJECT_NAME))
     sys.exit(1)
 
 DEBUG = True
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE_DIR = os.path.dirname(BASE_DIR)
 if DEBUG:
     LOG_DIR = BASE_DIR
 else:
