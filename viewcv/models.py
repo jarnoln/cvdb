@@ -7,7 +7,7 @@ from viewcv.durations import calculate_duration, duration_as_string
 
 
 class Css(models.Model):
-    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.SlugField(max_length=100, default='', verbose_name=ugettext_lazy('name'))
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
@@ -19,7 +19,7 @@ class Css(models.Model):
 
 
 class CssUrl(models.Model):
-    creator = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.SlugField(max_length=100, default='bootstrap400', verbose_name=ugettext_lazy('name'))
     title = models.CharField(max_length=250, blank=True, default='Bootstrap 4.0.0', verbose_name=ugettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
@@ -33,7 +33,7 @@ class CssUrl(models.Model):
 
 
 class Cv(models.Model):
-    user = models.ForeignKey(auth.get_user_model(), null=True, blank=True, default=None)
+    user = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.SlugField(max_length=100, default='default', verbose_name=ugettext_lazy('name'))
     title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
@@ -41,9 +41,9 @@ class Cv(models.Model):
                                  help_text=ugettext_lazy('Are other users allowed to see this CV'))
     primary = models.BooleanField(blank=True, default=False,
                                   help_text=ugettext_lazy('Is this the primary CV for this user'))
-    css = models.ForeignKey(Css, null=True, blank=True, default=None,
+    css = models.ForeignKey(Css, on_delete=models.SET_NULL, null=True, blank=True, default=None,
                             help_text=ugettext_lazy('CSS used for styling CV'))
-    css_url = models.ForeignKey(CssUrl, null=True, blank=True, default=None,
+    css_url = models.ForeignKey(CssUrl, on_delete=models.SET_NULL, null=True, blank=True, default=None,
                                 help_text=ugettext_lazy('Link to CSS file used for styling CV'))
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     edited = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -77,7 +77,7 @@ class Cv(models.Model):
 
 
 class Personal(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     email = models.EmailField(max_length=200, blank=True, default='')
     phone = models.CharField(max_length=100, blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
@@ -91,7 +91,7 @@ class Personal(models.Model):
 
 
 class Work(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')
     position = models.CharField(max_length=250, blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
@@ -126,7 +126,7 @@ class Work(models.Model):
 
 
 class Education(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     institution = models.CharField(max_length=250, blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
     area = models.CharField(max_length=250, blank=True, default='')
@@ -163,7 +163,7 @@ class Education(models.Model):
 
 
 class Volunteer(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     organization = models.CharField(max_length=250, blank=True, default='')
     position = models.CharField(max_length=250, blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
@@ -198,7 +198,7 @@ class Volunteer(models.Model):
 
 
 class Skill(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')
     level = models.CharField(max_length=100, blank=True, default='')
     keywords = models.CharField(max_length=500, blank=True, default='[]')  # Actually a list
@@ -211,7 +211,7 @@ class Skill(models.Model):
 
 
 class Language(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')
     fluency = models.CharField(max_length=100, blank=True, default='')
 
@@ -220,7 +220,7 @@ class Language(models.Model):
 
 
 class Project(models.Model):
-    cv = models.ForeignKey(Cv, null=True, blank=True, default=None)
+    cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')
     description = models.TextField(blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
