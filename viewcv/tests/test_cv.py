@@ -1,7 +1,7 @@
 import datetime
 # from unittest import skip
 from django.contrib import auth
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from users.tests.ext_test_case import ExtTestCase
 from viewcv.models import Cv, Personal, Css, CssUrl, Work, Education, Volunteer, Skill, Language, Project
 

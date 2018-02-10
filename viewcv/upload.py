@@ -1,8 +1,7 @@
 import json
 from django import forms
-from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from api01.views import create_resume
 
 

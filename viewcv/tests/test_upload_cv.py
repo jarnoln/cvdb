@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.files.base import File
 from users.tests.ext_test_case import ExtTestCase
 from viewcv.models import Cv, Personal, Work, Education, Volunteer, Skill, Language, Project

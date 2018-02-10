@@ -1,6 +1,6 @@
 import json
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib import auth
 from django.utils.translation import ugettext_lazy
 from viewcv.durations import calculate_duration, duration_as_string

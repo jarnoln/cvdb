@@ -1,6 +1,5 @@
 from unittest import skip
 import datetime
-# from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.test import TestCase
 from viewcv.models import Cv, Personal, Css, CssUrl, Work, Education, Volunteer, Skill, Language, Project
