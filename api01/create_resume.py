@@ -24,6 +24,8 @@ def create_resume(data, user):
         work_data['cv'] = cv.id
         work_data['start_date'] = work_item['startDate']
         work_data['end_date'] = work_item['endDate']
+        if work_data['end_date'] == '':
+            work_data['end_date'] = '1337-01-01'
         work_serializer = WorkSerializer(data=work_data)
         if work_serializer.is_valid():
             work_serializer.save()

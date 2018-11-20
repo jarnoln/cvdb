@@ -131,6 +131,21 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(work_2.start_date, datetime.date(1940, 1, 1))
         self.assertEqual(work_2.end_date, datetime.date(1944, 12, 1))
 
+    def test_submit_work_with_no_end_date_set(self):
+        user = self.create_and_log_in_user()
+        resume = get_resume()
+        work_data = get_work_bugle()
+        work_data['endDate'] = ''
+        resume['work'] = [work_data]
+        resume_json = json.dumps(resume)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        print(response.content)
+        self.assertEqual(Cv.objects.count(), 1)
+        self.assertEqual(Work.objects.count(), 1)
+        work_1 = Work.objects.all()[0]
+        self.assertEqual(work_1.start_date, datetime.date(1945, 1, 1))
+        self.assertEqual(work_1.end_date, datetime.date(1337, 1, 1))  # Special date, replaced by current date in UI
+
     def test_submit_resume_with_education(self):
         user = self.create_and_log_in_user()
         resume = get_resume()
