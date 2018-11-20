@@ -225,6 +225,28 @@ class WorkModelTest(TestCase):
         self.assertEqual(work.duration_months, 9)
         self.assertEqual(work.duration_str, '1 year, 9 months')
 
+    def test_end_date_current(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter',
+                                   start_date=datetime.date(2000, 1, 1),
+                                   end_date=datetime.date(2000, 2, 1))
+        self.assertEqual(work.end_date_current, work.end_date)
+        work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter',
+                                   start_date=datetime.date(2000, 1, 1),
+                                   end_date=datetime.date(1337, 1, 1))
+        self.assertEqual(work.end_date_current.year, datetime.date.today().year)
+
+    def test_duration_with_no_end_date(self):
+        """ Using date 1337-01-01 should cause it to be replaced by current date is duration calculations """
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter',
+                                   start_date=datetime.date(2000, 1, 1),
+                                   end_date=datetime.date(1337, 1, 1))
+        self.assertTrue(work.duration_years > 17)
+        self.assertTrue(work.duration_months > 0)
+
 
 class EducationModelTest(TestCase):
     def test_can_save_and_load(self):

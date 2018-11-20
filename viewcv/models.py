@@ -1,4 +1,5 @@
 import json
+import datetime
 from django.db import models
 from django.urls import reverse
 from django.contrib import auth
@@ -100,7 +101,15 @@ class Work(models.Model):
     summary = models.TextField(blank=True, default='')
 
     @property
+    def end_date_current(self):  # Replaces end date with current date if not defined
+        if self.end_date.year == 1337:
+            return datetime.datetime.now()
+        return self.end_date
+
+    @property
     def duration(self):
+        if self.end_date.year == 1337:
+            return calculate_duration(self.start_date, None)
         return calculate_duration(self.start_date, self.end_date)
 
     @property
@@ -122,7 +131,7 @@ class Work(models.Model):
         return '{}:{}'.format(self.name, self.position)
 
     class Meta:
-        ordering = ['-end_date']
+        ordering = ['-start_date']
 
 
 class Education(models.Model):

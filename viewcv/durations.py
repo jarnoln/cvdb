@@ -1,6 +1,11 @@
+import datetime
 
-def calculate_duration(start_date, end_date):
+
+def calculate_duration(start_date, end_date=None):
     """ Calculate how many years and months have passed between start and end dates """
+    # If end date not defined, use current date
+    if not end_date:
+        end_date = datetime.date.today()
     years = end_date.year - start_date.year
     months = end_date.month - start_date.month
     if months < 0:
