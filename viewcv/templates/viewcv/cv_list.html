@@ -31,4 +31,17 @@
 {% endfor %}
   </tbody>
 </table>
+
+<form method="POST" enctype="multipart/form-data" action="{% url 'upload' %}">
+  {% csrf_token %}
+  <table class="table">
+    <tr>
+        <th class="nowrap"> {% trans 'Send new JSON CV'%} </th>
+        <td> <input type="file" name="json_file" required id="id_json_file" /> </td>
+        <td> {{ form.json_file.help_text }} </td>
+        <td colspan="3"> <button class="save btn btn-primary">{% trans "Send" %}</button> </td>
+    </tr>
+  </table>
+</form>
+
 {% endblock %}
