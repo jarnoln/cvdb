@@ -66,9 +66,14 @@ Generate password:
 
     python cvdb/generate_passwords.py cvdb/passwords.py
 
+Initialize DB:
+
+    ./manage.py makemigrations viewcv
+    ./manage.py migrate viewcv
+    ./manage.py migrate
+
 Run tests:
 
-    ./manage.py migrate
     ./manage.py test
 
 If tests pass, you should be good to go.

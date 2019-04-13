@@ -14,6 +14,8 @@ jobs:
       - run:
           command: python cvdb/generate_passwords.py cvdb/passwords.py
       - run:
+          command: python manage.py migrate
+      - run:
           command: python manage.py test
       - run:
           name: Run coverage
