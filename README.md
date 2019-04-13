@@ -35,7 +35,7 @@ Using
  - [PyCharm](https://www.jetbrains.com/pycharm/) as IDE
  - [Obey the testing goat](https://www.obeythetestinggoat.com/) for guidance and inspiration
 
-Installation
+Deploy
 ------------
 [Install Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
 
@@ -48,3 +48,33 @@ Add your host to ansible/inventory. Then:
     ansible-playbook -i ansible/inventory ansible/provision-deb.yaml
 
     fab -f fabfile.py deploy:host=user@host
+
+
+Set up development environment
+------------------------------
+
+Get sources:
+
+    git clone https://github.com/jarnoln/cvdb.git
+
+Create virtual environment and install Python packages:
+
+    mkvirtualenv -p /usr/bin/python3 cvdb
+    pip install -r requirements.txt
+
+Generate password:
+
+    python cvdb/generate_passwords.py cvdb/passwords.py
+
+Run tests:
+
+    ./manage.py migrate
+    ./manage.py test
+
+If tests pass, you should be good to go.
+
+Run development server:
+
+    ./manage.py runserver
+
+Now should be able to see CVDB in your browser at http://127.0.0.1:8000/
