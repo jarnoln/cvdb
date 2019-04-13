@@ -13,7 +13,11 @@ install:
 before_script:
   - python cvdb/generate_passwords.py cvdb/passwords.py
   - python manage.py makemigrations
+  - python manage.py makemigrations users
+  - python manage.py makemigrations viewcv
   - python manage.py migrate
+  - python manage.py migrate users
+  - python manage.py migrate viewcv
 
 script:
   - coverage run --source=api01,users,viewcv manage.py test -v2
