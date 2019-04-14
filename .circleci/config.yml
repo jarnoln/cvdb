@@ -16,7 +16,12 @@ jobs:
       - run:
           command: python cvdb/generate_passwords.py cvdb/passwords.py
       - run:
-          command: python manage.py migrate
+          name: Update database tables
+          command: |
+            python manage.py makemigrations
+            python manage.py migrate
+            python manage.py makemigrations viewcv
+            python manage.py migrate viewcv
       - run:
           command: python manage.py test
       - run:
