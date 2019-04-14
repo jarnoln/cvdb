@@ -1,7 +1,7 @@
 # CVDB
 
 [![CircleCI](https://circleci.com/gh/jarnoln/cvdb.svg?style=shield)](https://circleci.com/gh/jarnoln/cvdb)
-[![Travis CI](https://travis-ci.org/jarnoln/cvdb.png)](https://travis-ci.org/jarnoln/cvdb)
+[![Travis CI](https://travis-ci.org/jarnoln/cvdb.svg)](https://travis-ci.org/jarnoln/cvdb)
 [![codecov](https://codecov.io/gh/jarnoln/cvdb/branch/master/graph/badge.svg)](https://codecov.io/gh/jarnoln/cvdb)
 
 CV database for storing and displaying CVs and resumes. There are many like it, but this one is mine.
@@ -18,7 +18,7 @@ Running instance at [cvdb.fi](https://cvdb.fi).
 
 Using
 -----
- - [Python](https://www.python.org/)(3.5) and [Django](https://www.djangoproject.com/)(2.1)
+ - [Python](https://www.python.org/)(3.6) and [Django](https://www.djangoproject.com/)(2.2)
  - [Behave](http://pythonhosted.org/behave/),
    [behave-django](https://behave-django.readthedocs.io/) and
    [Selenium](http://www.seleniumhq.org/) for functional testing
@@ -68,9 +68,9 @@ Generate password:
 
 Initialize DB:
 
+    ./manage.py migrate
     ./manage.py makemigrations viewcv
     ./manage.py migrate viewcv
-    ./manage.py migrate
 
 Run tests:
 
@@ -83,3 +83,9 @@ Run development server:
     ./manage.py runserver
 
 Now should be able to see CVDB in your browser at http://127.0.0.1:8000/
+
+Note: When trying to sign up on local server, sending confirmation email fails
+unless a mail server is installed. Installing for example Postfix should fix
+this:
+
+    sudo apt install postfix

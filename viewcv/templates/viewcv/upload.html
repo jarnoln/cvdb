@@ -32,7 +32,8 @@
 </form>
 {% else %}
     <p> You can <a href="{% url 'cv_public_list' %}">browse public CVs</a>,
-    but you need to <a href="https://{{ request.META.SERVER_NAME }}{% url 'account_login' %}">sign in</a> to be able to upload your own CV/Resume.
+    but you need to <a href="{% url 'account_login' %}">sign in</a> to be able to upload your own CV/Resume.
+    {# https://{{ request.META.SERVER_NAME }}{% url 'account_login' %} #}
     </p>
 {% endif %}
 
