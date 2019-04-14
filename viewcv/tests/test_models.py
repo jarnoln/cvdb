@@ -247,6 +247,22 @@ class WorkModelTest(TestCase):
         self.assertTrue(work.duration_years > 17)
         self.assertTrue(work.duration_months > 0)
 
+    def test_work_projects(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter',
+                                   start_date=datetime.date(2000, 1, 1),
+                                   end_date=datetime.date(1337, 1, 1))
+        project = Project.objects.create(cv=cv,
+                                         work=work,
+                                         name='Expose Luthor',
+                                         description="Find and report misdeeds by Luthor",
+                                         type='article',
+                                         start_date=datetime.date(1990, 1, 1),
+                                         end_date=datetime.date(2000, 1, 1))
+        self.assertEqual(work.project_set.count(), 1)
+        self.assertEqual(work.project_set.first(), project)
+
 
 class EducationModelTest(TestCase):
     def test_can_save_and_load(self):

@@ -230,6 +230,8 @@ class Language(models.Model):
 
 class Project(models.Model):
     cv = models.ForeignKey(Cv, on_delete=models.CASCADE, null=True, blank=True, default=None)
+    # If this project was a work project, can add link here
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, null=True, blank=True, default=None)
     name = models.CharField(max_length=250, blank=True, default='')
     description = models.TextField(blank=True, default='')
     url = models.URLField(max_length=250, blank=True, default='')
