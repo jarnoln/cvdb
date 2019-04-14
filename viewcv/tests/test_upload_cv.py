@@ -34,6 +34,11 @@ class UploadCvTest(ExtTestCase):
         self.assertEqual(work_1.position, "Reporter")
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
         self.assertEqual(response.context['cv'], cv)
+        self.assertEqual(Project.objects.count(), 1)
+        project_1 = Project.objects.all()[0]
+        self.assertEqual(project_1.cv, cv)
+        self.assertEqual(project_1.work, work_1)
+        self.assertEqual(project_1.name, "Expose Luthor")
 
     def test_submit_complete_resume_file(self):
         user = self.create_and_log_in_user()

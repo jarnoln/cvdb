@@ -23,6 +23,13 @@
     "summary": "Description...",
     "highlights": [
       "Got Pulizer"
+    ],
+    "projects": [{
+      "name": "Expose Luthor",
+      "description": "Discover and report misdeeds perpretrated by Luthor",
+      "startDate": "2016-08-24",
+      "endDate": "2016-08-24"
+      }
     ]
   }]
 }

@@ -47,6 +47,4 @@ class LanguageSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['cv', 'name', 'description', 'url', 'entity', 'type', 'start_date', 'end_date']
-
-
+        fields = ['cv', 'work', 'name', 'description', 'url', 'entity', 'type', 'start_date', 'end_date']

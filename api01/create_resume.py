@@ -1,6 +1,6 @@
 import json
 from django.http import JsonResponse
-from viewcv.models import Cv
+from viewcv.models import Cv, Work
 from .serializers import CvSerializer, PersonalSerializer, WorkSerializer, EducationSerializer, VolunteerSerializer
 from .serializers import SkillSerializer, LanguageSerializer, ProjectSerializer
 
@@ -31,6 +31,23 @@ def create_resume(data, user):
             work_serializer.save()
         else:
             return JsonResponse(work_serializer.errors, status=400)
+
+        work_object = Work.objects.get(name=work_item['name'])
+        work_projects = work_data.get('projects', [])
+        for work_project in work_projects:
+            project_data = work_project
+            project_data['cv'] = cv.id
+            project_data['work'] = work_object.id
+            project_data['start_date'] = work_project['startDate']
+            project_data['end_date'] = work_project['endDate']
+            if project_data['end_date'] == '':
+                project_data['end_date'] = '1337-01-01'
+
+            project_serializer = ProjectSerializer(data=project_data)
+            if project_serializer.is_valid():
+                project_serializer.save()
+            else:
+                return JsonResponse(project_serializer.errors, status=400)
 
     education_list = data.get('education', [])
     for education_item in education_list:
@@ -87,6 +104,7 @@ def create_resume(data, user):
     for item in project_list:
         project_data = item
         project_data['cv'] = cv.id
+        project_data['work'] = None
         project_data['start_date'] = item['startDate']
         project_data['end_date'] = item['endDate']
         project_serializer = ProjectSerializer(data=project_data)
