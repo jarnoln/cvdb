@@ -32,7 +32,7 @@ def create_resume(data, user):
         else:
             return JsonResponse(work_serializer.errors, status=400)
 
-        work_object = Work.objects.get(name=work_item['name'])
+        work_object = Work.objects.get(cv=cv, name=work_item['name'])
         work_projects = work_data.get('projects', [])
         for work_project in work_projects:
             project_data = work_project

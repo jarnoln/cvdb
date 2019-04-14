@@ -64,6 +64,14 @@ class Cv(models.Model):
     def non_specialties(self):
         return Skill.objects.filter(cv=self).exclude(level='Excellent')
 
+    @property
+    def hobby_projects(self):
+        return Project.objects.filter(cv=self, work=None)
+
+    @property
+    def work_projects(self):
+        return Project.objects.filter(cv=self).exclude(work=None)
+
     def can_edit(self, user):
         return user == self.user
 

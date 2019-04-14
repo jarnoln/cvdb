@@ -100,7 +100,28 @@
       {{ work.name }}
     {% endif %}
      </strong>
-    <ul> <li> {{ work.summary }} </li> </ul>
+    <ul>
+        <li> {{ work.summary }} </li>
+    {% if work.project_set.count > 0 %}
+        <li>
+            Projects
+            <ul>
+        {% for project in work.project_set.all %}
+                <li>
+            {{ project.start_date|date:"Y-m" }}
+            {% if project.duration_str %}
+                / {{ project.end_date|date:"Y-m" }}
+                ({{ project.duration_str }})
+            {% endif %}
+            {{ project.name }}
+                <ul>
+                    <li>{{ project.description }}</li>
+                </ul>
+        {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+    </ul>
   </li>
 {% endfor %}
 </ul>
@@ -153,10 +174,10 @@
 </ul>
 {% endif %}
 
-{% if cv.project_set.count > 0 %}
+{% if cv.hobby_projects.count > 0 %}
 <h3> {%  trans 'Hobby projects' %} </h3>
 <ul>
-  {% for project in cv.project_set.all %}
+  {% for project in cv.hobby_projects %}
   <li>
     <strong>
       {{ project.start_date|date:"Y" }}
@@ -171,6 +192,29 @@
     </strong>
     {% if project.description %}
     <ul> <li> {{ project.description|safe }} </li> </ul>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if cv.work_projects.count > 0 %}
+<h3> {%  trans 'Work projects' %} </h3>
+<ul>
+  {% for project in cv.work_projects %}
+  <li>
+    <strong>
+        {{ project.start_date|date:"Y-m" }}
+    {% if project.duration_str %}
+        / {{ project.end_date|date:"Y-m" }}
+        ({{ project.duration_str }})
+    {% endif %}
+    {{ project.name }}
+    </strong>
+    {% if project.description %}
+    <ul>
+        <li>{{ project.description|safe }}</li>
+    </ul>
     {% endif %}
   </li>
   {% endfor %}

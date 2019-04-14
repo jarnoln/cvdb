@@ -262,6 +262,10 @@ class WorkModelTest(TestCase):
                                          end_date=datetime.date(2000, 1, 1))
         self.assertEqual(work.project_set.count(), 1)
         self.assertEqual(work.project_set.first(), project)
+        self.assertEqual(cv.project_set.count(), 1)
+        self.assertEqual(cv.work_projects.count(), 1)
+        self.assertEqual(cv.work_projects[0], project)
+        self.assertEqual(cv.hobby_projects.count(), 0)
 
 
 class EducationModelTest(TestCase):
@@ -307,6 +311,9 @@ class ProjectModelTest(TestCase):
         project.save()
         self.assertEqual(Project.objects.all().count(), 1)
         self.assertEqual(Project.objects.all()[0], project)
+        self.assertEqual(cv.hobby_projects.count(), 1)
+        self.assertEqual(cv.hobby_projects[0], project)
+        self.assertEqual(cv.work_projects.count(), 0)
 
     def test_string(self):
         user = auth.get_user_model().objects.create(username='creator')
