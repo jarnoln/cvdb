@@ -238,7 +238,7 @@ class WorkModelTest(TestCase):
         self.assertEqual(work.end_date_current.year, datetime.date.today().year)
 
     def test_duration_with_no_end_date(self):
-        """ Using date 1337-01-01 should cause it to be replaced by current date is duration calculations """
+        """ Using date 1337-01-01 should cause it to be replaced by current date in duration calculations """
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter',
@@ -306,6 +306,7 @@ class ProjectModelTest(TestCase):
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         project = Project(cv=cv, name='Miss Direction', description="A mapping engine that misguides you",
                           type='application',
+                          keywords='["GoogleMaps", "JavaScript"]',
                           start_date=datetime.date(2016, 8, 24),
                           end_date=datetime.date(2016, 8, 24))
         project.save()
@@ -326,6 +327,19 @@ class ProjectModelTest(TestCase):
         self.assertEqual(str(project), project.name)
         self.assertEqual(project.duration_str, '')
 
+    def test_keyword_string(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         keywords='["GoogleMaps", "JavaScript"]',
+                                         start_date=datetime.date(2016, 8, 24),
+                                         end_date=datetime.date(2016, 8, 24))
+        self.assertEqual(str(project), project.name)
+        self.assertEqual(project.duration_str, '')
+        self.assertEqual(project.keyword_str, 'GoogleMaps, JavaScript')
+
     def test_duration(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
@@ -337,6 +351,18 @@ class ProjectModelTest(TestCase):
         self.assertEqual(project.duration_str, '1 month')
         self.assertEqual(project.duration_years, 0)
         self.assertEqual(project.duration_months, 1)
+
+    def test_duration_with_no_end_date(self):
+        """ Using date 1337-01-01 should cause it to be replaced by current date in duration calculations """
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         start_date=datetime.date(2000, 1, 1),
+                                         end_date=datetime.date(1337, 1, 1))
+        self.assertTrue(project.duration_years > 17)
+        self.assertTrue(project.duration_months > 0)
 
 
 class SkillModelTest(TestCase):

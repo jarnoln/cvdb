@@ -213,6 +213,9 @@
     </strong>
     {% if project.description %}
     <ul>
+        {% if project.keyword_str %}
+        <li> Technologies: {{ project.keyword_str }}</li>
+        {% endif %}
         <li>{{ project.description|safe }}</li>
     </ul>
     {% endif %}

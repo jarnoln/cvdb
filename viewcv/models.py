@@ -252,6 +252,8 @@ class Project(models.Model):
 
     @property
     def duration(self):
+        if self.end_date.year == 1337:
+            return calculate_duration(self.start_date, None)
         return calculate_duration(self.start_date, self.end_date)
 
     @property
@@ -268,6 +270,11 @@ class Project(models.Model):
     def duration_str(self):
         years, months = self.duration
         return duration_as_string(years, months)
+
+    @property
+    def keyword_str(self):
+        keywords = json.loads(self.keywords)
+        return ', '.join(keywords)
 
     def __str__(self):
         return '{}'.format(self.name)
