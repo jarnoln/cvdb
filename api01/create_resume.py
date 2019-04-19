@@ -40,6 +40,12 @@ def create_resume(data, user):
             project_data['work'] = work_object.id
             project_data['start_date'] = work_project['startDate']
             project_data['end_date'] = work_project['endDate']
+            if 'keywords' in work_project:
+                project_data['keywords'] = json.dumps(work_project['keywords'])
+            else:
+                project_data['keywords'] = json.dumps([])
+
+            project_data['keywords'] = work_project.get('keywords', '[]')
             if project_data['end_date'] == '':
                 project_data['end_date'] = '1337-01-01'
 
@@ -105,6 +111,11 @@ def create_resume(data, user):
         project_data = item
         project_data['cv'] = cv.id
         project_data['work'] = None
+        if 'keywords' in item:
+            project_data['keywords'] = json.dumps(item['keywords'])
+        else:
+            project_data['keywords'] = json.dumps([])
+        # project_data['keywords'] = item.get('keywords', '[]')
         project_data['start_date'] = item['startDate']
         project_data['end_date'] = item['endDate']
         project_serializer = ProjectSerializer(data=project_data)

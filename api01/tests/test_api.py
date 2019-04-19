@@ -283,6 +283,7 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(project.url, project_data['url'])
         self.assertEqual(project.entity, project_data['entity'])
         self.assertEqual(project.type, project_data['type'])
+        self.assertEqual(project.keywords, json.dumps(project_data['keywords']))
         self.assertEqual(project.start_date, datetime.date(2016, 8, 24))
         self.assertEqual(project.end_date, datetime.date(2016, 8, 24))
 
