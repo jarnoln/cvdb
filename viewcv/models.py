@@ -247,6 +247,8 @@ class Project(models.Model):
     roles = models.CharField(max_length=250, blank=True, default='[]')  # Actually a list
     entity = models.CharField(max_length=250, blank=True, default='')
     type = models.CharField(max_length=250, blank=True, default='')
+    industry = models.CharField(max_length=250, blank=True, default='')
+    client = models.CharField(max_length=250, blank=True, default='')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
 

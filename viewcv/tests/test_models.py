@@ -307,6 +307,8 @@ class ProjectModelTest(TestCase):
         project = Project(cv=cv, name='Miss Direction', description="A mapping engine that misguides you",
                           type='application',
                           keywords='["GoogleMaps", "JavaScript"]',
+                          industry='Consumer',
+                          client='Navigore',
                           start_date=datetime.date(2016, 8, 24),
                           end_date=datetime.date(2016, 8, 24))
         project.save()

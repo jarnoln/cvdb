@@ -260,6 +260,8 @@ class SubmitResumeTest(ExtTestCase):
             "keywords": [
                 "GoogleMaps", "Chrome Extension", "Javascript"
             ],
+            "industry": "Consumer",
+            "client": "Navigore",
             "startDate": "2016-08-24",
             "endDate": "2016-08-24",
             "url": "http://missdirection.example.com",
@@ -284,6 +286,8 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(project.entity, project_data['entity'])
         self.assertEqual(project.type, project_data['type'])
         self.assertEqual(project.keywords, json.dumps(project_data['keywords']))
+        self.assertEqual(project.industry, project_data['industry'])
+        self.assertEqual(project.client, project_data['client'])
         self.assertEqual(project.start_date, datetime.date(2016, 8, 24))
         self.assertEqual(project.end_date, datetime.date(2016, 8, 24))
 

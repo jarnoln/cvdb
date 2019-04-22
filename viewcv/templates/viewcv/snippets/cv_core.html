@@ -216,6 +216,8 @@
         {% if project.keyword_str %}
         <li> Technologies: {{ project.keyword_str }}</li>
         {% endif %}
+        {% if project.industry %}<li>Industry: {{ project.industry }}</li>{% endif %}
+        {% if project.client %}<li>Client: {{ project.client }}</li>{% endif %}
         <li>{{ project.description|safe }}</li>
     </ul>
     {% endif %}

@@ -47,9 +47,8 @@ def create_resume(data, user):
             else:
                 project_data['keywords'] = json.dumps([])
 
-            project_data['keywords'] = work_project.get('keywords', '[]')
-            if project_data['end_date'] == '':
-                project_data['end_date'] = '1337-01-01'
+            project_data['industry'] = work_project.get('industry', '')
+            project_data['client'] = work_project.get('client', '')
 
             project_serializer = ProjectSerializer(data=project_data)
             if project_serializer.is_valid():
