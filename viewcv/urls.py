@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .upload import UploadCvView
 from .about import AboutView
 from .cv import CvOwnList, CvPublicList, CvDetail, CvUpdate, CvDelete
+from .css import CssList
 
 
 urlpatterns = [
@@ -11,6 +12,7 @@ urlpatterns = [
     url(r'^cv/(?P<pk>\d+)/delete/$', login_required(CvDelete.as_view()), name='cv_delete'),
     url(r'^cv/(?P<pk>\d+)/$', login_required(CvDetail.as_view()), name='cv'),
     url(r'^upload/$', login_required(UploadCvView.as_view()), name='upload'),
+    url(r'^css_list/$', CssList.as_view(), name='css_list'),
     url(r'^list/$', CvPublicList.as_view(), name='cv_public_list'),
     url(r'^my_cvs/$', login_required(CvOwnList.as_view()), name='cv_list'),
     url(r'^about/$', AboutView.as_view(), name='about'),
