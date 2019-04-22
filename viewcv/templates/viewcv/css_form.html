@@ -1,0 +1,37 @@
+{% extends "viewcv/base.html" %}
+{% load i18n %}
+{% block head_title %} {% trans "Edit CSS" %} {% endblock %}
+{% block content %}
+<div> {{ form.non_field_errors }}</div>
+
+<form method="post" action="{% url 'css_update' css.id %}">
+      <input type="hidden" name="next" value="{% url 'css_update' css.id %}" />
+  {% csrf_token %}
+  <table class="table">
+    <tr>
+        <th class="nowrap"> {{ form.name.label_tag }} </th>
+        <td> {{ form.name }} </td>
+        <td> {{ form.name.help_text }} </td>
+    </tr>
+    <tr>
+        <th class="nowrap"> {{ form.title.label_tag }} </th>
+        <td> {{ form.title }} </td>
+        <td> {{ form.title.help_text }} </td>
+    </tr>
+    <tr>
+        <th class="nowrap"> {{ form.css.label_tag }} </th>
+        <td> {{ form.css }} </td>
+        <td> {{ form.css.help_text }} </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <input type="submit" id="id_button_login" class="btn btn-primary" value="{% trans 'Save' %}" />
+        </td>
+    </tr>
+  </table>
+</form>
+
+{% if form.errors %}
+<p> {{ form.errors }} </p>
+{% endif %}
+{% endblock %}

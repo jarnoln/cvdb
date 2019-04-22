@@ -28,3 +28,37 @@ class CssListTest(ExtTestCase):
         Css.objects.create(name='test_css_2', title='Test CSS 2', creator=user)
         response = self.client.get(reverse('css_list'))
         self.assertEqual(response.context['css_list'].count(), 2)
+
+
+class UpdateCssTest(ExtTestCase):
+    def test_reverse_task_edit(self):
+        self.assertEqual(reverse('css_update', args=['1337']),
+                         '/css/1337/edit/')
+
+    def test_uses_correct_template(self):
+        creator = self.create_and_log_in_user()
+        css = Css.objects.create(name='test_css', title='Test CSS', creator=creator)
+        response = self.client.get(reverse('css_update', args=[css.id]))
+        self.assertTemplateUsed(response, 'viewcv/css_form.html')
+
+    def test_default_context(self):
+        creator = self.create_and_log_in_user()
+        css = Css.objects.create(name='test_css', title='Test CSS', creator=creator)
+        response = self.client.get(reverse('css_update', args=[css.id]))
+        self.assertEqual(response.context['css'], css)
+        self.assertEqual(response.context['message'], '')
+
+    def test_can_update_css(self):
+        creator = self.create_and_log_in_user()
+        css = Css.objects.create(name='org_name', title='Org title', creator=creator)
+        self.assertEqual(css.name, 'org_name')
+        self.assertEqual(css.title, 'Org title')
+        self.assertEqual(Css.objects.all().count(), 1)
+        response = self.client.post(reverse('css_update', args=[css.id]),
+                                    {'name': 'updated_name', 'title': 'CV updated'},
+                                    follow=True)
+        self.assertEqual(Css.objects.all().count(), 1)
+        css = Css.objects.all()[0]
+        self.assertEqual(css.name, 'updated_name')
+        self.assertEqual(css.title, 'CV updated')
+        self.assertTemplateUsed(response, 'viewcv/css_list.html')

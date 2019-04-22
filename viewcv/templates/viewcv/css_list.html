@@ -1,6 +1,6 @@
 {% extends "viewcv/base.html" %}
 {% load i18n %}
-{% block head_title %} {% trans 'CV list' %} {% endblock %}
+{% block head_title %} {% trans 'CSS list' %} {% endblock %}
 
 {% block content %}
 <h1> {% trans 'CSS list' %} </h1>
@@ -23,8 +23,7 @@
       <td> {{ css.title }} </td>
       <td>
   {% if user.is_authenticated %}
-          <a class="btn btn-primary" href="{% url 'cv_update' css.id %}">{% trans 'Edit' %} </a>
-          <a class="btn btn-danger" href="{% url 'cv_delete' css.id %}">{% trans 'Delete' %} </a>
+          <a class="btn btn-primary" href="{% url 'css_update' css.id %}">{% trans 'Edit' %} </a>
   {% endif %}
       </td>
     </tr>

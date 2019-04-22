@@ -14,6 +14,9 @@ class Css(models.Model):
     summary = models.TextField(blank=True, default='')
     css = models.TextField(blank=True, default='')
 
+    def can_edit(self, user):
+        return user == self.creator
+
     def __str__(self):
         return self.title
         # return '{}:{}'.format(self.name, self.title)

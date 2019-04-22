@@ -21,3 +21,24 @@ class CssList(ListView):
         context = super(CssList, self).get_context_data(**kwargs)
         context['messages'] = self.request.GET.get('message', '')
         return context
+
+
+class CssUpdate(UpdateView):
+    model = Css
+    fields = ['name', 'title', 'css']
+
+    def get_object(self):
+        css = super(CssUpdate, self).get_object()
+        if css.can_edit(self.request.user):
+            return css
+
+        # Todo: Smarter way to handle this
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        context = super(CssUpdate, self).get_context_data(**kwargs)
+        context['message'] = self.request.GET.get('message', '')
+        return context
+
+    def get_success_url(self):
+        return reverse('css_list')
