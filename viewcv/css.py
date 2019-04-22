@@ -41,4 +41,7 @@ class CssUpdate(UpdateView):
         return context
 
     def get_success_url(self):
-        return reverse('css_list')
+        if self.object:
+            return reverse_lazy('css_update', args=[self.object.id])
+        else:
+            return reverse('css_list')

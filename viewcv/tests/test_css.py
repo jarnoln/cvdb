@@ -61,4 +61,4 @@ class UpdateCssTest(ExtTestCase):
         css = Css.objects.all()[0]
         self.assertEqual(css.name, 'updated_name')
         self.assertEqual(css.title, 'CV updated')
-        self.assertTemplateUsed(response, 'viewcv/css_list.html')
+        self.assertTemplateUsed(response, 'viewcv/css_form.html')
