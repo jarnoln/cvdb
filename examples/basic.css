@@ -1,0 +1,31 @@
+@media print {
+    body {
+        font-size: 13px;
+    }
+    #mugshot {
+        width: 120px;
+    }
+}
+
+body {
+    font-family: verdana, arial, sans-serif;
+}
+
+th {
+    text-align: left;
+    margin: 5px 10px;
+    white-space: nowrap;
+}
+
+img {
+    margin: 0px 15px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#work-projects-header {
+    page-break-before: always;
+}

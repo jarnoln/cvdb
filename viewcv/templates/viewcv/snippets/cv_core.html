@@ -9,7 +9,7 @@
   {% if info.image %}
     <tr>
       <td rowspan="7" width="10%">
-        <img alt="{{ user.username }}" src="{{ info.image }}" />
+        <img id="mugshot" alt="{{ user.username }}" src="{{ info.image }}" />
       </td>
     </tr>
   {% endif %}
@@ -72,8 +72,8 @@
       <th> Profiles </th>
       <td>
       {% for profile in info.profile_list %}
-        {% if profile.url %}
-          <a href="{{ profile.url }}">{{ profile.network }}</a>
+        {% if profile.url and profile.username %}
+          {{ profile.network }}: <a href="{{ profile.url }}">{{ profile.username }}</a>
         {% else %}
           {{ profile.network }}
         {% endif %}
@@ -191,7 +191,12 @@
     {% endif %}
     </strong>
     {% if project.description %}
-    <ul> <li> {{ project.description|safe }} </li> </ul>
+    <ul>
+        {% if project.keyword_str %}
+        <li> Technologies: {{ project.keyword_str }}</li>
+        {% endif %}
+        <li> {{ project.description|safe }} </li>
+    </ul>
     {% endif %}
   </li>
   {% endfor %}
@@ -199,7 +204,7 @@
 {% endif %}
 
 {% if cv.work_projects.count > 0 %}
-<h3> {%  trans 'Work projects' %} </h3>
+<h3 id="work-projects-header"> {%  trans 'Work projects' %} </h3>
 <ul>
   {% for project in cv.work_projects %}
   <li>
