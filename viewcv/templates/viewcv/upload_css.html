@@ -1,0 +1,39 @@
+{% extends "viewcv/base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'CVDB' %}{% endblock %}
+{% block content %}
+<h1 class="text-center"> CVDB </h1>
+<p class="text-center"> <em> CV/Resume database </em> </p>
+{% if user.is_authenticated %}
+<h3> {% trans "Upload CSS" %} </h3>
+
+{% blocktrans %}
+<p>
+  Choose a CSS file to upload.
+  Example: <a href="https://github.com/jarnoln/cvdb/blob/master/examples/basic.css">basic.css</a>.
+</p>
+<p>
+  Tip: Might be easiest to download the example, edit it and then upload.
+</p>
+{% endblocktrans %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+  <table class="table">
+    <tr>
+        <th class="nowrap"> {{ form.css_file.label_tag }} </th>
+        <td> <input type="file" name="css_file" required id="id_css_file" /> </td>
+        <td> {{ form.css_file.help_text }} </td>
+    </tr>
+    <tr> <td colspan="3"> <button class="save btn btn-primary">{% trans "Send" %}</button> </td> </tr>
+  </table>
+</form>
+{% else %}
+    <p> You can <a href="{% url 'cv_public_list' %}">browse public CVs</a>,
+    but you need to <a href="{% url 'account_login' %}">sign in</a> to be able to upload your own CV/Resume.
+    {# https://{{ request.META.SERVER_NAME }}{% url 'account_login' %} #}
+    </p>
+{% endif %}
+
+{% endblock content %}

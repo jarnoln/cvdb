@@ -245,7 +245,7 @@ class DeleteCvTest(ExtTestCase):
         response = self.client.get(reverse('cv_delete', args=['1']))
         self.assertTemplateUsed(response, '404.html')
 
-    def test_cant_cv_project_if_not_logged_in(self):
+    def test_cant_delete_css_if_not_logged_in(self):
         user = auth.get_user_model().objects.create(username='shinji')
         cv = Cv.objects.create(name='test_cv', title='Test CV', user=user)
         self.assertEqual(Cv.objects.all().count(), 1)
@@ -261,4 +261,3 @@ class DeleteCvTest(ExtTestCase):
         response = self.client.post(reverse('cv_delete', args=[cv.id]), {}, follow=True)
         self.assertEqual(Cv.objects.all().count(), 1)
         self.assertTemplateUsed(response, '404.html')
-

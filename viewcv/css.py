@@ -45,3 +45,19 @@ class CssUpdate(UpdateView):
             return reverse_lazy('css_update', args=[self.object.id])
         else:
             return reverse('css_list')
+
+
+class CssDelete(DeleteView):
+    model = Css
+    success_url = reverse_lazy('css_list')
+
+    def get_object(self):
+        css = super(CssDelete, self).get_object()
+        if css.can_edit(self.request.user):
+            return css
+
+        # Todo: Smarter way to handle this
+        raise Http404
+
+    def render_to_response(self, context, **response_kwargs):
+        return super(CssDelete, self).render_to_response(context, **response_kwargs)
