@@ -88,7 +88,7 @@
 </table>
 {% endwith %}
 
-<h3> {%  trans 'Work experience' %} </h3>
+<h2 id="work-experience-header"> {%  trans 'Work experience' %} </h2>
 
 <ul>
 {% for work in cv.work_set.all %}
@@ -126,7 +126,7 @@
 {% endfor %}
 </ul>
 
-<h3> {%  trans 'Education' %} </h3>
+<h2 id="education-header"> {%  trans 'Education' %} </h2>
 
 <ul>
 {% for edu in cv.education_set.all %}
@@ -150,7 +150,7 @@
 </ul>
 
 {% if cv.volunteer_set.count > 0 %}
-<h3> {%  trans 'Other experience' %} </h3>
+<h2 id="volunteer-header"> {%  trans 'Other experience' %} </h2>
 <ul>
   {% for vol in cv.volunteer_set.all %}
   <li>
@@ -175,7 +175,7 @@
 {% endif %}
 
 {% if cv.hobby_projects.count > 0 %}
-<h3> {%  trans 'Hobby projects' %} </h3>
+<h2 id="hobby-projects-header"> {%  trans 'Hobby projects' %} </h2>
 <ul>
   {% for project in cv.hobby_projects %}
   <li>
@@ -204,7 +204,7 @@
 {% endif %}
 
 {% if cv.work_projects.count > 0 %}
-<h3 id="work-projects-header"> {%  trans 'Work projects' %} </h3>
+<h2 id="work-projects-header"> {%  trans 'Work projects' %} </h2>
 <ul>
   {% for project in cv.work_projects %}
   <li>
