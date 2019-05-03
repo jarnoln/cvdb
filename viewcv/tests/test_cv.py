@@ -175,7 +175,7 @@ class CvDetailTest(ExtTestCase):
 
 
 class UpdateCvTest(ExtTestCase):
-    def test_reverse_task_edit(self):
+    def test_reverse(self):
         self.assertEqual(reverse('cv_update', args=['1337']),
                          '/cv/1337/edit/')
 
@@ -220,6 +220,29 @@ class UpdateCvTest(ExtTestCase):
         self.assertEqual(cv.css, css)
         self.assertEqual(cv.css_url, css_url)
         self.assertTemplateUsed(response, 'viewcv/cv_detail.html')
+
+
+class SetAsPrimaryCvTest(ExtTestCase):
+    def test_reverse(self):
+        self.assertEqual(reverse('cv_set_as_primary', args=['1337']),
+                         '/cv/1337/set_as_primary/')
+
+    def test_as_primary(self):
+        creator = self.create_and_log_in_user()
+        cv_1 = Cv.objects.create(name='cv_1', title='CV 1', user=creator)
+        cv_2 = Cv.objects.create(name='cv_2', title='CV 2', user=creator)
+        self.assertEqual(cv_1.primary, False)
+        self.assertEqual(cv_2.primary, False)
+        response = self.client.get(reverse('cv_set_as_primary', args=[cv_1.id]))
+        cv_1 = Cv.objects.get(name='cv_1')
+        cv_2 = Cv.objects.get(name='cv_2')
+        self.assertEqual(cv_1.primary, True)
+        self.assertEqual(cv_2.primary, False)
+        response = self.client.get(reverse('cv_set_as_primary', args=[cv_2.id]))
+        cv_1 = Cv.objects.get(name='cv_1')
+        cv_2 = Cv.objects.get(name='cv_2')
+        self.assertEqual(cv_1.primary, False)
+        self.assertEqual(cv_2.primary, True)
 
 
 class DeleteCvTest(ExtTestCase):

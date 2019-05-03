@@ -78,6 +78,13 @@ class Cv(models.Model):
     def can_edit(self, user):
         return user == self.user
 
+    def set_as_primary(self):
+        # First make all CVs non-primary, then set this one as primary (so there is only one primary CV)
+        if not self.primary:
+            Cv.objects.filter(user=self.user).update(primary=False)
+            self.primary = True
+            self.save()
+
     def __str__(self):
         return '{}'.format(self.name)
 

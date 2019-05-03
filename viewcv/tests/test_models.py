@@ -23,6 +23,23 @@ class CvModelTest(TestCase):
         cv = Cv.objects.create(user=user, name='cv', title='CV')
         self.assertEqual(cv.get_absolute_url(), '/cv/%d/' % cv.id)
 
+    def test_set_as_primary(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv_1 = Cv.objects.create(user=user, name='cv1', title='CV 1')
+        cv_2 = Cv.objects.create(user=user, name='cv2', title='CV 2')
+        self.assertEqual(cv_1.primary, False)
+        self.assertEqual(cv_2.primary, False)
+        cv_1.set_as_primary()
+        cv_1 = Cv.objects.get(name='cv1')
+        cv_2 = Cv.objects.get(name='cv2')
+        self.assertEqual(cv_1.primary, True)
+        self.assertEqual(cv_2.primary, False)
+        cv_2.set_as_primary()
+        cv_1 = Cv.objects.get(name='cv1')
+        cv_2 = Cv.objects.get(name='cv2')
+        self.assertEqual(cv_2.primary, True)
+        self.assertEqual(cv_1.primary, False)
+
     def test_get_personal_info(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')

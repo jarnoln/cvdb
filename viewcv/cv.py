@@ -1,7 +1,8 @@
 import logging
 import weasyprint
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, RedirectView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.http import Http404, HttpResponse
 from django.contrib import auth
@@ -108,6 +109,14 @@ class CvUpdate(UpdateView):
             return reverse('cv_list')
 
 
+class CvSetAsPrimary(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        cv = get_object_or_404(Cv, pk=kwargs['pk'])
+        if cv.can_edit(self.request.user):
+            cv.set_as_primary()
+        return reverse('cv_list')
+
+
 class CvDelete(DeleteView):
     model = Cv
     success_url = reverse_lazy('cv_list')
@@ -118,6 +127,7 @@ class CvDelete(DeleteView):
             return cv
 
         # Todo: Smarter way to handle this
+        # raise PermissionDenied
         raise Http404
 
     def render_to_response(self, context, **response_kwargs):
