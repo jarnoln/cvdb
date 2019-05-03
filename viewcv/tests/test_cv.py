@@ -233,16 +233,22 @@ class SetAsPrimaryCvTest(ExtTestCase):
         cv_2 = Cv.objects.create(name='cv_2', title='CV 2', user=creator)
         self.assertEqual(cv_1.primary, False)
         self.assertEqual(cv_2.primary, False)
+        self.assertEqual(cv_1.public, False)
+        self.assertEqual(cv_2.public, False)
         response = self.client.get(reverse('cv_set_as_primary', args=[cv_1.id]))
         cv_1 = Cv.objects.get(name='cv_1')
         cv_2 = Cv.objects.get(name='cv_2')
         self.assertEqual(cv_1.primary, True)
         self.assertEqual(cv_2.primary, False)
+        self.assertEqual(cv_1.public, True)
+        self.assertEqual(cv_2.public, False)
         response = self.client.get(reverse('cv_set_as_primary', args=[cv_2.id]))
         cv_1 = Cv.objects.get(name='cv_1')
         cv_2 = Cv.objects.get(name='cv_2')
         self.assertEqual(cv_1.primary, False)
         self.assertEqual(cv_2.primary, True)
+        self.assertEqual(cv_1.public, True)
+        self.assertEqual(cv_2.public, True)
 
 
 class DeleteCvTest(ExtTestCase):

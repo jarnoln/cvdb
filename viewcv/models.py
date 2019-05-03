@@ -83,6 +83,7 @@ class Cv(models.Model):
         if not self.primary:
             Cv.objects.filter(user=self.user).update(primary=False)
             self.primary = True
+            self.public = True
             self.save()
 
     def __str__(self):
