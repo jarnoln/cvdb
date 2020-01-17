@@ -262,7 +262,8 @@ class WorkModelTest(TestCase):
                                    start_date=datetime.date(2000, 1, 1),
                                    end_date=datetime.date(1337, 1, 1))
         self.assertTrue(work.duration_years > 17)
-        self.assertTrue(work.duration_months > 0)
+        today = datetime.date.today()
+        self.assertEqual(work.duration_months, today.month - work.start_date.month)
 
     def test_work_projects(self):
         user = auth.get_user_model().objects.create(username='creator')
@@ -380,8 +381,9 @@ class ProjectModelTest(TestCase):
                                          type='application',
                                          start_date=datetime.date(2000, 1, 1),
                                          end_date=datetime.date(1337, 1, 1))
-        self.assertTrue(project.duration_years > 17)
-        self.assertTrue(project.duration_months > 0)
+        today = datetime.date.today()
+        self.assertEqual(project.duration_years, today.year - project.start_date.year)
+        self.assertEqual(project.duration_months, today.month - project.start_date.month)
 
 
 class SkillModelTest(TestCase):

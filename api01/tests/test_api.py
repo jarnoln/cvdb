@@ -145,7 +145,9 @@ class SubmitResumeTest(ExtTestCase):
         work_1 = Work.objects.all()[0]
         self.assertEqual(work_1.start_date, datetime.date(1945, 1, 1))
         self.assertEqual(work_1.end_date, datetime.date(1337, 1, 1))  # Special date, replaced by current date in UI
-        self.assertTrue(work_1.duration_months > 0)
+        today = datetime.date.today()
+        self.assertEqual(work_1.duration_years, today.year - work_1.start_date.year)
+        self.assertEqual(work_1.duration_months, today.month - work_1.start_date.month)
 
     def test_submit_resume_with_education(self):
         user = self.create_and_log_in_user()
