@@ -2,7 +2,7 @@
   "basics": {
     "name": "Jarno Luoma-Nirva",
     "label": "SW Specialist",
-    "image": "https://jln.fi/static/jpg/jln_2017_200x200.jpg",
+    "image": "http://46.101.195.97/static/jpg/jln_2017_200x200.jpg",
     "email": "jln@iki.fi",
     "phone": "+358 40 584 8782",
     "url": "https://www.jln.fi",
@@ -65,7 +65,7 @@
       "url": "http://vaisto.io",
       "startDate": "2017-09-01",
       "endDate": "",
-      "summary": "Python/Django development. Test automation."
+      "summary": "Python/Django and Vue.js development. Test automation."
     },
     {
       "name": "Symbio",
@@ -123,6 +123,13 @@
     }
   ],
   "volunteer": [
+    {
+      "organization": "Finnish Pirate Party",
+      "position": "Member of the Board",
+      "url": "",
+      "startDate": "2019-12-01",
+      "endDate": "2020-01-01"
+    },
     {
       "organization": "Parliament Elections",
       "position": "Candidate",
