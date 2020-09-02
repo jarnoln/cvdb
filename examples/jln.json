@@ -5,7 +5,7 @@
     "image": "http://46.101.195.97/static/jpg/jln_2017_200x200.jpg",
     "email": "jln@iki.fi",
     "phone": "+358 40 584 8782",
-    "url": "https://www.jln.fi",
+    "url": "https://jln.fi",
     "summary": "",
     "profiles": [
       {
@@ -46,11 +46,11 @@
       "level": "Good"
     },
     {
-      "name": "Jenkins",
+      "name": "Vue.js",
       "level": "Good"
     },
     {
-      "name": "MySQL",
+      "name": "Jenkins",
       "level": "Good"
     },
     {
@@ -111,15 +111,6 @@
       "startDate": "2000-04-01",
       "endDate": "2000-10-01",
       "gpa": ""
-    },
-    {
-      "institution": "Kauhajoki Senior High School",
-      "url": "http://lukio.kauhajoki.fi/",
-      "area": "",
-      "studyType": "",
-      "startDate": "1992-08-01",
-      "endDate": "1995-06-01",
-      "gpa": ""
     }
   ],
   "volunteer": [
@@ -127,7 +118,7 @@
       "organization": "Finnish Pirate Party",
       "position": "Member of the Board",
       "url": "",
-      "startDate": "2019-12-01",
+      "startDate": "2019-01-01",
       "endDate": "2020-01-01"
     },
     {
@@ -153,6 +144,18 @@
     }
   ],
   "projects": [
+    {
+      "name": "Exposures",
+      "description": "Corona exposure event database and report generator made with Django. Open source, available in <a href=\"https://github.com/jarnoln/exposures/\">Github</a>.",
+      "keywords": [
+        "Python", "Django"
+      ],
+      "startDate": "2020-01-01",
+      "endDate": "2020-01-01",
+      "url": "https://altistukset.fi",
+      "entity": "",
+      "type": "Web service"
+    },
     {
       "name": "CVDB",
       "description": "CV/Resume database made with Django. Open source, available in <a href=\"https://github.com/jarnoln/cvdb/\">Github</a>.",
