@@ -1,0 +1,53 @@
+@media print {
+  body {
+    font-size: 12px;
+  }
+  #mugshot {
+    width: 120px;
+  }
+}
+
+body {
+  font-family: verdana, arial, sans-serif;
+}
+
+h1 {
+  font-size: 2.0em;
+  margin: 0px 0px 5px 0px;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 20px 0px 5px 0px;
+}
+
+h3 {
+  font-size: 1.0em;
+  margin: 10px 0px 2px 0px;
+}
+
+li {
+  margin: 0px;
+}
+
+img {
+  margin: 0px 15px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.sidebar {
+  float: left;
+  width: 140px;
+  height: 100%;
+}
+
+.main-content {
+  margin-left: 150px;
+}
+#work-projects-header {
+    page-break-before: always;
+}

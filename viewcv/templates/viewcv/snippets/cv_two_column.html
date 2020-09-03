@@ -1,0 +1,208 @@
+{% load account %}
+{% load i18n %}
+
+<header>
+  <h1 id="title-name"> {{ cv.user.first_name }} {{ cv.user.last_name }}</h1>
+  <h2 id="cv-title"> {{ cv.title }} </h2>
+</header>
+<hr />
+<aside class="sidebar">
+{% with info=cv.personal %}
+{% if info.email %}
+  <h3>{% trans 'Email' %} </h3>
+  <div> {{ info.email }} </div>
+{% endif %}
+{% if info.phone %}
+  <h3>{% trans 'Phone' %}</h3>
+  <div> {{ info.phone }} </div>
+{% endif %}
+{% if info.url %}
+  <h3>{% trans 'Home page' %}</h3>
+  <div> <a href="{{ info.url }}"> {{ info.url }} </a> </div>
+{% endif %}
+
+{% if cv.specialties.count > 0 %}
+  <h3>{% trans 'Specialties' %}</h3>
+  <div>
+    {% for skill in cv.specialties.all %}
+      {% if forloop.last %}
+        {{ skill.name }}
+      {% else %}
+        {{ skill.name }},
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if cv.non_specialties.count > 0 %}
+  <h3> {% trans 'Other skills' %} </h3>
+  <div>
+    {% for skill in cv.non_specialties.all %}
+      {% if forloop.last %}
+        {{ skill.name }}
+      {% else %}
+        {{ skill.name }},
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if cv.language_set.count > 0 %}
+  <h3> Languages </h3>
+  <div>
+    {% for lang in cv.language_set.all %}
+      {% if forloop.last %}
+        {{ lang.name }}
+      {% else %}
+        {{ lang.name }},
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if info.profile_list %}
+  <h3> Profiles </h3>
+  {% for profile in info.profile_list %}
+    {% if profile.url and profile.username %}
+      <div>{{ profile.network }}: <a href="{{ profile.url }}">{{ profile.username }}</a></div>
+    {% else %}
+      <div>{{ profile.network }}</div>
+    {% endif %}
+  {% endfor %}
+  </div>
+{% endif %}
+
+{% if info.summary %}
+    <div>{{ info.summary|safe }}</div>
+{% endif %}
+{% endwith %}
+</aside>
+
+<main class="main-content">
+<h2 id="work-experience-header">{%  trans 'Work experience' %}</h2>
+
+{% for work in cv.work_set.all %}
+<h3> {{ work.start_date|date:"Y-m" }} / {{ work.end_date_current|date:"Y-m" }} ({{ work.duration_str }})
+      {{ work.position }} at
+    {% if work.url %}
+      <a href="{{ work.url }}">{{ work.name }}</a>
+    {% else %}
+      {{ work.name }}
+    {% endif %}
+</h3>
+<div> {{ work.summary }} </div>
+  {% if work.project_set.count > 0 and False %}
+      <li>
+          Projects
+          <ul>
+      {% for project in work.project_set.all %}
+              <li>
+          {{ project.start_date|date:"Y-m" }}
+          {% if project.duration_str %}
+              / {{ project.end_date|date:"Y-m" }}
+              ({{ project.duration_str }})
+          {% endif %}
+          {{ project.name }}
+              <ul>
+                  <li>{{ project.description }}</li>
+              </ul>
+      {% endfor %}
+            </ul>
+        </li>
+  {% endif %}
+{% endfor %}
+
+<h2 id="education-header"> {%  trans 'Education' %} </h2>
+
+{% for edu in cv.education_set.all %}
+  <h3> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date|date:"Y-m" }} ({{ edu.duration_str }})
+    {% if edu.study_type and edu.area and edu.institution %}
+      {{ edu.study_type }} of {{ edu.area }} at
+    {% elif edu.study_type and edu.institution %}
+      {{ edu.study_type }} at
+    {% elif edu.area and edu.institution %}
+      {{ edu.area }} at
+    {% endif %}
+    {% if edu.url %}
+      <a href="{{ edu.url }}">{{ edu.institution }}</a>
+    {% else %}
+      {{ edu.institution }}
+    {% endif %}
+   </h3>
+   {% if edu.summary %}<div>{{ edu.summary|safe }}</div>{% endif %}
+{% endfor %}
+
+{% if cv.volunteer_set.count > 0 %}
+<h2 id="volunteer-header"> {%  trans 'Other experience' %} </h2>
+<ul>
+  {% for vol in cv.volunteer_set.all %}
+  <li>
+    <strong>
+      {{ vol.start_date|date:"Y" }}
+    {% if vol.duration_years %}
+      / {{ vol.end_date|date:"Y" }}
+    {% endif %}
+      {{ vol.position }} in
+    {% if vol.url %}
+      <a href="{{ vol.url }}">{{ vol.organization }}</a>
+    {% else %}
+      {{ vol.organization }}
+    {% endif %}
+    </strong>
+    {% if vol.summary %}
+    <ul> <li> {{ vol.summary|safe }} </li> </ul>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if cv.hobby_projects.count > 0 %}
+<h2 id="hobby-projects-header"> {%  trans 'Hobby projects' %} </h2>
+  {% for project in cv.hobby_projects %}
+    <h3>
+      {{ project.start_date|date:"Y" }}
+    {% if vol.duration_years %}
+      / {{ project.end_date|date:"Y" }}
+    {% endif %}
+    {% if project.url %}
+      <a href="{{ project.url }}">{{ project.name }}</a>
+    {% else %}
+      {{ project.name }}
+    {% endif %}
+    </h3>
+    {% if project.description %}
+    <div>
+        {% if project.keyword_str %}
+        Technologies: {{ project.keyword_str }}<br />
+        {% endif %}
+        {{ project.description|safe }}
+    </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if cv.work_projects.count > 0 %}
+<h2 id="work-projects-header"> {%  trans 'Work projects' %} </h2>
+  {% for project in cv.work_projects %}
+    <h3>
+        {{ project.start_date|date:"Y-m" }}
+    {% if project.duration_str %}
+        / {{ project.end_date|date:"Y-m" }}
+        ({{ project.duration_str }})
+    {% endif %}
+    {{ project.name }}
+    </h3>
+    {% if project.description %}
+    <div>
+      {% if project.keyword_str %}
+        Technologies: {{ project.keyword_str }}<br />
+      {% endif %}
+      {% if project.industry %}Industry: {{ project.industry }}<br />{% endif %}
+      {% if project.client %}Client: {{ project.client }}<br />{% endif %}
+      {{ project.description|safe }}
+    </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+</main>
