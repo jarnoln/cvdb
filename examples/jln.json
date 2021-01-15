@@ -1,8 +1,7 @@
 {
   "basics": {
     "name": "Jarno Luoma-Nirva",
-    "label": "SW Specialist",
-    "image": "http://46.101.195.97/static/jpg/jln_2017_200x200.jpg",
+    "label": "Technology Specialist",
     "email": "jln@iki.fi",
     "phone": "+358 40 584 8782",
     "url": "https://jln.fi",
@@ -148,7 +147,7 @@
       "name": "Exposures",
       "description": "Corona exposure event database and report generator made with Django. Open source, available in <a href=\"https://github.com/jarnoln/exposures/\">Github</a>.",
       "keywords": [
-        "Python", "Django"
+        "Python", "Django", "Vue.js"
       ],
       "startDate": "2020-01-01",
       "endDate": "2020-01-01",
