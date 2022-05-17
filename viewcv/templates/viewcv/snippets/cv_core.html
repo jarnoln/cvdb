@@ -197,7 +197,11 @@
       / {{ project.end_date|date:"Y" }}
     {% endif %}
     {% if project.url %}
-      <a href="{{ project.url }}">{{ project.name }}</a>
+      {% if format == 'pdf' %}
+        {{ project.name }} ({{ project.url }})
+      {% else %}
+        <a href="{{ project.url }}">{{ project.name }}</a>
+      {% endif %}
     {% else %}
       {{ project.name }}
     {% endif %}
