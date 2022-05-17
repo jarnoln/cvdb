@@ -47,6 +47,21 @@ def get_education():
     return education
 
 
+def get_volunteer_work():
+    volunteer_work = {
+        "organization": "CoderDojo",
+        "position": "Teacher",
+        "url": "http://coderdojo.example.com/",
+        "startDate": "2012-01-01",
+        "endDate": "2013-01-01",
+        "summary": "Global movement of free coding clubs for young people.",
+        "highlights": [
+            "Awarded 'Teacher of the Month'"
+        ]
+    }
+    return volunteer_work
+
+
 def get_resume():
     resume = {
         "basics": {
@@ -178,35 +193,17 @@ class SubmitResumeTest(ExtTestCase):
         education['endDate'] = ''
         resume['education'] = [education]
         resume_json = json.dumps(resume)
-        self.assertEqual(Cv.objects.count(), 0)
         self.assertEqual(Education.objects.count(), 0)
         response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
-        self.assertEqual(Cv.objects.count(), 1)
         self.assertEqual(Education.objects.count(), 1)
         edu = Education.objects.first()
-        self.assertEqual(edu.institution, education['institution'])
-        self.assertEqual(edu.url, education['url'])
-        self.assertEqual(edu.area, education['area'])
-        self.assertEqual(edu.gpa, education['gpa'])
-        self.assertEqual(edu.study_type, education['studyType'])
-        self.assertEqual(edu.summary, education['summary'])
         self.assertEqual(edu.start_date, datetime.date(1940, 6, 1))
         self.assertEqual(edu.end_date, datetime.date(1337, 1, 1))
 
     def test_submit_resume_with_volunteer_work(self):
         self.create_and_log_in_user()
         resume = get_resume()
-        volunteer_data = {
-            "organization": "CoderDojo",
-            "position": "Teacher",
-            "url": "http://coderdojo.example.com/",
-            "startDate": "2012-01-01",
-            "endDate": "2013-01-01",
-            "summary": "Global movement of free coding clubs for young people.",
-            "highlights": [
-                "Awarded 'Teacher of the Month'"
-            ]
-        }
+        volunteer_data = get_volunteer_work()
         resume['volunteer'] = [volunteer_data]
         resume_json = json.dumps(resume)
         self.assertEqual(Cv.objects.count(), 0)
@@ -224,6 +221,22 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(volunteer.summary, volunteer_data['summary'])
         self.assertEqual(volunteer.start_date, datetime.date(2012, 1, 1))
         self.assertEqual(volunteer.end_date, datetime.date(2013, 1, 1))
+
+    def test_submit_resume_with_ongoing_volunteer_work(self):
+        self.create_and_log_in_user()
+        resume = get_resume()
+        volunteer_data = get_volunteer_work()
+        volunteer_data['endDate'] = ''
+        resume['volunteer'] = [volunteer_data]
+        resume_json = json.dumps(resume)
+        self.assertEqual(Volunteer.objects.count(), 0)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        self.assertEqual(Volunteer.objects.count(), 1)
+        cv = Cv.objects.first()
+        volunteer = Volunteer.objects.first()
+        self.assertEqual(volunteer.cv, cv)
+        self.assertEqual(volunteer.start_date, datetime.date(2012, 1, 1))
+        self.assertEqual(volunteer.end_date, datetime.date(1337, 1, 1))
 
     def test_submit_resume_with_skill(self):
         self.create_and_log_in_user()

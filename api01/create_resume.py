@@ -79,7 +79,10 @@ def create_resume(data, user):
         volunteer_data = item
         volunteer_data['cv'] = cv.id
         volunteer_data['start_date'] = item['startDate']
-        volunteer_data['end_date'] = item['endDate']
+        if 'endDate' in item and item['endDate'] != '':
+            volunteer_data['end_date'] = item['endDate']
+        else:
+            volunteer_data['end_date'] = '1337-01-01'
         volunteer_serializer = VolunteerSerializer(data=volunteer_data)
         if volunteer_serializer.is_valid():
             volunteer_serializer.save()

@@ -208,7 +208,15 @@ class Volunteer(models.Model):
     end_date = models.DateField(null=True, blank=True)
 
     @property
+    def end_date_current(self):  # Replaces end date with current date if not defined
+        if self.end_date.year == 1337:
+            return datetime.datetime.now()
+        return self.end_date
+
+    @property
     def duration(self):
+        if self.end_date.year == 1337:
+            return calculate_duration(self.start_date, None)
         return calculate_duration(self.start_date, self.end_date)
 
     @property

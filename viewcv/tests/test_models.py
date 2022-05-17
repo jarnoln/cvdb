@@ -406,6 +406,16 @@ class ProjectModelTest(TestCase):
         self.assertEqual(project.duration_years, today.year - project.start_date.year)
         self.assertEqual(project.duration_months, today.month - project.start_date.month)
 
+    def test_end_date_current(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        project = Project.objects.create(cv=cv, name='Miss Direction',
+                                         description="A mapping engine that misguides you",
+                                         type='application',
+                                         start_date=datetime.date(2000, 1, 1),
+                                         end_date=datetime.date(1337, 1, 1))
+        self.assertEqual(project.end_date_current.year, datetime.date.today().year)
+
 
 class SkillModelTest(TestCase):
     def test_can_save_and_load(self):
@@ -473,3 +483,26 @@ class VolunteerModelTest(TestCase):
         self.assertEqual(volunteer.duration_str, '1 year')
         self.assertEqual(volunteer.duration_years, 1)
         self.assertEqual(volunteer.duration_months, 0)
+
+    def test_duration_with_no_end_date(self):
+        """ Using date 1337-01-01 should cause it to be replaced by current date in duration calculations """
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        volunteer = Volunteer.objects.create(cv=cv, organization='CoderDojo', position="Teacher",
+                                             url='http://coderdojo.example.com/',
+                                             summary='Global movement of free coding clubs for young people.',
+                                             start_date=datetime.date(2012, 1, 1),
+                                             end_date=datetime.date(1337, 1, 1))
+        today = datetime.date.today()
+        self.assertEqual(volunteer.duration_years, today.year - volunteer.start_date.year)
+        self.assertEqual(volunteer.duration_months, today.month - volunteer.start_date.month)
+
+    def test_end_date_current(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        volunteer = Volunteer.objects.create(cv=cv, organization='CoderDojo', position="Teacher",
+                                             url='http://coderdojo.example.com/',
+                                             summary='Global movement of free coding clubs for young people.',
+                                             start_date=datetime.date(2012, 1, 1),
+                                             end_date=datetime.date(1337, 1, 1))
+        self.assertEqual(volunteer.end_date_current.year, datetime.date.today().year)
