@@ -92,7 +92,13 @@
 
 <ul>
 {% for work in cv.work_set.all %}
-  <li> <strong> {{ work.start_date|date:"Y-m" }} / {{ work.end_date_current|date:"Y-m" }} ({{ work.duration_str }})
+  <li> <strong> {{ work.start_date|date:"Y-m" }} /
+    {% if work.end_date.year == 1337 %}
+      current
+    {% else %}
+      {{ work.end_date_current|date:"Y-m" }}
+    {% endif %}
+      ({{ work.duration_str }})
       {{ work.position }} at
     {% if work.url %}
       <a href="{{ work.url }}">{{ work.name }}</a>
@@ -130,7 +136,13 @@
 
 <ul>
 {% for edu in cv.education_set.all %}
-  <li> <strong> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date_current|date:"Y-m" }} ({{ edu.duration_str }})
+  <li> <strong> {{ edu.start_date|date:"Y-m" }} /
+    {% if edu.end_date.year == 1337 %}
+      ongoing
+    {% else %}
+      {{ edu.end_date_current|date:"Y-m" }}
+    {% endif %}
+    ({{ edu.duration_str }})
     {% if edu.study_type and edu.area and edu.institution %}
       {{ edu.study_type }} of {{ edu.area }} at
     {% elif edu.study_type and edu.institution %}
@@ -210,11 +222,15 @@
   <li>
     <strong>
         {{ project.start_date|date:"Y-m" }}
-    {% if project.duration_str %}
-        / {{ project.end_date_current|date:"Y-m" }}
-        ({{ project.duration_str }})
-    {% endif %}
-    {{ project.name }}
+        {% if project.duration_str %}
+          {% if project.end_date.year == 1337 %}
+            / ongoing
+          {% else %}
+            / {{ project.end_date_current|date:"Y-m" }}
+          {% endif %}
+          ({{ project.duration_str }})
+        {% endif %}
+        {{ project.name }}
     </strong>
     {% if project.description %}
     <ul>
