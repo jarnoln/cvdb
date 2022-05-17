@@ -64,7 +64,6 @@
       "position": "SW Specialist",
       "url": "http://vaisto.io",
       "startDate": "2017-09-01",
-      "endDate": "",
       "summary": "Python/Django and Vue.js development. Test automation."
     },
     {
@@ -117,9 +116,8 @@
     {
       "organization": "Finnish Pirate Party",
       "position": "Member of the Board",
-      "url": "",
-      "startDate": "2019-01-01",
-      "endDate": "2020-01-01"
+      "url": "https://www.piraattipuolue.fi/",
+      "startDate": "2019-01-01"
     },
     {
       "organization": "Parliament Elections",
@@ -152,9 +150,7 @@
       ],
       "startDate": "2020-01-01",
       "endDate": "2020-01-01",
-      "url": "https://altistukset.fi",
-      "entity": "",
-      "type": "Web service"
+      "url": "https://altistukset.fi"
     },
     {
       "name": "CVDB",
@@ -164,9 +160,7 @@
       ],
       "startDate": "2017-01-01",
       "endDate": "2017-01-01",
-      "url": "https://cvdb.fi",
-      "entity": "",
-      "type": "Web service"
+      "url": "https://cvdb.fi"
     },
     {
       "name": "Mitasny",
@@ -176,9 +170,7 @@
       ],
       "startDate": "2016-01-01",
       "endDate": "2017-01-01",
-      "url": "http://mitasny.com",
-      "entity": "",
-      "type": "Web service"
+      "url": "http://mitasny.com"
     },
     {
       "name": "Plokkeri",
@@ -188,9 +180,7 @@
       ],
       "startDate": "2015-01-01",
       "endDate": "2017-01-01",
-      "url": "https://plokkeri.fi",
-      "entity": "",
-      "type": "Web service"
+      "url": "https://plokkeri.fi"
     },
     {
       "name": "Tyranny of Majority",
@@ -200,9 +190,7 @@
       ],
       "startDate": "2012-01-01",
       "endDate": "2016-01-01",
-      "url": "http://tyrannyofmajority.net",
-      "entity": "",
-      "type": "Web service"
+      "url": "https://tyrannyofmajority.net"
     }
   ]
 }
