@@ -211,7 +211,7 @@
     <strong>
         {{ project.start_date|date:"Y-m" }}
     {% if project.duration_str %}
-        / {{ project.end_date|date:"Y-m" }}
+        / {{ project.end_date_current|date:"Y-m" }}
         ({{ project.duration_str }})
     {% endif %}
     {{ project.name }}

@@ -23,9 +23,10 @@ def create_resume(data, user):
         work_data = work_item
         work_data['cv'] = cv.id
         work_data['start_date'] = work_item['startDate']
-        work_data['end_date'] = work_item['endDate']
-        if work_data['end_date'] == '':
-            work_data['end_date'] = '1337-01-01'
+        if 'endDate' in work_item and work_item['endDate'] != '':
+            work_data['end_date'] = work_item['endDate']
+        else:
+            work_data['end_date'] = '1337-01-01'  # Code for no end date
         work_serializer = WorkSerializer(data=work_data)
         if work_serializer.is_valid():
             work_serializer.save()
@@ -39,9 +40,10 @@ def create_resume(data, user):
             project_data['cv'] = cv.id
             project_data['work'] = work_object.id
             project_data['start_date'] = work_project['startDate']
-            project_data['end_date'] = work_project['endDate']
-            if project_data['end_date'] == '':
-                project_data['end_date'] = '1337-01-01'
+            if 'endDate' in work_project and work_project['endDate'] != '':
+                project_data['end_date'] = work_project['endDate']
+            else:
+                project_data['end_date'] = '1337-01-01'  # Code for no end date
             if 'keywords' in work_project:
                 project_data['keywords'] = json.dumps(work_project['keywords'])
             else:
@@ -62,7 +64,10 @@ def create_resume(data, user):
         education_data['cv'] = cv.id
         education_data['study_type'] = education_item['studyType']
         education_data['start_date'] = education_item['startDate']
-        education_data['end_date'] = education_item['endDate']
+        if 'endDate' in education_item and education_item['endDate'] != '':
+            education_data['end_date'] = education_item['endDate']
+        else:
+            education_data['end_date'] = '1337-01-01'  # Code for no end date
         education_serializer = EducationSerializer(data=education_data)
         if education_serializer.is_valid():
             education_serializer.save()
@@ -118,8 +123,9 @@ def create_resume(data, user):
             project_data['keywords'] = json.dumps([])
         # project_data['keywords'] = item.get('keywords', '[]')
         project_data['start_date'] = item['startDate']
-        project_data['end_date'] = item['endDate']
-        if project_data['end_date'] == '':
+        if 'endDate' in item and item['endDate'] != '':
+            project_data['end_date'] = item['endDate']
+        else:
             project_data['end_date'] = '1337-01-01'
         project_serializer = ProjectSerializer(data=project_data)
         if project_serializer.is_valid():

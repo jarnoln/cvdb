@@ -91,7 +91,8 @@ class UploadCvTest(ExtTestCase):
         self.assertEqual(language.cv, cv)
         self.assertEqual(language.name, "English")
         self.assertEqual(language.fluency, "Native speaker")
+        self.assertEqual(Project.objects.count(), 2)
         project = Project.objects.all()[0]
         self.assertEqual(project.cv, cv)
-        self.assertEqual(project.name, "Miss Direction")
-        self.assertEqual(project.description, "A mapping engine that misguides you")
+        self.assertEqual(project.name, "Neverending User Story")
+        self.assertEqual(project.description, "Game about running software project")

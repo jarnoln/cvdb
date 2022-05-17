@@ -171,6 +171,28 @@ class SubmitResumeTest(ExtTestCase):
         self.assertEqual(edu.start_date, datetime.date(1940, 6, 1))
         self.assertEqual(edu.end_date, datetime.date(1944, 1, 1))
 
+    def test_submit_resume_with_ongoing_education(self):
+        user = self.create_and_log_in_user()
+        resume = get_resume()
+        education = get_education()
+        education['endDate'] = ''
+        resume['education'] = [education]
+        resume_json = json.dumps(resume)
+        self.assertEqual(Cv.objects.count(), 0)
+        self.assertEqual(Education.objects.count(), 0)
+        response = self.client.post('/api/01/resume/', data=resume_json, content_type='application/json')
+        self.assertEqual(Cv.objects.count(), 1)
+        self.assertEqual(Education.objects.count(), 1)
+        edu = Education.objects.first()
+        self.assertEqual(edu.institution, education['institution'])
+        self.assertEqual(edu.url, education['url'])
+        self.assertEqual(edu.area, education['area'])
+        self.assertEqual(edu.gpa, education['gpa'])
+        self.assertEqual(edu.study_type, education['studyType'])
+        self.assertEqual(edu.summary, education['summary'])
+        self.assertEqual(edu.start_date, datetime.date(1940, 6, 1))
+        self.assertEqual(edu.end_date, datetime.date(1337, 1, 1))
+
     def test_submit_resume_with_volunteer_work(self):
         self.create_and_log_in_user()
         resume = get_resume()

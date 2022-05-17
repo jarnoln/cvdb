@@ -317,6 +317,27 @@ class EducationModelTest(TestCase):
         self.assertEqual(education.duration_months, 7)
         self.assertEqual(education.duration_str, '2 years, 7 months')
 
+    def test_duration_with_no_end_date(self):
+        """ Using date 1337-01-01 should cause it to be replaced by current date in duration calculations """
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        education = Education.objects.create(cv=cv, institution='University of Oklahoma', area="IT",
+                                             study_type='Bachelor', gpa='4.0',
+                                             start_date=datetime.date(2011, 1, 1),
+                                             end_date=datetime.date(1337, 1, 1))
+        today = datetime.date.today()
+        self.assertEqual(education.duration_years, today.year - education.start_date.year)
+        self.assertEqual(education.duration_months, today.month - education.start_date.month)
+
+    def test_end_date_current(self):
+        user = auth.get_user_model().objects.create(username='creator')
+        cv = Cv.objects.create(user=user, name='cv', title='CV')
+        education = Education.objects.create(cv=cv, institution='University of Oklahoma', area="IT",
+                                             study_type='Bachelor', gpa='4.0',
+                                             start_date=datetime.date(2011, 1, 1),
+                                             end_date=datetime.date(1337, 1, 1))
+        self.assertEqual(education.end_date_current.year, datetime.date.today().year)
+
 
 class ProjectModelTest(TestCase):
     def test_can_save_and_load(self):
