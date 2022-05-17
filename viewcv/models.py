@@ -195,7 +195,7 @@ class Education(models.Model):
         return '{}:{}:{}'.format(self.institution, self.area, self.study_type)
 
     class Meta:
-        ordering = ['-end_date']
+        ordering = ['-start_date']
 
 
 class Volunteer(models.Model):
@@ -238,7 +238,7 @@ class Volunteer(models.Model):
         return '{}:{}'.format(self.organization, self.position)
 
     class Meta:
-        ordering = ['-end_date']
+        ordering = ['-start_date']
 
 
 class Skill(models.Model):

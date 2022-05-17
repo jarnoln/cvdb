@@ -130,7 +130,7 @@
 
 <ul>
 {% for edu in cv.education_set.all %}
-  <li> <strong> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date|date:"Y-m" }} ({{ edu.duration_str }})
+  <li> <strong> {{ edu.start_date|date:"Y-m" }} / {{ edu.end_date_current|date:"Y-m" }} ({{ edu.duration_str }})
     {% if edu.study_type and edu.area and edu.institution %}
       {{ edu.study_type }} of {{ edu.area }} at
     {% elif edu.study_type and edu.institution %}
@@ -157,7 +157,7 @@
     <strong>
       {{ vol.start_date|date:"Y" }}
     {% if vol.duration_years %}
-      / {{ vol.end_date|date:"Y" }}
+      / {{ vol.end_date_current|date:"Y" }}
     {% endif %}
       {{ vol.position }} in
     {% if vol.url %}
