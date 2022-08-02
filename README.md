@@ -18,7 +18,7 @@ Running instance at [cvdb.fi](https://cvdb.fi).
 
 Using
 -----
- - [Python](https://www.python.org/)(3.6) and [Django](https://www.djangoproject.com/)(2.2)
+ - [Python](https://www.python.org/)(3.6) and [Django](https://www.djangoproject.com/)(3.2)
  - [Behave](http://pythonhosted.org/behave/),
    [behave-django](https://behave-django.readthedocs.io/) and
    [Selenium](http://www.seleniumhq.org/) for functional testing
