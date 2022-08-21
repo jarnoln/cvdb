@@ -6,4 +6,4 @@
 
 [digitalocean]
 # makecv.net ansible_user=django
-cvdb.fi ansible_user=django
+cvdb.fi ansible_user=django site_name=cvdb.fi
