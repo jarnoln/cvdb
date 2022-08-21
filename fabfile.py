@@ -27,7 +27,8 @@ def get_site_name():
     if env.host == 'localhost' or env.host == '127.0.0.1':
         return LOCAL_SITE_NAME
     else:
-        return env.host
+        return 'cvdb.fi'
+        # return env.host
 
 
 def deploy():
@@ -41,10 +42,10 @@ def deploy():
     _create_directory_structure_if_necessary(site_folder)
     _init_virtualenv(site_folder)
     _get_latest_source(source_folder)
-    _update_settings(source_folder)
-    _check_settings(source_folder, python)
     _install_virtualenv_libraries(source_folder, pip)
     _check_secret_key(source_folder, python)
+    _update_settings(source_folder)
+    _check_settings(source_folder, python)
     _update_database(source_folder, python)
     _update_static_files(source_folder)
     _run_remote_unit_tests(app_list, source_folder, python)
