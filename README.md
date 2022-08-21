@@ -37,7 +37,7 @@ Using
 
 Deploy
 ------------
-[Install Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
+[Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
 Get sources:
 
