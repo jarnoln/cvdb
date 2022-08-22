@@ -37,7 +37,7 @@
 
     - name: add nginx config to sites-available
       template:
-          src=./nginx-http.conf.j2
+          src=./nginx.conf.j2
           dest=/etc/nginx/sites-available/{{ host }}
       notify:
           - restart nginx
