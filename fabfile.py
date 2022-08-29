@@ -4,7 +4,7 @@
 # Localhost:
 # fab deploy:host=username@localhost
 # Live:
-# fab deploy:host=django@makecv.net
+# fab deploy:host=django@cvdb.fi
 
 import os
 from fabric.contrib.files import exists, sed
@@ -115,5 +115,5 @@ def _run_remote_unit_tests(app_list, source_folder, python):
 
 
 def _restart_nginx():
-    sudo('systemctl restart gunicorn-cvdb')
+    sudo('systemctl restart cvdb.gunicorn')
     sudo('service nginx restart')
