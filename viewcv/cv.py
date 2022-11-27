@@ -43,8 +43,8 @@ class CvDetail(DetailView):
 
     def get_object(self, queryset=None):
         # logger = logging.getLogger(__name__)
-        if 'slug' in self.kwargs:
-            username = self.kwargs['slug']
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
             # logger.debug('CvDetail:username={}'.format(username))
             user = get_object_or_404(auth.get_user_model(), username=username)
             cv = Cv.objects.filter(user=user, public=True, primary=True)

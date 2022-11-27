@@ -1,7 +1,7 @@
 import os
 from django.conf import settings
 from django.views.generic import TemplateView
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from markdown import markdown
 
 
@@ -18,6 +18,6 @@ class AboutView(TemplateView):
         about_text = markdown(about_content)
 
         context['page'] = "about"
-        context['title'] = ugettext("About")
+        context['title'] = gettext("About")
         context['about_text'] = about_text
         return context

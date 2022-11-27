@@ -3,14 +3,14 @@ import datetime
 from django.db import models
 from django.urls import reverse
 from django.contrib import auth
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from viewcv.durations import calculate_duration, duration_as_string
 
 
 class Css(models.Model):
     creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, blank=True, default=None)
-    name = models.SlugField(max_length=100, default='', verbose_name=ugettext_lazy('name'))
-    title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
+    name = models.SlugField(max_length=100, default='', verbose_name=gettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='', verbose_name=gettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
     css = models.TextField(blank=True, default='')
 
@@ -24,11 +24,11 @@ class Css(models.Model):
 
 class CssUrl(models.Model):
     creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, blank=True, default=None)
-    name = models.SlugField(max_length=100, default='bootstrap400', verbose_name=ugettext_lazy('name'))
-    title = models.CharField(max_length=250, blank=True, default='Bootstrap 4.0.0', verbose_name=ugettext_lazy('title'))
+    name = models.SlugField(max_length=100, default='bootstrap400', verbose_name=gettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='Bootstrap 4.0.0', verbose_name=gettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
     url = models.URLField(max_length=250, blank=True,
-                          help_text=ugettext_lazy('Link to CSS file'),
+                          help_text=gettext_lazy('Link to CSS file'),
                           default='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
 
     def __str__(self):
@@ -38,17 +38,17 @@ class CssUrl(models.Model):
 
 class Cv(models.Model):
     user = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE, null=True, blank=True, default=None)
-    name = models.SlugField(max_length=100, default='default', verbose_name=ugettext_lazy('name'))
-    title = models.CharField(max_length=250, blank=True, default='', verbose_name=ugettext_lazy('title'))
+    name = models.SlugField(max_length=100, default='default', verbose_name=gettext_lazy('name'))
+    title = models.CharField(max_length=250, blank=True, default='', verbose_name=gettext_lazy('title'))
     summary = models.TextField(blank=True, default='')
     public = models.BooleanField(blank=True, default=False,
-                                 help_text=ugettext_lazy('Are other users allowed to see this CV'))
+                                 help_text=gettext_lazy('Are other users allowed to see this CV'))
     primary = models.BooleanField(blank=True, default=False,
-                                  help_text=ugettext_lazy('Is this the primary CV for this user'))
+                                  help_text=gettext_lazy('Is this the primary CV for this user'))
     css = models.ForeignKey(Css, on_delete=models.SET_NULL, null=True, blank=True, default=None,
-                            help_text=ugettext_lazy('CSS used for styling CV'))
+                            help_text=gettext_lazy('CSS used for styling CV'))
     css_url = models.ForeignKey(CssUrl, on_delete=models.SET_NULL, null=True, blank=True, default=None,
-                                help_text=ugettext_lazy('Link to CSS file used for styling CV'))
+                                help_text=gettext_lazy('Link to CSS file used for styling CV'))
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     edited = models.DateTimeField(auto_now=True, null=True, blank=True)
 
