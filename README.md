@@ -39,6 +39,10 @@ Deploy
 ------------
 [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
+Install fabric 1.x:
+
+    pip install 'fabric<2.0' 
+
 Get sources:
 
     git clone https://github.com/jarnoln/cvdb.git
