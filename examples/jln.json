@@ -59,7 +59,7 @@
       "name": "Infiniteq Systems",
       "position": "Technical Lead",
       "url": "https://www.infiniteqsystems.com/",
-      "startDate": "2017-10-01",
+      "startDate": "2023-10-01",
       "summary": "Developing software for iRobo test robot."
     },
     {
@@ -103,8 +103,8 @@
       "studyType": "M.Sc.",
       "startDate": "1996-08-01",
       "endDate": "2004-12-01",
-      "gpa": "",
-      "summary": "Degree Program in Information Technology. Main subject: <a href=\"https://jln.fi/master.html\">Computer Science</a>. GPA: 3.02. Degree thesis: <a href=\"https://jln.fi/thesis.html\">Training Simulator for Optical Range Finder</a>. Thesis grade: 4"
+      "gpa": "3.02",
+      "summary": "Degree Program in Information Technology. Main subject: <a href=\"https://jln.fi/master.html\">Computer Science</a>. Degree thesis: <a href=\"https://jln.fi/thesis.html\">Training Simulator for Optical Range Finder</a>."
     },
     {
       "institution": "Kitami Institute of Technology",
@@ -143,6 +143,18 @@
     }
   ],
   "projects": [
+    {
+      "name": "Juttukaveri",
+      "description": "Voice interface to OpenAI's ChatGPT. Backend with Python/Django using Django REST framework, frontend using Vue 3 + TypeScript. Open source, available in <a href=\"https://github.com/jarnoln/juttukaveri\">GitHub</a>.",
+      "keywords": [
+        "Python", "Django", "Vue.js", "TypeScript"
+      ],
+      "startDate": "2023-01-01",
+      "endDate": "2023-01-01",
+      "url": "https://juttukaveri.fi",
+      "entity": "",
+      "type": "Web service"
+    },
     {
       "name": "Covid-questionnaire",
       "description": "Covid-related questionnaire to 2023 parliament election candidates. Backend with Python/Django using Django REST framework, frontend using Vue 3 + TypeScript with Pinia store and unit tests with Vitest. Open source, available in GitHub: <a href=\"https://github.com/jarnoln/atange-backend\">backend</a>, <a href=\"https://github.com/jarnoln/atange-vite\">frontend</a>.",
