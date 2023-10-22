@@ -23,7 +23,7 @@
   "skills": [
     {
       "name": "C++/Qt",
-      "level": "Excellent"
+      "level": "Good"
     },
     {
       "name": "Python/Django",
@@ -38,16 +38,12 @@
       "level": "Good"
     },
     {
-      "name": "HTML5",
-      "level": "Good"
-    },
-    {
       "name": "JavaScript",
       "level": "Good"
     },
     {
       "name": "Vue.js",
-      "level": "Good"
+      "level": "Excellent"
     },
     {
       "name": "Jenkins",
@@ -100,7 +96,7 @@
       "startDate": "1996-08-01",
       "endDate": "2004-12-01",
       "gpa": "",
-      "summary": "Degree Program in Information Technology. Main subject: Computer Science. GPA: 3.02. Degree thesis: <a href=\"https://jln.fi/thesis.html\">Training Simulator for Optical Range Finder</a>. Thesis grade: 4 <a href=\"https://jln.fi/master.html\">Details</a>"
+      "summary": "Degree Program in Information Technology. Main subject: <a href=\"https://jln.fi/master.html\">Computer Science</a>. GPA: 3.02. Degree thesis: <a href=\"https://jln.fi/thesis.html\">Training Simulator for Optical Range Finder</a>. Thesis grade: 4"
     },
     {
       "institution": "Kitami Institute of Technology",
@@ -122,8 +118,8 @@
     {
       "organization": "Parliament Elections",
       "position": "Candidate",
-      "startDate": "2015-01-01",
-      "endDate": "2015-01-01"
+      "startDate": "2023-01-01",
+      "endDate": "2023-01-01"
     },
     {
       "organization": "European Parliament Elections",
@@ -139,6 +135,30 @@
     }
   ],
   "projects": [
+    {
+      "name": "Covid-questionnaire",
+      "description": "Covid-related questionnaire to 2023 parliament election candidates. Backend with Python/Django using Django REST framework, frontend using Vue 3 + TypeScript with Pinia store and unit tests with Vitest. Open source, available in GitHub: <a href=\"https://github.com/jarnoln/atange-backend\">backend</a>, <a href=\"https://github.com/jarnoln/atange-vite\">frontend</a>.",
+      "keywords": [
+        "Python", "Django", "Vue.js", "TypeScript"
+      ],
+      "startDate": "2023-01-01",
+      "endDate": "2023-01-01",
+      "url": "https://koronavaalikone.fi",
+      "entity": "",
+      "type": "Web service"
+    },
+    {
+      "name": "Where To Go For Lunch",
+      "description": "Multiple-choice voting service using advanced election methods. Backend with Python/Django using Django REST framework, frontend using Vue 3 + TypeScript. Open source, available in GitHub: <a href=\"https://github.com/jarnoln/wtgfl-backend\">backend</a>, <a href=\"https://github.com/jarnoln/wtgfl-vue3-ts\">frontend</a>.",
+      "keywords": [
+        "Python", "Django", "Vue.js", "TypeScript"
+      ],
+      "startDate": "2021-01-01",
+      "endDate": "2021-01-01",
+      "url": "https://wtgfl.com",
+      "entity": "",
+      "type": "Web service"
+    },
     {
       "name": "Exposures",
       "description": "Corona exposure event database and report generator made with Django. Open source, available in <a href=\"https://github.com/jarnoln/exposures/\">Github</a>.",

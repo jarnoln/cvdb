@@ -8,13 +8,13 @@
   <tbody>
   {% if info.image %}
     <tr>
-      <td rowspan="7" width="10%">
+      <td rowspan="7" style="width:10%">
         <img id="mugshot" alt="{{ user.username }}" src="{{ info.image }}" />
       </td>
     </tr>
   {% endif %}
-  {% if info.email %} <tr> <th width="20%"> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
-  {% if info.phone %} <tr> <th width="20%"> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
+  {% if info.email %} <tr> <th style="width:20%"> {% trans 'Email' %} </th> <td> {{ info.email }} </td> </tr> {% endif %}
+  {% if info.phone %} <tr> <th style="width:20%"> {% trans 'Phone' %} </th> <td> {{ info.phone }} </td> </tr> {% endif %}
   {% if info.url %}
     <tr>
       <th> {% trans 'Home page' %} </th>
