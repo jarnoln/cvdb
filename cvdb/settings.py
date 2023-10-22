@@ -26,7 +26,6 @@ try:
     from .site_config import CSRF_COOKIE_SECURE
     from .site_config import CSRF_TRUSTED_ORIGINS
     from .site_config import DEBUG
-    from .site_config import OPENAI_API_KEY
     from .site_config import SECRET_KEY
     from .site_config import SECURE_SSL_REDIRECT
     from .site_config import SESSION_COOKIE_SECURE
