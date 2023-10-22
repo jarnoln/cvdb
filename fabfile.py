@@ -43,7 +43,7 @@ def deploy():
     _init_virtualenv(site_folder)
     _get_latest_source(source_folder)
     _install_virtualenv_libraries(source_folder, pip)
-    _check_secret_key(source_folder, python)
+    _check_site_config(source_folder, python)
     _update_settings(source_folder)
     _check_settings(source_folder, python)
     _update_database(source_folder, python)

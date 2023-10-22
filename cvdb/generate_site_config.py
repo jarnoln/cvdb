@@ -27,7 +27,6 @@ def generate_site_config(site_config_file_path):
         chars = "abcdefghijklmnopqrstuvxyz01234567890_-!*"
         secret_key = "".join(random.SystemRandom().choice(chars) for _ in range(50))
         site_config_file.write("SECRET_KEY = '%s'\n" % secret_key)
-        site_config_file.write("OPENAI_API_KEY = 'your_openai_api_key'\n")
 
 
 if __name__ == "__main__":
