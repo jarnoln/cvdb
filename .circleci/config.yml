@@ -19,7 +19,7 @@ jobs:
             pip install coverage
             pip install codecov
       - run:
-          command: python cvdb/generate_passwords.py cvdb/passwords.py
+          command: python cvdb/generate_site_config.py cvdb/site_config.py
       - run:
           name: Update database tables
           command: |
