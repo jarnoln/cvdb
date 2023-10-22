@@ -242,6 +242,13 @@ class WorkModelTest(TestCase):
         self.assertEqual(work.duration_months, 9)
         self.assertEqual(work.duration_str, '1 year, 9 months')
 
+        work = Work.objects.create(cv=cv, name='Daily Bugle', position='Reporter',
+                                   start_date=datetime.date(2000, 6, 1),
+                                   end_date=datetime.date(2000, 6, 2))
+        self.assertEqual(work.duration_years, 0)
+        self.assertEqual(work.duration_months, 0)
+        self.assertEqual(work.duration_str, 'less than a month')
+
     def test_end_date_current(self):
         user = auth.get_user_model().objects.create(username='creator')
         cv = Cv.objects.create(user=user, name='cv', title='CV')
@@ -366,7 +373,7 @@ class ProjectModelTest(TestCase):
                                          start_date=datetime.date(2016, 8, 24),
                                          end_date=datetime.date(2016, 8, 24))
         self.assertEqual(str(project), project.name)
-        self.assertEqual(project.duration_str, '')
+        self.assertEqual(project.duration_str, 'less than a month')
 
     def test_keyword_string(self):
         user = auth.get_user_model().objects.create(username='creator')
@@ -378,7 +385,7 @@ class ProjectModelTest(TestCase):
                                          start_date=datetime.date(2016, 8, 24),
                                          end_date=datetime.date(2016, 8, 24))
         self.assertEqual(str(project), project.name)
-        self.assertEqual(project.duration_str, '')
+        self.assertEqual(project.duration_str, 'less than a month')
         self.assertEqual(project.keyword_str, 'GoogleMaps, JavaScript')
 
     def test_duration(self):

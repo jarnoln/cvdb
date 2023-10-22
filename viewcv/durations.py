@@ -26,6 +26,8 @@ def duration_as_string(years, months):
         duration_m = '{} months'.format(months)
     elif months == 1:
         duration_m = '1 month'
+    elif years == 0 and months == 0:
+        duration_m = 'less than a month'
     if duration_y and duration_m:
         return '{}, {}'.format(duration_y, duration_m)
 
