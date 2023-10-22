@@ -1,7 +1,7 @@
 {
   "basics": {
     "name": "Jarno Luoma-Nirva",
-    "label": "Technology Specialist",
+    "label": "Technical Lead",
     "image": "https://jln-static.netlify.app/jpg/jln_2017_200x200.jpg",
     "email": "jln@iki.fi",
     "phone": "+358 40 584 8782",
@@ -56,10 +56,18 @@
   ],
   "work": [
     {
+      "name": "Infiniteq Systems",
+      "position": "Technical Lead",
+      "url": "https://www.infiniteqsystems.com/",
+      "startDate": "2017-10-01",
+      "summary": "Developing software for iRobo test robot."
+    },
+    {
       "name": "Vaisto Solutions",
-      "position": "SW Specialist",
+      "position": "Technology Specialist",
       "url": "http://vaisto.io",
       "startDate": "2017-09-01",
+      "endDate": "2023-10-01",
       "summary": "Python/Django and Vue.js development. Test automation."
     },
     {
