@@ -87,8 +87,7 @@ def _check_settings(source_folder, python):
 
 
 def _install_virtualenv_libraries(source_folder, pip):
-    # TODO: CHeck Python version. For now assume version 3.5.
-    run('cd %s && %s install -r requirements-py3.5.txt' % (source_folder, pip))
+    run('cd %s && %s install -r requirements.txt' % (source_folder, pip))
 
 
 def _check_secret_key(source_folder, python):
