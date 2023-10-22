@@ -41,7 +41,7 @@ Deploy
 
 Install fabric 1.x:
 
-    pip install 'fabric<2.0' 
+    pip install - r requirements-deploy.txt 
 
 Get sources:
 
