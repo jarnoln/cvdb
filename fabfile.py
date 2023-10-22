@@ -90,10 +90,10 @@ def _install_virtualenv_libraries(source_folder, pip):
     run('cd %s && %s install -r requirements.txt' % (source_folder, pip))
 
 
-def _check_secret_key(source_folder, python):
+def _check_site_config(source_folder, python):
     settings_folder = source_folder + '/cvdb'
-    if not exists(settings_folder + '/passwords.py'):
-        run('%s %s/generate_passwords.py %s/passwords.py' % (python, settings_folder, settings_folder))
+    if not exists(settings_folder + '/site_config.py'):
+        run('%s %s/generate_site_config.py %s/site_config.py' % (python, settings_folder, settings_folder))
 
 
 def _update_database(source_folder, python):

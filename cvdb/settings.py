@@ -19,25 +19,32 @@ BASE_DIR = os.path.dirname(SETTINGS_DIR)
 SITE_DIR = os.path.dirname(BASE_DIR)
 PROJECT_NAME = os.path.basename(SETTINGS_DIR)
 
-try:
-    from .passwords import SECRET_KEY
-except ImportError:
-    print('Password file does not exist. How to create it:')
-    print('python {}/generate_passwords.py {}/passwords.py'.format(PROJECT_NAME, PROJECT_NAME))
-    sys.exit(1)
 
-DEBUG = True
+try:
+    from .site_config import ALLOWED_HOSTS
+    from .site_config import CORS_ALLOWED_ORIGINS
+    from .site_config import CSRF_COOKIE_SECURE
+    from .site_config import CSRF_TRUSTED_ORIGINS
+    from .site_config import DEBUG
+    from .site_config import OPENAI_API_KEY
+    from .site_config import SECRET_KEY
+    from .site_config import SECURE_SSL_REDIRECT
+    from .site_config import SESSION_COOKIE_SECURE
+except ImportError:
+    print("Site configuration file does not exist or not properly configured. How to create it:")
+    print("python {}/generate_site_config.py {}/site_config.py".format(PROJECT_NAME, PROJECT_NAME))
+    sys.exit(1)
 
 if DEBUG:
     LOG_DIR = BASE_DIR
 else:
     LOG_DIR = os.path.join(SITE_DIR, 'log')
+
 assert os.path.exists(LOG_DIR), 'Log directory {} does not exist'.format(LOG_DIR)
 
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 SITE_ID = 1
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'makecv.net', 'www.makecv.net', 'cvdb.fi', 'www.cvdb.fi', 'cvdb.jarnoln.net']
 ADMINS = [('Jarno', 'jarnoln@gmail.com')]
 
 
@@ -55,7 +62,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.amazon',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
