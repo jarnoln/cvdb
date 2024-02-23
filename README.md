@@ -1,7 +1,6 @@
 # CVDB
 
 [![CircleCI](https://circleci.com/gh/jarnoln/cvdb.svg?style=shield)](https://circleci.com/gh/jarnoln/cvdb)
-[![Travis CI](https://travis-ci.org/jarnoln/cvdb.svg)](https://travis-ci.org/jarnoln/cvdb)
 [![codecov](https://codecov.io/gh/jarnoln/cvdb/branch/master/graph/badge.svg)](https://codecov.io/gh/jarnoln/cvdb)
 
 CV database for storing and displaying CVs and resumes. There are many like it, but this one is mine.
