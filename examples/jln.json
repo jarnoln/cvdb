@@ -48,10 +48,6 @@
     {
       "name": "Jenkins",
       "level": "Good"
-    },
-    {
-      "name": "PostgreSQL",
-      "level": "Good"
     }
   ],
   "work": [
@@ -60,7 +56,7 @@
       "position": "Technical Lead",
       "url": "https://www.infiniteqsystems.com/",
       "startDate": "2023-10-01",
-      "summary": "Developing and maintaining software for iRobo test robot."
+      "summary": "Developing and maintaining software for iRobo test robot using Python and Qt. CI/CD pipelines with Jenkins and GitLab."
     },
     {
       "name": "Vaisto Solutions",
@@ -181,7 +177,7 @@
     },
     {
       "name": "Exposures",
-      "description": "Corona exposure event database and report generator made with Django. Open source, available in <a href=\"https://github.com/jarnoln/exposures/\">Github</a>.",
+      "description": "Corona exposure event database and report generator. Open source, available in <a href=\"https://github.com/jarnoln/exposures/\">Github</a>.",
       "keywords": [
         "Python", "Django", "Vue.js"
       ],
