@@ -13,10 +13,12 @@ jobs:
             sudo apt-get install libpangocairo-1.0-0
       - python/install-packages:
           pkg-manager: pip
+      - python/install-packages:
+          pip-dependency-file: requirements.txt
+          pkg-manager: pip
       - run:
-          name: Install Python packages
+          name: Install additional Python packages
           command: |
-            pip install -r requirements.txt
             pip install coverage
             pip install codecov
       - run:
