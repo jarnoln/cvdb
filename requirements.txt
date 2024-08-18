@@ -24,6 +24,7 @@ parse==1.19.0
 parse-type==0.6.0
 pdfrw==0.4
 Pillow==10.3.0
+pydyf==0.10.0  # Temprorarily sepcifying older pydyf
 pycparser==2.21
 pyphen==0.13.2
 python3-openid==3.2.0
