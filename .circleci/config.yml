@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  python: circleci/python@2.0.3
+  python: circleci/python@2.1.1
 jobs:
   build:
     executor: python/default
@@ -19,6 +19,7 @@ jobs:
             pip install coverage
             pip install codecov
       - run:
+          name: Generate site config
           command: python cvdb/generate_site_config.py cvdb/site_config.py
       - run:
           name: Update database tables
@@ -28,6 +29,7 @@ jobs:
             python manage.py makemigrations viewcv
             python manage.py migrate viewcv
       - run:
+          name: Run unit tests
           command: python manage.py test
       - run:
           name: Run coverage
