@@ -33,5 +33,5 @@ requests-oauthlib==2.0.0
 six==1.16.0
 sqlparse==0.5.0
 urllib3==1.26.19
-weasyprint==62.3
+weasyprint==61.2
 webencodings==0.5.1
