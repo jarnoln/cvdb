@@ -34,10 +34,11 @@ def get_site_name():
 def deploy():
     site_name = get_site_name()
     site_folder = '/home/%s/sites/%s' % (env.user, site_name)
-    source_folder = site_folder + '/source'
-    virtualenv = site_folder + '/virtualenv'
-    python = virtualenv + '/bin/python'
-    pip = virtualenv + '/bin/pip'
+    source_folder = os.path.join(site_folder, 'source')
+    virtualenv = os.path.join(site_folder, 'virtualenv')
+    binaries = os.path.join(virtualenv, 'bin')
+    python = os.path.join(binaries, 'python')
+    pip = os.path.join(binaries, 'pip')
     app_list = ['api01', 'users', 'viewcv']
     _create_directory_structure_if_necessary(site_folder)
     _init_virtualenv(site_folder)
@@ -91,7 +92,7 @@ def _install_virtualenv_libraries(source_folder, pip):
 
 
 def _check_site_config(source_folder, python):
-    settings_folder = source_folder + '/cvdb'
+    settings_folder = os.path.join(source_folder, 'cvdb')
     if not exists(settings_folder + '/site_config.py'):
         run('%s %s/generate_site_config.py %s/site_config.py' % (python, settings_folder, settings_folder))
 
