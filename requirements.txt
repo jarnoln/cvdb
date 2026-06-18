@@ -23,7 +23,7 @@ olefile==0.47
 parse==1.20.2
 parse-type==0.6.2
 pdfrw==0.4
-Pillow==10.4.0
+Pillow==12.2.0
 pydyf==0.10.0  # Temprorarily sepcifying older pydyf
 pycparser==2.21
 pyphen==0.13.2
