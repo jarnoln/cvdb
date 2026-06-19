@@ -1,9 +1,11 @@
 version: 2.1
 orbs:
-  python: circleci/python@2.1.1
+  python: circleci/python@4.0.0
 jobs:
   build:
-    executor: python/default
+    executor:
+      name: python/default
+      tag: "3.12"
     steps:
       - checkout
       - run:
@@ -13,9 +15,8 @@ jobs:
             sudo apt-get install libpangocairo-1.0-0
       - python/install-packages:
           pkg-manager: pip
-      - python/install-packages:
           pip-dependency-file: requirements.txt
-          pkg-manager: pip
+          cache-version: v2
       - run:
           name: Install additional Python packages
           command: |
