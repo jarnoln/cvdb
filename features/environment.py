@@ -1,9 +1,15 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from time import sleep
 
 
 def before_all(context):
-    context.browser = webdriver.Firefox()
+    options = Options()
+    options.add_argument('--headless=new')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--window-size=1280,1024')
+    context.browser = webdriver.Chrome(options=options)
     context.username = 'test_user'
     context.email = 'test_user@example.com'
     context.password = 'test_password'
@@ -11,8 +17,7 @@ def before_all(context):
 
 def after_all(context):
     sleep(1)
-    context.browser.close()  # Use close instead of quit (because quit gives error)
-    # context.browser = None
+    context.browser.quit()
 
 
 def before_feature(context, feature):

@@ -130,7 +130,7 @@ DEFAULT_FROM_EMAIL = 'accounts@cvdb.fi'  # Used for normal emails (mostly accoun
 
 # Django allauth settings
 # http://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https' if not DEBUG else 'http'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Internationalization

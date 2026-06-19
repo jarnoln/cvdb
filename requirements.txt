@@ -9,7 +9,7 @@ cssselect==1.4.0
 cssselect2==0.9.0
 defusedxml==0.7.1
 Django==6.0.6
-django-allauth==0.57.2  # 0.63+ changes social account URL routes and breaks tests
+django-allauth==65.18.0
 django-filter==25.2
 djangorestframework==3.17.1
 gunicorn==26.0.0

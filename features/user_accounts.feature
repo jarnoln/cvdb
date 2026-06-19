@@ -27,6 +27,7 @@ Feature: User account management
          And I will see link "Login"
 
     Scenario: Login
+        Given a signed up user
         When I open root page
          And I click link "Login"
         Then I will see title "Sign In"
@@ -37,6 +38,10 @@ Feature: User account management
          And I will see link "Delete account"
 
     Scenario: Delete account
+        Given a signed up user
+        When I open root page
+         And I click link "Login"
+        When I fill login form
         When I click link "Delete account"
         Then I will see title "Confirm delete user"
          And I will see button "Delete"
