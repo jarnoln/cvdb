@@ -3,6 +3,7 @@
 *.retry
 *.pdf
 __pycache__
+venv/
 db.sqlite3
 .idea
 .coverage
