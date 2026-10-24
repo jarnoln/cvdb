@@ -8,10 +8,10 @@ chardet==7.4.3
 cssselect==1.4.0
 cssselect2==0.9.0
 defusedxml==0.7.1
-Django==6.0.9
+Django==6.1.2
 django-allauth[socialaccount]==65.18.0
 django-filter==25.2
-djangorestframework==3.17.2
+djangorestframework==3.18.3
 gunicorn==26.0.0
 html5lib==1.1
 idna==3.18
