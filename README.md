@@ -60,12 +60,13 @@ Get sources:
 
 Create virtual environment and install Python packages:
 
-    mkvirtualenv -p /usr/bin/python3 cvdb
+    python -m venv venv
+    source ./venv/bin/activata
     pip install -r requirements.txt
 
-Generate password:
+Generate site config:
 
-    python cvdb/generate_passwords.py cvdb/passwords.py
+    python cvdb/generate_site_config.py cvdb/site_config.py
 
 Initialize DB:
 
